@@ -1,0 +1,35 @@
+# The URL the site will be built for
+base_url = "https://64.github.io"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+theme = "feather"
+
+taxonomies = [
+    {name = "categories", paginate_by = 10},
+]
+
+[extra]
+# specify an image for the big header at the top of the page.
+# this will be a background cover image, so make it large enough
+# so that it won't upscale enough to pixelate
+feather_header_image = "/theme_images/mthood.jpg"
+
+# if you want comments, add your disqus embed code here.  
+# you can obtain a code on the disqus website.
+#feather_disqus_code = "<div id='disqus_thread'></div><script> var disqus_config = ... etc ... etc ..."
+
+# if you'd like people to be able to donate to you, you can include a donate link
+# to be displayed in the footer of the website.
+#feather_donate_link = ""
+
+# if you want analytics, add your tracking code HTML here.
+#feather_analytics = "<script async src='https://www.googletagmanager.com/gtag/... etc ... etc ..."
