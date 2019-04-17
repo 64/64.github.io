@@ -8,7 +8,7 @@ script:
   - zola build
 
 after_success: |
-  [ $TRAVIS_BRANCH = source ] &&
+  [ $TRAVIS_BRANCH = src ] &&
   [ $TRAVIS_PULL_REQUEST = false ] &&
   zola build &&
   sudo pip install ghp-import &&
