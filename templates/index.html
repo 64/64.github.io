@@ -1,3 +1,5 @@
+{% import "post_macros.html" as post_macros %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,77 +11,111 @@
 
       <title>{% block title %}{{ config.title }}{% endblock title %}</title>
 
-      <!-- css -->
-      <link rel="stylesheet" href="/reset.css">
-      <link rel="stylesheet" href="/feather.css">
-
-      <!-- fonts -->
-      <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
-
-      <!-- js -->
-      <script src='/js/images.js'></script>
-      <script src='/js/main.js'></script>
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-      <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-      </script>
-
-      {% if config.extra.feather_analytics %}
-        {{ config.extra.feather_analytics | safe }}
-      {% endif %}
-
       {% if config.generate_rss %}
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml") }}">
       {% endif %}
+
+      {% block js %}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+          {% if config.extra.katex_enable %}
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/mathtex-script-type.min.js" integrity="sha384-zWYbd0NBwgTsgIdFKVprSfTh1mbMPe5Hz1X3yY4Sd1h/K1cQoUe36OGwAGz/PcDy" crossorigin="anonymous"></script>
+              {% if config.extra.katex_auto_render %}
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+                  onload="renderMathInElement(document.body);"></script>
+              {% endif %}
+          {% endif %}
+      {% endblock js %}
+
+      {% block css %}
+          <link rel="stylesheet" href="{{ get_url(path="site.css", trailing_slash=false) }}">
+          {% if config.extra.katex_enable %}
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+          {% endif %}
+      {% endblock css %}
 
       {% block extra_head %}
       {% endblock extra_head %}
     </head>
 
     <body>
+        <div class="container">
 
-    <a href="/">
-      <div class='header-image' style='background-image: url({% if config.extra.feather_header_image %}{{ config.extra.feather_header_image }}{% else %}/theme_images/default.gif{% endif %});'></div>
-    </a>
-
-    {% block content %}
-    <div class="container">
-      <div class="posts">
-        {% for page in section.pages %}
-            <section>
-              <a class='header-link' href="{{ page.permalink }}">
-                <h3 class="title"> {{ page.title }} </h3>
-              </a>
-              <p> 
-                {{ page.content | safe | striptags | truncate }} 
-              </p>
-
-              <!-- TODO: modularize this so we don't repeat ourselves -->
-              <div class='info'>
-                <span>{{ page.reading_time }} minute read</span>
-                {% if page.date %}
-                  <span class='divider'/>
-                  <span>{{ page.date | date(format="%d %B %Y") }}</span>
-                {% endif %}
-                {% for category in page.taxonomies.categories %}
-                  <span class='divider'/>
-                  <span><a href="/categories/{{category | slugify }}">{{ category }}</a></span>
-                {% endfor %}
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="/" class="logo">{{ config.extra.even_title }}</a>
               </div>
-            </section>
-          <hr/>
-        {% endfor %}
-      </div>
-    </div>
-    {% endblock content %}
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
 
-    <footer>
-      Feather theme by <a href="https://github.com/piedoom/feather">doomy</a>&nbsp;&nbsp;-&nbsp;&nbsp; Built with <a href="https://www.getzola.org/">Zola</a>
-      &nbsp;&nbsp;-&nbsp;&nbsp; Header photo by <a href="https://reddit.com/u/Danielstagner">u/Danielstagner</a>
-      {% if config.extra.feather_donate_link %}&nbsp;&nbsp;-&nbsp;&nbsp; <a href={{config.extra.feather_donate_link}}>Donate</a>
-      {% endif %}
-    </footer>
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                {% for item in config.extra.even_menu %}
+                    <li class="mobile-menu-item">
+                        <a href="{{ item.url | replace(from="$BASE_URL", to=config.base_url) }}">
+                            {{ item.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+              </ul>
+            </nav>
 
+            <header id="header">
+                <div class="logo"><a href="{{ config.base_url }}">{{ config.extra.even_title }}</a></div>
+                <nav class="menu">
+                    <ul>
+                        {% for item in config.extra.even_menu %}
+                            <li>
+                                <a href="{{ item.url | replace(from="$BASE_URL", to=config.base_url) }}">
+                                    {{ item.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    {% block content %}
+                        <div class="posts">
+                            {% for page in paginator.pages %}
+                                <article class="post">
+                                    {{ post_macros::title(page=page) }}
+                                    <div class="post__summary">
+                                        {{ page.summary | safe }}
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="{{ page.permalink }}">Read more...</a>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                        <nav class="pagination">
+                            {% if paginator.previous %}
+                                <a class="previous" href="{{ paginator.previous }}">‹ Previous</a>
+                            {% endif %}
+                            {% if paginator.next %}
+                                <a class="next" href="{{ paginator.next }}">Next ›</a>
+                            {% endif %}
+                        </nav>
+                    {% endblock content %}
+                </div>
+            </main>
+
+            {% block footer %}
+            {% endblock footer %}
+        </div>
+
+      {% block js_body %}
+          <script type="text/javascript" src="{{ get_url(path="even.js", trailing_slash=false) }}" ></script>
+      {% endblock js_body %}
     </body>
 
 </html>

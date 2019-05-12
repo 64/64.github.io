@@ -1,29 +1,15 @@
 {% extends "index.html" %}
 
 {% block content %}
-  <div class="container">
-    <section>
-      <h2> Category: {{ term.name }} </h2>
-    </section>
-    <div class="posts">
-      {% for page in term.pages %}
-          <section>
-            <a class='header-link' href="{{ page.permalink }}">
-              <h3 class="title"> {{ page.title }} </h3>
-            </a>
-            <p> 
-              {{ page.content | safe | striptags | truncate }} 
-            </p>
-            <div class='info'>
-              <span>{{ page.reading_time }} minute read</span>
-              {% if page.date %}
-                <span class='divider'/>
-                <span>{{ page.date | date(format="%d %B %Y") }}</span>
-              {% endif %}
+    <div class="taxonomy">
+        <h2>{{ term.name }}</h2>
+        {% for page in term.pages %}
+            <div class="taxonomy__item">
+                <span class="taxonomy__item__time">{{ page.date | date(format="%b %e, %Y") }}</span>
+                <span class="taxonomy__item__title">
+                    <a href="{{ page.permalink }}">{{ page.title }}</a>
+                </span>
             </div>
-          </section>
-        <hr/>
-      {% endfor %}
+        {% endfor %}
     </div>
-  </div>
 {% endblock content %}
