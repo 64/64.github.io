@@ -215,7 +215,7 @@ For some further reading, see [John Hable's blog post](http://filmicworlds.com/b
 
 ## ACES
 
-Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae which are shown below (adapted from [here](https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl​)):
+Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae adapted from [Stephen Hill's](https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl​) fit, shown below:
 
 ```cpp
 static const std::array<vec3, 3> aces_input_matrix =
@@ -338,24 +338,28 @@ Hopefully this guide was instructive. I've placed a grid of all TMOs used here f
         {{ figure(src="https://i.ibb.co/TcZcBYD/out.png", caption="Clamp") }}
     </div>
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/vmbB9QV/out.png", caption="Reinhard luminance (white point = max luminance)") }}
-    </div>
-    <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/MnFDk8n/out.png", caption="Uncharted 2") }}
-    </div>
-    <div class="image-grid-col">
-        {{ figure(src="https://i.imgur.com/Ck14lqL.png", caption="ACES (worse fit)") }}
+        {{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard simple") }}
     </div>
 </div>
 <div class="image-grid-row">
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard simple") }}
+        {{ figure(src="https://i.ibb.co/vmbB9QV/out.png", caption="Reinhard luminance (white point = max luminance)") }}
     </div>
     <div class="image-grid-col">
         {{ figure(src="https://i.imgur.com/ofIO1KR.png", caption="Reinhard-Jodie") }}
     </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        {{ figure(src="https://i.ibb.co/MnFDk8n/out.png", caption="Uncharted 2") }}
+    </div>
     <div class="image-grid-col">
         {{ figure(src="https://i.imgur.com/YZ0eNGw.png", caption="ACES") }}
+    </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        {{ figure(src="https://i.imgur.com/Ck14lqL.png", caption="ACES (worse fit)") }}
     </div>
     <div class="image-grid-col">
         {{ figure(src="https://i.ibb.co/K78Xff4/out.png", caption="DSCS315-R1 (ISO = 6.0)") }}

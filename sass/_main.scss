@@ -87,16 +87,9 @@ main {
     }
 
     &__category, &__comment_count {
-      display: inline;
-
-      @include underline-from-center;
-      /*a {
-        color: inherit;
-
-        &:hover {
-          color: $main-colour;
-        }
-      }*/
+      a {
+        color: $main-colour;
+      }
     }
 
     &__meta {

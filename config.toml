@@ -18,7 +18,7 @@ katex_auto_render = true
 even_title = "Zeta - Blog by 64"
 author = "64"
 disqus_comment_code = "<div id=\"disqus_thread\"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();</script> <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>"
-disqus_comment_count = "<script id=\"dsq-count-scr\" src=\"//64-github-io.disqus.com/count.js\" async></script>"
+#disqus_comment_count = "<script id=\"dsq-count-scr\" src=\"//64-github-io.disqus.com/count.js\" async></script>"
 
 even_menu = [
     {url = "$BASE_URL", name = "Home"},
