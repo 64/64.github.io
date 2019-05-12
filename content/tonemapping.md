@@ -139,6 +139,24 @@ Here's the difference it makes - the stained glass windows and the column on the
     </div>
 </div>
 
+Note that in fact with Reinhard, the luminance calculation can be simplified somewhat:
+
+{% katex(block=true) %}
+\begin{aligned}
+    L_\mathrm{out} &= \frac{L_\mathrm{in}}{1.0 + L_\mathrm{in}} \\
+    \implies \frac{L_\mathrm{out}}{L_\mathrm{in}} &= \frac{1.0}{1.0 + L_\mathrm{in}}
+\end{aligned}
+{% end %}
+
+Hence
+
+{% katex(block=true) %}
+\begin{aligned}
+\mathrm{TMO_{reinhardextlum}} &= C_\mathrm{in} \frac{L_\mathrm{out}}{L_\mathrm{in}} \\
+&= \frac{C_\mathrm{in}}{1.0 + L_\mathrm{in}}
+\end{aligned}
+{% end %}
+
 ## Reinhard-Jodie
 
 You aren't necessarily forced to choose between tone mapping RGB individually and tone mapping luminance. Here's one such Reinhard variant by shadertoy user [Jodie](https://www.shadertoy.com/user/Jodie) which does that:

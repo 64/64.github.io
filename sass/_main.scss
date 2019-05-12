@@ -86,21 +86,17 @@ main {
       @include underline-from-center;
     }
 
-    &__category {
+    &__category, &__comment_count {
       display: inline;
 
-      a {
+      @include underline-from-center;
+      /*a {
         color: inherit;
-
-        &:before {
-          content: "\B7";
-          padding-right: 2px;
-        }
 
         &:hover {
           color: $main-colour;
         }
-      }
+      }*/
     }
 
     &__meta {
@@ -299,5 +295,9 @@ figcaption {
   .image-grid-col {
     flex: 100%;
     max-width: 100%;
+  }
+
+  :not(.image-grid-col) > figure {
+    width: 100%;
   }
 }
