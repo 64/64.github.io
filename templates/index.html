@@ -114,6 +114,9 @@
         </div>
 
       {% block js_body %}
+          {% if config.extra.disqus_comment_count %}
+              {{ config.extra.disqus_comment_count | safe }}
+          {% endif %}
           <script type="text/javascript" src="{{ get_url(path="even.js", trailing_slash=false) }}" ></script>
       {% endblock js_body %}
     </body>

@@ -5,10 +5,22 @@
         </h1>
         <div class="post__meta">
             <span class="post__time">{{ page.date | date(format="%b %e, %Y") }}</span>
-            {% if page.category %}
-                <div class="post__category">
-                    <a href="{{ get_taxonomy_url(kind="category", name=page.category) }}">{{ page.category }}</a>
-                </div>
+            <span class="post__readtime">
+                &bull; {{ page.reading_time }} minute read
+            </span>
+            {% if page.taxonomies.categories %}
+                &bull;
+                {% for category in page.taxonomies.categories %}
+                    <span class="post__category">
+                            <a href="{{ get_taxonomy_url(kind="categories", name=category) }}">{{ category }}</a>
+                    </span>
+                {% endfor %}
+            {% endif %}
+            {% if config.extra.disqus_comment_count %}
+            &bull;
+            <span class="post__comment_count">
+                <a href="{{ page.permalink }}#disqus_thread">Comments</a>
+            </span>
             {% endif %}
         </div>
     </header>

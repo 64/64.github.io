@@ -71,6 +71,15 @@
     </div>
 
     {% block page_after_footer %}
+        {% if config.extra.disqus_comment_code %}
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "{{ page.permalink | safe }}";
+                    this.page.identifier = "{{ page.slug | safe }}";
+                };
+            </script>
+            {{ config.extra.disqus_comment_code | safe }}
+        {% endif %}
     {% endblock page_after_footer %}
 </article>
 
