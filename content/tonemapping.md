@@ -326,7 +326,7 @@ vec3 camera_tonemap(vec3 v, float iso)
 
 So far, all the TMOs I've discussed have been *global tone mapping operators*. This means that the computation they do is only based on the input radiance value and global image parameters like the average luminance. Tone mapping operators which are a function of position are known as *local tone mapping operators*. These are generally far more expensive and hence unsuitable for real time graphics - yet widely used in digital photography. Local TMOs can also give strange results when applied to video.
 
-One local tone mapping operator is described in the [same paper by Reinhard et al.](https://www.cs.utah.edu/~reinhard/cdrom/tonemap.pdf) - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different contrast to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.
+One local tone mapping operator is described in the [same paper by Reinhard et al.](https://www.cs.utah.edu/~reinhard/cdrom/tonemap.pdf) - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different exposure to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.
 
 # Conclusion
 
