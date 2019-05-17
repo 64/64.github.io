@@ -8,7 +8,7 @@ categories = ["Graphics"]
 
 ## What is tone mapping?
 
-Most monitors are capable of displaying RGB values in the range of \\([0, 255]\\). However, in real life, there is no limit on the amount of light 'energy' incident on a point. Most renderers output linear radiance values in \\([0, \infty)\\), which needs to be mapped into a viewable range. Those radiance values are described as High Dynamic Range (HDR), because they are unlimited, and the target (finite) range is described as Low Dynamic Range (LDR), because there is a fixed limit of 255. Put simply, tone mapping is the process of mapping HDR values in \\([0, \infty)\\) into LDR values (e.g values in \\([0, 255]\\) or \\([0.0, 1.0]\\)).
+Most monitors are capable of displaying RGB values in the range of \\([0, 255]\\). However, in real life, there is no limit on the amount of light 'energy' incident on a point. Most renderers output linear radiance values in \\([0, \infty)\\), which needs to be mapped into a viewable range. Those radiance values are described as High Dynamic Range (HDR), because they are unlimited, and the viewable target range is described as Low Dynamic Range (LDR), because there is a fixed limit of 255. Put simply, tone mapping is the process of mapping HDR values in \\([0, \infty)\\) into LDR values (e.g values in \\([0, 255]\\) or \\([0.0, 1.0]\\)).
 <!-- more -->
 
 A *tone mapping operator* (TMO) is essentially just a function which maps an input color (e.g an RGB triple) to an output color:
@@ -108,7 +108,7 @@ Two other more complex luminance-adjusting methods are discussed in [a paper](ht
 
 Don't confuse *luminance* with *luma* - luma is the equivalent of the luminance computed from an sRGB pixel (i.e gamma-corrected). The coefficients used to convert to luma are the same as luminance, they just operate on sRGB components instead. See [Wikipedia](https://en.wikipedia.org/wiki/Luma_(video)) for more details.
 
-Note that the hue / saturation preservation which results from this method isn't always desireable. Reinhard tone mapping in particular was created with the intention of being applied to luminance only, so it looks much better when this is done (see the following section for details on that). Other tone mapping curves look better when applied to RGB components separately.
+Note that the hue / saturation preservation which results from this method isn't always desirable. Reinhard tone mapping in particular was created with the intention of being applied to luminance only, so it looks much better when this is done (see the following section for details on that). Other tone mapping curves look better when applied to RGB components separately.
 
 >Reinhard was on the wrong track in applying his tone mapping curve to luminance; his curve was inspired by film, but film curves are applied to each color channel separately. And that is a good thing - [...] the "hue and saturation shifts" (really mostly saturation shifts) resulting from applying nonlinear curves per channel are an important feature, not a bug.
 >
@@ -152,7 +152,7 @@ Hence
 
 {% katex(block=true) %}
 \begin{aligned}
-\mathrm{TMO_{reinhardextlum}} &= C_\mathrm{in} \frac{L_\mathrm{out}}{L_\mathrm{in}} \\
+\mathrm{TMO_{reinhardextlum}}(C_\mathrm{in}) &= C_\mathrm{in} \frac{L_\mathrm{out}}{L_\mathrm{in}} \\
 &= \frac{C_\mathrm{in}}{1.0 + L_\mathrm{in}}
 \end{aligned}
 {% end %}
@@ -170,7 +170,7 @@ vec3 reinhard_jodie(vec3 v)
 }
 ```
 
-The difference between this and the luminance-only tone map is barely noticeable in this scene (you can see that the stain glass windows are slightly less orange), but in other scenes (especially those with coloured lights) the difference is more obvious. Note that there's also no way to set the white point with this TMO, but you could add a way yourself.
+The difference between this and the luminance-only tone map is barely noticeable in this scene (you can see that the stain glass windows are slightly less orange), but in other scenes (especially those with colored lights) the difference is more obvious. Note that there's also no way to set the white point with this TMO, but you could add a way yourself.
 
 {{ figure(src="https://i.imgur.com/ofIO1KR.png", caption="Reinhard-Jodie tone mapping") }}
 
@@ -184,7 +184,7 @@ Note that the other end of the tone mapping curve is usually described as the 's
 
 ## Uncharted 2
 
-A popular TMO for real-time video games is the Uncharted 2 TMO devised by John Hable (sometimes known as 'Hable Tone Mapping' or 'Hable Filmic' etc). It has some parameters which can be tweaked, but the basic operator is given by the following code:
+A popular TMO for real-time graphics is the Uncharted 2 TMO devised by John Hable (sometimes known as 'Hable Tone Mapping' or 'Hable Filmic' etc). It has some parameters which can be tweaked, but the basic operator is given by the following code:
 
 ```cpp
 vec3 uncharted2_tonemap_partial(vec3 x)
@@ -215,7 +215,7 @@ For some further reading, see [John Hable's blog post](http://filmicworlds.com/b
 
 ## ACES
 
-Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae which are shown below (adapted from [here](https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl​)):
+Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae adapted from [Stephen Hill's](https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl​) fit, shown below:
 
 ```cpp
 static const std::array<vec3, 3> aces_input_matrix =
@@ -257,7 +257,7 @@ vec3 aces_fitted(vec3 v)
 
 {{ figure(src="https://i.imgur.com/YZ0eNGw.png", caption="ACES tone mapping")}}
 
-You can also use this approximated ACES fit by [Krzysztof Narkowicz](https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/) for something a bit more performant. Note that this curve oversaturates bright colors slightly.
+You can also use this approximated ACES fit by [Krzysztof Narkowicz](https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/) for something a bit more performant. Note that this approximation oversaturates bright colors slightly compared to the better fit (you can see that in the middle stained glass window).
 
 ```cpp
 vec3 aces_approx(vec3 v)
@@ -322,6 +322,8 @@ vec3 camera_tonemap(vec3 v, float iso)
 
 {{ figure(src="https://i.ibb.co/K78Xff4/out.png", caption="DSCS315-R1 response curve, ISO = 6.0") }}
 
+This method is available as an option in [Indigo Renderer](https://www.indigorenderer.com/documentation/manual/rendering-with-indigo/camera/tone-mapping), for the curious.
+
 # Local Tone Mapping Operators
 
 So far, all the TMOs I've discussed have been *global tone mapping operators*. This means that the computation they do is only based on the input radiance value and global image parameters like the average luminance. Tone mapping operators which are a function of position are known as *local tone mapping operators*. These are generally far more expensive and hence unsuitable for real time graphics - yet widely used in digital photography. Local TMOs can also give strange results when applied to video.
@@ -338,24 +340,28 @@ Hopefully this guide was instructive. I've placed a grid of all TMOs used here f
         {{ figure(src="https://i.ibb.co/TcZcBYD/out.png", caption="Clamp") }}
     </div>
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/vmbB9QV/out.png", caption="Reinhard luminance (white point = max luminance)") }}
-    </div>
-    <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/MnFDk8n/out.png", caption="Uncharted 2") }}
-    </div>
-    <div class="image-grid-col">
-        {{ figure(src="https://i.imgur.com/Ck14lqL.png", caption="ACES (worse fit)") }}
+        {{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard simple") }}
     </div>
 </div>
 <div class="image-grid-row">
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard simple") }}
+        {{ figure(src="https://i.ibb.co/vmbB9QV/out.png", caption="Reinhard luminance (white point = max luminance)") }}
     </div>
     <div class="image-grid-col">
         {{ figure(src="https://i.imgur.com/ofIO1KR.png", caption="Reinhard-Jodie") }}
     </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        {{ figure(src="https://i.ibb.co/MnFDk8n/out.png", caption="Uncharted 2") }}
+    </div>
     <div class="image-grid-col">
         {{ figure(src="https://i.imgur.com/YZ0eNGw.png", caption="ACES") }}
+    </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        {{ figure(src="https://i.imgur.com/Ck14lqL.png", caption="ACES (worse fit)") }}
     </div>
     <div class="image-grid-col">
         {{ figure(src="https://i.ibb.co/K78Xff4/out.png", caption="DSCS315-R1 (ISO = 6.0)") }}
