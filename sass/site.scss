@@ -8,9 +8,9 @@ $theme-color-map: (
   'Dark Violet': #9932CC #f5f4fa
 );
 
-// TODO: allow to change that
-$main-colour: #c05b4d;
-$secondary-colour: #f8f5ec;
+$main-colour: #7908cf;
+$secondary-colour: #f3ecf8;
+$underline: rgba($main-colour, 0.8);
 $body-width: 800px;
 $mobile-navbar-height: 50px !default;
 $code-colour: #c7254e;
