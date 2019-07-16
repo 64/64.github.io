@@ -1,7 +1,7 @@
 base_url = "https://64.github.io"
 compile_sass = true
 highlight_code = true
-highlight_theme = "ayu-dark"
+highlight_theme = "visual-studio-dark"
 build_search_index = true
 theme = "even"
 title = "Delta"
@@ -14,7 +14,6 @@ taxonomies = [
 
 [extra]
 katex_enable = true
-katex_auto_render = true
 even_title = "Delta - Blog by 64"
 author = "64"
 disqus_comment_code = "<div id=\"disqus_thread\"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();</script> <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>"

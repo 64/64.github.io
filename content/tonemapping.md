@@ -8,24 +8,26 @@ categories = ["Graphics"]
 
 ## What is tone mapping?
 
-Most monitors are capable of displaying RGB values in the range of \\([0, 255]\\). However, in real life, there is no limit on the amount of light 'energy' incident on a point. Most renderers output linear radiance values in \\([0, \infty)\\), which needs to be mapped into a viewable range. Those radiance values are described as High Dynamic Range (HDR), because they are unlimited, and the viewable target range is described as Low Dynamic Range (LDR), because there is a fixed limit of 255. Put simply, tone mapping is the process of mapping HDR values in \\([0, \infty)\\) into LDR values (e.g values in \\([0, 255]\\) or \\([0.0, 1.0]\\)).
+Most monitors are capable of displaying RGB values in the range of {{ katex(body="[0, 255]") }}. However, in real life, there is no limit on the amount of light 'energy' incident on a point. Most renderers output linear radiance values in {{ katex(body="[0, \infty)") }}, which needs to be mapped into a viewable range. Those radiance values are described as High Dynamic Range (HDR), because they are unlimited, and the viewable target range is described as Low Dynamic Range (LDR), because there is a fixed limit of 255. Put simply, tone mapping is the process of mapping HDR values in {{ katex(body="[0, \infty)") }} into LDR values (e.g values in {{ katex(body="[0, 255]") }} or {{ katex(body="[0.0, 1.0]") }}).
 <!-- more -->
 
 A *tone mapping operator* (TMO) is essentially just a function which maps an input color (e.g an RGB triple) to an output color:
 
-$$ C_{\mathrm{out}} = \mathrm{TMO}(C_{\mathrm{in}}) $$
+{% katex(block=true) %}
+C_{\mathrm{out}} = \mathrm{TMO}(C_{\mathrm{in}})
+{% end %}
 
-At this point you might be a little confused as to why you've never had to think about tone mapping inside your program. If you're using an API like OpenGL, your radiance values are probably just being clamped by the implementation to \\([0.0, 1.0]\\) in the final framebuffer. This is essentially a trivial tone mapping operator:
+At this point you might be a little confused as to why you've never had to think about tone mapping inside your program. If you're using an API like OpenGL, your radiance values are probably just being clamped by the implementation to {{ katex(body="[0.0, 1.0]") }} in the final framebuffer. This is essentially a trivial tone mapping operator:
 
-$$ \mathrm{TMO_{clamp}}(C) = \mathrm{clamp}(C, 0.0, 1.0) $$
+{% katex(block=true)%} \mathrm{TMO_{clamp}}(C) = \mathrm{clamp}(C, 0.0, 1.0) {% end %}
 
 This TMO, as you might guess, is quite flawed. Here's what it looks like when we apply this TMO to the memorial scene (the HDR scene file can be downloaded [here](https://www.cs.huji.ac.il/~danix/hdr/hdrs/memorial.hdr)):
 
 {{ figure(src="https://i.ibb.co/TcZcBYD/out.png", caption="Tone mapping with clamp") }}
 
-High radiance values are be completely lost beyond a certain point. This results in the white areas (like the middle stained glass window) looking completely 'blown out'. For this particular scene it's not too bad because most of the radiance values are in \\([0.0, 1.0]\\) already, but for a brighter outdoors scene it would look a lot worse. You could alleviate the issue somewhat by dividing the input color by some value before clamping: 
+High radiance values are be completely lost beyond a certain point. This results in the white areas (like the middle stained glass window) looking completely 'blown out'. For this particular scene it's not too bad because most of the radiance values are in {{ katex(body="[0.0, 1.0]") }} already, but for a brighter outdoors scene it would look a lot worse. You could alleviate the issue somewhat by dividing the input color by some value before clamping: 
 
-$$ \mathrm{TMO_{clamp2}}(C) = \mathrm{clamp}\left(\frac{C}{k}, 0.0, 1.0\right) $$
+{% katex(block=true) %} \mathrm{TMO_{clamp2}}(C) = \mathrm{clamp}\left(\frac{C}{k}, 0.0, 1.0\right) {% end %}
 
 However, as it turns out, we don't really want a linear relationship between input and output color. Human color perception is very non-linear - the difference between 1 light source and 2 light sources illuminating a point appears much greater than the difference between 100 light sources and 101 light sources. Non-linear TMOs are potentially able to reproduce images which can convey more detail to our eyes. Floats actually work great for storing HDR values for this exact reason - they have higher precision nearer zero, and lower precision as their value increases towards infinity.
 
@@ -35,11 +37,11 @@ The rest of this guide will explore a few simple tone mapping operators, as well
 
 This is one of the simplest and most common TMOs, described by Reinhard et al. in [this paper](https://www.cs.utah.edu/~reinhard/cdrom/tonemap.pdf). Simply put, it is:
 
-$$ \mathrm{TMO_{reinhard}}(C) = \frac{C}{1 + C} $$
+{% katex(block=true) %} \mathrm{TMO_{reinhard}}(C) = \frac{C}{1 + C} {% end %}
 
 (Note that this isn't exactly what Reinhard is proposing in his paper, but more on that further down.)
 
-This is mathematically guaranteed to produce a value in \\([0.0, 1.0]\\). By differentiating, you can see that \\(C_{\mathrm{out}}\\) has an inverse-square falloff (e.g a radiance value of 4 results in something which is only 1.2 times as bright as a radiance value of 2).
+This is mathematically guaranteed to produce a value in {{ katex(body="[0.0, 1.0]") }}. By differentiating, you can see that {{ katex(body="C_{\mathrm{out}}") }} has an inverse-square falloff (e.g a radiance value of 4 results in something which is only 1.2 times as bright as a radiance value of 2).
 
 In C++:
 
@@ -56,13 +58,13 @@ Compare this image to the previous 'clamp' TMO. Reinhard looks much more grey-is
 
 ## Extended Reinhard
 
-The problem with the 'simple' Reinhard TMO is that it doesn't necessarily make good use of the full Low Dynamic Range. If our max scene radiance happened to be \\((1.0, 1.0, 1.0)\\) then the resulting maximum brightness would only be \\((0.5, 0.5, 0.5)\\) - only half of the available range. Fortunately, the paper by Reinhard presents a way to scale and make use of the full range:
+The problem with the 'simple' Reinhard TMO is that it doesn't necessarily make good use of the full Low Dynamic Range. If our max scene radiance happened to be {{ katex(body="(1.0, 1.0, 1.0)") }} then the resulting maximum brightness would only be {{ katex(body="(0.5, 0.5, 0.5)") }} - only half of the available range. Fortunately, the paper by Reinhard presents a way to scale and make use of the full range:
 
-$$ \mathrm{TMO_{reinhardext}}(C) = \frac{C\left(1 + \frac{C}{C_{\mathrm{white}}^2}\right)}{1 + C} $$
+{% katex(block=true) %} \mathrm{TMO_{reinhardext}}(C) = \frac{C\left(1 + \frac{C}{C_{\mathrm{white}}^2}\right)}{1 + C} {% end %}
 
-where \\(C_{\mathrm{white}}\\) is the biggest radiance value in the scene. Now, our biggest radiance value will get mapped to \\((1.0, 1.0, 1.0)\\), using the full LDR.
+where {{ katex(body="C_{\mathrm{white}}") }} is the biggest radiance value in the scene. Now, our biggest radiance value will get mapped to {{ katex(body="(1.0, 1.0, 1.0)") }}, using the full LDR.
 
-(Note that you can also just set \\(C_\mathrm{white}\\) to a value lower than the maximum radiance, which will ensure that anything higher gets mapped to \\((1.0, 1.0, 1.0)\\) - for this reason it is sometimes referred to as the 'white point'.)
+(Note that you can also just set {{ katex(body="C_\mathrm{white}") }} to a value lower than the maximum radiance, which will ensure that anything higher gets mapped to {{ katex(body="(1.0, 1.0, 1.0)") }} - for this reason it is sometimes referred to as the 'white point'.)
 
 In C++:
 
@@ -74,21 +76,23 @@ vec3 reinhard_extended(vec3 v, float max_white)
 }
 ```
 
-If we just set our max scene radiance as the white point, this TMO appears almost exactly the same as the simple reinhard operator. That's because the max radiance for this scene is 622, and \\(\frac{622}{1+622} \approx 0.998\\), so the difference between the extended and the simple variants in this case is imperceptible - simple reinhard was already making full use of the low dynamic range. If we used a different white point, the TMO would look noticeably different.
+If we just set our max scene radiance as the white point, this TMO appears almost exactly the same as the simple reinhard operator. That's because the max radiance for this scene is 622, and {{ katex(body="\frac{622}{1+622} \approx 0.998") }}, so the difference between the extended and the simple variants in this case is imperceptible - simple reinhard was already making full use of the low dynamic range. If we used a different white point, the TMO would look noticeably different.
 
 # Luminance and Color Theory
 
-Okay, so I must admit that I've lied to you slightly. Reinhard's formulas actually operate on a thing called *luminance* rather than operating on RGB-triples as I implied. Luminance is a single scalar value which measures how bright we view something. It may not be obvious, but for example we perceive green as much brighter than blue. In other words, \\((0.0, 0.7, 0.0)\\) appears much brighter than \\((0.0, 0.0, 0.7)\\).
+Okay, so I must admit that I've lied to you slightly. Reinhard's formulas actually operate on a thing called *luminance* rather than operating on RGB-triples as I implied. Luminance is a single scalar value which measures how bright we view something. It may not be obvious, but for example we perceive green as much brighter than blue. In other words, {{ katex(body="(0.0, 0.7, 0.0)") }} appears much brighter than {{ katex(body="(0.0, 0.0, 0.7)") }}.
 
 Converting a linear RGB triple to a luminance value is easy:
 
-$$ L = 0.2126R + 0.7152G + 0.0722B $$
+{% katex(block=true) %} L = 0.2126R + 0.7152G + 0.0722B {% end %}
 
 So far we've effectively been applying our TMOs to each RGB channel individually. However this can cause a 'shift' in hue or saturation which can significantly change the color appearance.
 
 Instead, what Reinhard's formula entails is to convert our linear RGB radiance to luminance, apply tone mapping the luminance, then somehow scale our RGB value by the new luminance. The simplest way of doing that final scaling is:
 
-$$ C_{\mathrm{out}} =  C_{\mathrm{in}} \frac{L_{\mathrm{out}}}{L_{\mathrm{in}}} $$
+{% katex(block=true) %}
+C_{\mathrm{out}} =  C_{\mathrm{in}} \frac{L_{\mathrm{out}}}{L_{\mathrm{in}}}
+{% end %}
 
 In C++:
 ```cpp
@@ -176,7 +180,7 @@ The difference between this and the luminance-only tone map is barely noticeable
 
 # Filmic Tone Mapping Operators
 
-So-called 'filmic' TMOs are designed to emulate real film. Other than that, their defining feature is the distinctive 'toe' at the bottom end of the curve (radiance is on the \\(x\\)-axis, final pixel brightness is on the \\(y\\)-axis):
+So-called 'filmic' TMOs are designed to emulate real film. Other than that, their defining feature is the distinctive 'toe' at the bottom end of the curve (radiance is on the {{ katex(body="x") }}-axis, final pixel brightness is on the {{ katex(body="y") }}-axis):
 
 {{ figure(src="https://i.imgur.com/apsY7L0.png") }}
 
@@ -215,7 +219,7 @@ For some further reading, see [John Hable's blog post](http://filmicworlds.com/b
 
 ## ACES
 
-Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae adapted from [Stephen Hill's](https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl​) fit, shown below:
+Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae adapted from [Stephen Hill's](https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl) fit, shown below:
 
 ```cpp
 static const std::array<vec3, 3> aces_input_matrix =
@@ -278,9 +282,9 @@ vec3 aces_approx(vec3 v)
 
 Sometimes it might be desireable to exactly reproduce the 'tone mapping' response of a real camera. Fortunately, the University of Columbia has released a [database of camera response functions](http://www.cs.columbia.edu/CAVE/software/softlib/dorf.php) which we can use for this purpose. Each camera response curve has two axes: irradiance (essentially the energy coming into the camera) and intensity (essentially the value of color component at that point on the film).
 
-Since irradiance is the input and intensity is the output, you can visualise irradiance and intensity on the \\(x\\) and \\(y\\) axes respectively. The data given to us has the points on both axes normalized into the range \\([0.0, 1.0]\\). For intensity, this is exactly what we want, as we can just scale the output by 256 to get the corresponding 8-bit color component. For irradiance, we will need to decide the 'width' of the curve. Since the point with the largest \\(x\\) value is \\((1.0, 1.0)\\), if we stretch this curve horizontally by a factor of \\(a\\) then the new furthest point will be \\((a, 1.0)\\). We can map any irradiance value greater than \\(a\\) to \\(1.0\\) and hence we can effectively control the white point by stretching or squashing the irradiance axis. Instead of 'white point', we'll call this parameter 'ISO' which mimics the function of the ISO setting on a real-world camera.
+Since irradiance is the input and intensity is the output, you can visualise irradiance and intensity on the {{ katex(body="x") }} and {{ katex(body="y") }} axes respectively. The data given to us has the points on both axes normalized into the range {{ katex(body="[0.0, 1.0]") }}. For intensity, this is exactly what we want, as we can just scale the output by 256 to get the corresponding 8-bit color component. For irradiance, we will need to decide the 'width' of the curve. Since the point with the largest {{ katex(body="x") }} value is {{ katex(body="(1.0, 1.0)") }}, if we stretch this curve horizontally by a factor of {{ katex(body="a") }} then the new furthest point will be {{ katex(body="(a, 1.0)") }}. We can map any irradiance value greater than {{ katex(body="a") }} to {{ katex(body="1.0") }} and hence we can effectively control the white point by stretching or squashing the irradiance axis. Instead of 'white point', we'll call this parameter 'ISO' which mimics the function of the ISO setting on a real-world camera.
 
-The data is given as two associative arrays. Given a irradiance value in \\([0.0, 1.0]\\) we need to find the index into the irradiance array (ideally using a binary search). Then, we can compute the output value by using the index we got from that binary search to look up the intensity value from the intensity array. We'll repeat this procedure for each RGB channel individually to compute the final color.
+The data is given as two associative arrays. Given a irradiance value in {{ katex(body="[0.0, 1.0]") }} we need to find the index into the irradiance array (ideally using a binary search). Then, we can compute the output value by using the index we got from that binary search to look up the intensity value from the intensity array. We'll repeat this procedure for each RGB channel individually to compute the final color.
 
 For real-time graphics you might want to find a way to bake a LUT instead of doing a relatively expensive binary search.
 
