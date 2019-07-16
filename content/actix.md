@@ -60,7 +60,7 @@ The reasonable and responsible thing to do here is to merge. But instead, Nikola
 
 Not exactly the kind of attitude you'd want from the maintainer of a crate with 400k downloads.
 
-Another example of (in my opinion) poor attitude was the release of `actix-web 1.0.2`, which was actually a breaking change (some code was refactored into a separate crate). At least one person has been caught off-guard by this, and [when asked to yank and republish as 2.0.0](https://github.com/actix/actix-web/issues/953), Nikolay responded with simply "i dont see reason" and closed the issue. Again, it's not a huge problem in itself, but I'd consider it mildly irresponsible and a demonstration of poor attitude.
+Another example of (in my opinion) poor attitude was the release of `actix-web 1.0.2`, which was actually a breaking change (some code was refactored into a separate crate). At least one person has been caught off-guard by this, and [when asked to yank and add a re-export to mitigate](https://github.com/actix/actix-web/issues/953), Nikolay responded with simply "i dont see reason" and closed the issue. Again, it's not a huge problem in itself, but I'd consider it mildly irresponsible and a demonstration of poor attitude.
 
 ## Flying Solo
 
