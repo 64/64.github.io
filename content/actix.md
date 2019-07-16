@@ -158,6 +158,7 @@ Sorry for the downbeat tone - don't despair! Here are some promising alternative
 - [Gotham](https://gotham.rs/) - Still fairly new, but rapidly improving! Good support for async, recently added TLS and diesel middleware support in 0.4.
 - [Thruster](https://github.com/trezm/Thruster) - Fast middleware-based framework (think express, koa). Still very new but author is friendly and willing to help. Totally unsafe-free!
 - [Warp](https://github.com/seanmonstar/warp) - Lightweight composable framework using middleware 'filters', built on top of hyper
+- [Tide](https://github.com/rustasync/tide) - Modular framework built by the Rust Async Ecosystem working group, naturally quite focused on `async`/`await` support but still a work in progress
 - Please leave a comment (here or on reddit) if you feel I've left something off this list
 
 <hr>
