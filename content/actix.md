@@ -169,6 +169,7 @@ Sorry for the downbeat tone - don't despair! Here are some promising alternative
 - [Rocket](https://rocket.rs/) - Probably the most mature Rust web framework of all. Dead simple API, but lacking in performance, which will hopefully improve when the framework moves over to Futures and async/await
 - [Gotham](https://gotham.rs/) - Still fairly new, but rapidly improving! Good support for async, recently added TLS and diesel middleware support in 0.4.
 - [Thruster](https://github.com/trezm/Thruster) - Fast middleware-based framework (think express, koa). Still very new but author is friendly and willing to help. Totally unsafe-free!
+- [Warp](https://github.com/seanmonstar/warp) - Lightweight composable framework using middleware 'filters', built on top of hyper
 - Please leave a comment (here or on reddit) if you feel I've left something off this list
 
 <hr>
