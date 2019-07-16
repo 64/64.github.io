@@ -133,21 +133,9 @@ impl<T: AsyncRead + AsyncWrite> Future for App<T> {
 }
 ```
 
-In the Fortunes benchmark, it's not much better. HTTP requests being manually constructed in a way that no sane person would:
+Another problem is that actix doesn't seem to check the HTTP method at all, it just looks at the path and assumes (based on the benchmark specification) what it needs to do.
 
-```rust
-let mut body = BytesMut::with_capacity(2048);
-let mut writer = Writer(&mut body);
-let _ = write!(writer, "{}", FortunesTemplate { fortunes });
-let mut res =
-    Response::with_body(StatusCode::OK, Body::Bytes(body.freeze()));
-let hdrs = res.headers_mut();
-hdrs.insert(SERVER, h_srv);
-hdrs.insert(CONTENT_TYPE, h_ct);
-res
-```
-
-In fairness, it seems other benchmarks are doing this (hyper even does this - though [Sean acknowledges](https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/Rust/hyper/src/main.rs#L28) it's a bit of a scummy tactic). The authors of Gotham and Thruster [make a point](https://www.reddit.com/r/rust/comments/cd9asm/announcing_gotham_v04/etteye7/) not to do this, for what it's worth. More commentary on the benchmarks from Gotham author can be found [here](https://www.reddit.com/r/rust/comments/cd9asm/announcing_gotham_v04/ett80qm/). I would strongly urge someone to take a proper look at these benchmarks and notify TechEmpower that they're being cheated - there's have a special 'stripped' classification for framework applications which have been unrealistically crafted for maximum benchmark score - actix, hyper and many others probably deserve this. 
+In fairness, it seems other benchmarks are doing these things (hyper even does this - though [Sean acknowledges](https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/Rust/hyper/src/main.rs#L28) it's a bit of a scummy tactic). The authors of Gotham and Thruster [make a point](https://www.reddit.com/r/rust/comments/cd9asm/announcing_gotham_v04/etteye7/) not to do this, for what it's worth. More commentary on the benchmarks from Gotham author can be found [here](https://www.reddit.com/r/rust/comments/cd9asm/announcing_gotham_v04/ett80qm/). I would strongly urge someone to take a proper look at these benchmarks and notify TechEmpower that they're being deceived - there's have a special 'stripped' classification for framework applications which have been unrealistically crafted for maximum benchmark score - actix, hyper and many others probably deserve this. 
 
 Please don't misconstrue this as me arguing that actix is slow - it's definitely not - I'm just trying to point out that the TechEmpower benchmarks don't tell the whole story!
 
@@ -173,5 +161,7 @@ Sorry for the downbeat tone - don't despair! Here are some promising alternative
 - Please leave a comment (here or on reddit) if you feel I've left something off this list
 
 <hr>
+
+UPDATE 1: Replaced some bits from the benchmarks section. I was a little too harsh with my initial assessment.
 
 [^1]: Yes, I'm a Brit, and I'm bloody-well going to switch to spelling uninitialised with an 's' when you're not looking.
