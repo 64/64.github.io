@@ -82,6 +82,13 @@ main {
       }
     }
 
+    hr {
+      height: 1px;
+      background-color: #e6e6e6;
+      border: 0;
+    }
+
+
     &__title {
       margin: 0;
       font-size: 30px;

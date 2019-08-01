@@ -11,6 +11,35 @@ categories = ["Rust"]
 Don't get me wrong - I actually really like [`actix-web`](https://github.com/actix/actix-web). It's got a simple and innovative API, a reasonably sized ecosystem of [crates](https://crates.io/search?q=actix) and [examples](https://github.com/actix/examples) (at least compared to other Rust web frameworks), [real world usage](https://www.reddit.com/r/rust/comments/cdg5b4/rust_in_the_on_of_the_biggest_music_festival/) - and notably - it's fast. [Very fast](https://www.techempower.com/benchmarks/#section=data-r18&hw=ph&test=fortune). Despite these things, I'm going to try and spell out why I don't think it can be *the* framework of choice for the Rust community moving forward.
 <!-- more -->
 
+---
+
+UPDATE 1: Replaced some bits from the benchmarks section.
+
+UPDATE 2 \[2019-08-01\]: Wow, this [blew up](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/) a lot more than I expected. A lot of things have been said (mostly [on reddit](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/)), so I'm going to take a moment to respond and clarify, in a sort of Q&A format:
+
+**Q:** There is no need to be a dick. Why the mocking tone?<sup>[1](https://twitter.com/mgattozzi/status/1151982658173513728), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlwtr/), [3](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/eu13bog/)</sup>\
+**A:** This is certainly my biggest regret of the whole situation. It was absolutely not my intention to be mocking or insulting, but on the other hand I can totally see how this post may come across as such. In particular, the [Flying Solo](#Flying_Solo) section had a poor tone, and hence I have removed it. For what it's worth, the point of this section was **not** to randomly mock the framework or maintainer, but was to demonstrate the barriers that new contributors face, which is a bad thing for the longevity of any software project.
+
+**Q:** Criticising code is one thing, but why the personal angle? That clearly crosses a line.<sup>[1](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/eu3bkgq/), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxqj6n/)</sup>\
+**A:** I think [BurntSushi](https://github.com/BurntSushi) answered this in a much better way than I could:
+> Yes, I agree the situation is unfortunate. It's no fun being at the bad end of a mob. I think most people are being pretty polite relative to how the rest of the Internet behaves, but this is a thorny issue. I've said in the past (outside the context of actix) that the people behind a project are fair game for evaluating whether to bring in a dependency or not. There's trust, reputation and good judgment that are hard to quantify, but are nevertheless important qualitative metrics. You hear the positive side of this a lot, e.g., "burntsushi's crates are always good." But the negative side is... ugly, because it's really hard to straddle that line between being rude/unfair and lodging legitimate concerns with one's qualitative confidence in a maintainer. And then when you throw in the fact that this is a volunteer effort... It's tough. And unfortunately, that's exactly what's happening here.
+> -- [/u/BurntSushi on reddit](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/ety4hkz/)
+
+(Please do not misconstrue this as BurntSushi endorsing everything I or anyone else has said on the issue.)
+
+**Q:** None of the code shown actually contains any UB so what is the fuss about? <sup>[1](https://twitter.com/withoutboats/status/1151539484414136321), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etz92ze/)</sup>\
+**A:** [Instances](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlqot/) of UB which can be triggered through the public API have since been pointed out elsewhere. But my main problem is with the somewhat careless nature towards `unsafe` code. In the standard library, and many others, you are always encouraged to add a comment documenting which invariants the `unsafe` block requires, and how exactly they are upheld. Even the extra effort required for this should be enough to discourage you from using `unsafe` unnecessarily. Personally I find it quite worrying that this sort of attitude is prominent in such a popular and security-critical crate.
+
+**Q:** Do you believe that nobody should ever use `unsafe`? <sup>[1](https://twitter.com/withoutboats/status/1151537402265198605), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxkx4q/)</sup>\
+**A:** No, of course not. `unsafe` serves a purpose and is often needed for performance reasons or just to shorten the amount of code required. Both of these use cases are totally valid. However, many of the uses I am seeing in actix are entirely unnecessary, such as the first block I showed which appears to be able to be rewritten using the normal `Display` implementation while *gaining speed*. Further, the security critical nature of this crate is another reason why it's bad to have unnecessary unsafe lying about. For things such as CLI tools or games, there is less of a need to be so acutely aware of unsafety.
+
+**Q:** If you dislike actix so much, why not just use something else instead of bashing it? <sup>[1](https://twitter.com/valarauca1/status/1151226335072681985), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlwtr/)</sup>\
+**A:** That is pretty much what I am recommending to people. I think it is totally fair to notify people of these concerns and let them decide if they want to keep using the framework. I know a lot of people have read this post and decided to keep using actix anyway, which I have no problem with.
+
+Anyway, onwards with the rest.
+
+---
+
 ## Belly of the Beast
 
 Does anyone remember when actix used to have [over 100 instances of unsafe](https://github.com/actix/actix-web/issues/289), largely used willy-nilly? Most of the egregious usages have been fixed a while ago, but there's still about 25 instances of it. Looking through the code now, there's still some worrying bits. Here's [one example](https://github.com/actix/actix-web/blob/d286ccb4f5a86eca12c65b1632506a8bd8b37d19/actix-http/src/helpers.rs#L116):
@@ -52,7 +81,7 @@ let mut buf = unsafe { &mut *(dst.bytes_mut() as *mut [u8]) };
 
 You might be thinking 'somebody used unsafe a bit too much, what's the big deal here? Just fix it and move on.'. The problem I'm trying to highlight here is that there's a fundamental issue with the author's attitude which we don't seem to be able to change.
 
-For example, you'd think that after the previous [debacle](https://github.com/actix/actix-web/issues/289), Nikolay (the author) would have learnt his lesson about `unsafe`. But apparently this is not the case. Recently, GitHub user [Aaron1011](https://github.com/Aaron1011) opened a PR on actix [removing several instances of `unsafe`](https://github.com/actix/actix-web/pull/968). The changes basically boiled down to replacing a use of `UnsafeCell` with `Cell` / `RefCell` - changes which should have absolutely no observable impact on performance. Aaron101 explained that, as it currently stands, the current interface (though keep in mind this is **not** part of the public API) makes it possible to trigger UB in only a few lines of code.
+For example, you'd think that after the previous [debacle](https://github.com/actix/actix-web/issues/289), Nikolay (the author) would have learnt his lesson about `unsafe`. But apparently this is not the case. Recently, GitHub user [Aaron1011](https://github.com/Aaron1011) opened a PR on actix [removing several instances of `unsafe`](https://github.com/actix/actix-web/pull/968). The changes basically boiled down to replacing a use of `UnsafeCell` with `Cell` / `RefCell` - changes which should have absolutely no observable impact on performance. Aaron101 explained that, as it currently stands, the current interface (though keep in mind this is **not** part of the public API) makes it possible to trigger UB in only a few lines of code. (**UPDATE: This has since been re-opened and merged.**)
 
 The reasonable and responsible thing to do here is to merge. But instead, Nikolay [responded with](https://github.com/actix/actix-web/pull/968#issuecomment-509894555):
 
@@ -66,38 +95,7 @@ Another example of (in my opinion) poor attitude was the release of `actix-web 1
 
 ## Flying Solo
 
-Let me give a little bit of backstory here. I was working on a project and decided to go with the asynchronous `tokio-postgres` driver (which is fantastic, by the way). Unfortunately there was a little issue: connecting to the database is *asynchronous* (it returns a future), yet actix only supports *synchronous* creation of application state. I asked on gitter and was given a little bit of (admittedly confusing) advice on how to go about creating state asynchronously, along with: "it is complicated, I'll try to implement it soon".
-
-As I didn't really have any better ideas, I opened up the repo to see if I could implement it myself. I was pointed to [this](https://github.com/actix/actix-net/blob/da302d4b7a3faaeb5d041f8480d4437113d2e0d5/actix-server/src/services.rs#L26) code:
-```rust
-pub trait ServiceFactory: Send + Clone + 'static {
-	type NewService: NewService<Config = ServerConfig, Request = Io<TcpStream>>;
-
-	fn create(&self) -> Self::NewService;
-}
-
-pub(crate) trait InternalServiceFactory: Send {
-	fn name(&self, token: Token) -> &str;
-
-	fn clone_factory(&self) -> Box<InternalServiceFactory>;
-
-	fn create(&self) -> Box<Future<Item = Vec<(Token, BoxedServerService)>, Error = ()>>;
-}
-```
-
-Right off the bat I'm a bit confused. Why are there two traits here? They don't even appear connected in any meaningful way. Ignoring that, it looks like this `ServiceFactory` trait allows you to construct a `NewService`. Let's open that up next. We can look at the `docs.rs` for this one, since it's part of the public API. Oh wait, we can't look it on `docs.rs`, because it's part of the `actix-net` crate, and `docs.rs` [doesn't believe that it's a library](https://docs.rs/crate/actix-net/0.3.0). Not to worry, let's open up the copy of the documentation on `actix.rs` (which doesn't even seem to be linked from the main `actix.rs` site - there's a link to it on the GitHub page):
-
-> **Trait `actix_net::service::NewService`**
->
-> Creates new Service values. Acts as a service factory. This is useful for cases where new Service values must be produced.
-
-Hang on a second... so the `ServiceFactory::create()` method returns an item implementing `NewService`, and `NewService` supposedly acts as a 'service factory'? So `NewService` should really be `ServiceFactory`, and `ServiceFactory` should really be `ServiceFactoryFactory`. Got it. There's also [`IntoNewService`](https://actix.rs/actix-net/actix_net/service/trait.IntoNewService.html), which presumably does a similar thing to `ServiceFactory` except it gets consumed. Then there's [`NewServiceExt`](https://actix.rs/actix-net/actix_net/service/trait.NewServiceExt.html) (I have absolutely no idea why you'd need an `Ext` trait here). It gets even better - there's *another* internal trait called `ServiceFactory`, this time inside the `actix-web` crate itself, with a single mysterious method that doesn't on the face of it appear to 'create' anything (as a factory should): `fn register(&mut self, config: &mut AppService);`. We've also got two different `HttpServiceFactory` traits, one in the `actix-web` crate and one in the `actix-framed` crate, both internal and completely unrelated...
-
-I don't think I need to explore this rabbit hole much further to demonstrate what kind of mess we're dealing with here. I genuinely spent a good few hours looking at these parts of the code, trying to figure out how in hell this was going to help me connect to my database driver asynchronously before the server starts up. Even looking at it starting from the public API was incredibly confusing - there's about four or five different `NewService` / `IntoNewService` / `Service` layers that the user's config goes through before requests start getting handled.
-
-Ultimately, I found a way to sidestep the problem entirely by running the future to completion before starting the server, using a function in `actix_rt`, which seems to be actix's wrapper around a tokio executor runtime. Now, granted, I'm sure a more experienced Rust developer would have been able to find their way around the codebase much quicker than me, but I don't think it's unfair to call actix a mess. I should add that Nikolay recently implemented the feature in question about a month later, with apparent ease.
-
-The overall point I'm trying to make here is this: actix isn't something that you can easily contribute to. Ultimately, this makes us reliant on Nikolay for new features which is a *very* undesireable trait for a large software project.
+\[deleted\]
 
 ## Blazingly fast... or not?
 
@@ -162,7 +160,5 @@ Sorry for the downbeat tone - don't despair! Here are some promising alternative
 - Please leave a comment (here or on reddit) if you feel I've left something off this list
 
 <hr>
-
-UPDATE 1: Replaced some bits from the benchmarks section. I was a little too harsh with my initial assessment.
 
 [^1]: Yes, I'm a Brit, and I'm bloody-well going to switch to spelling uninitialised with an 's' when you're not looking.
