@@ -6,7 +6,7 @@ date = 2019-07-16
 categories = ["Rust"]
 +++
 
-Don't get me wrong - I actually really like [`actix-web`](https://github.com/actix/actix-web). It's got a simple and innovative API, a reasonably sized ecosystem of [crates](https://crates.io/search?q=actix) and [examples](https://github.com/actix/examples) (at least compared to other Rust web frameworks), [real world usage](https://www.reddit.com/r/rust/comments/cdg5b4/rust_in_the_on_of_the_biggest_music_festival/) - and notably - it's fast. [Very fast](https://www.techempower.com/benchmarks/#section=data-r18&hw=ph&test=fortune). Despite these things, I'm going to try and spell out why I don't think it can be *the* framework of choice for the Rust community moving forward.
+Don't get me wrong - I actually really like [`actix-web`](https://github.com/actix/actix-web). It's got a simple and innovative API, a reasonably sized ecosystem of crates and [examples](https://github.com/actix/examples) (at least compared to other Rust web frameworks), [real world usage](https://www.reddit.com/r/rust/comments/cdg5b4/rust_in_the_on_of_the_biggest_music_festival/) - and notably - it's fast. [Very fast](https://www.techempower.com/benchmarks/). Despite these things, I'm going to try and spell out why I don't think it can be *the* framework of choice for the Rust community moving forward.
 <!-- more -->
 
 ---
@@ -31,7 +31,7 @@ UPDATE 2 \[2019-08-01\]: Wow, this [blew up](https://www.reddit.com/r/rust/comme
 **Q:** Do you believe that nobody should ever use `unsafe`? <sup>[1](https://twitter.com/withoutboats/status/1151537402265198605), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxkx4q/)</sup>\
 **A:** No, of course not. `unsafe` serves a purpose and is often needed for performance reasons or just to shorten the amount of code required. Both of these use cases are totally valid. However, many of the uses I am seeing in actix are entirely unnecessary, such as the first block I showed which appears to be able to be rewritten using the normal `Display` implementation while *gaining speed*. Further, the security critical nature of this crate is another reason why it's bad to have unnecessary unsafe lying about. For things such as CLI tools or games, there is less of a need to be so acutely aware of unsafety.
 
-**Q:** If you dislike actix so much, why not just use something else instead of bashing it? <sup>[1](https://twitter.com/valarauca1/status/1151226335072681985), [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlwtr/)</sup>\
+**Q:** If you dislike actix so much, why not just use something else instead of bashing it? <sup>1 dead, [2](https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlwtr/)</sup>\
 **A:** That is pretty much what I am recommending to people. I think it is totally fair to notify people of these concerns and let them decide if they want to keep using the framework. I know a lot of people have read this post and decided to keep using actix anyway, which I have no problem with.
 
 Anyway, onwards with the rest.
@@ -67,7 +67,7 @@ pub(crate) fn convert_usize(mut n: usize, bytes: &mut BytesMut) {
 }
 ```
 
-There's a couple of reasons that code like this worries me, and probably should worry you too. First is the use of [`std::mem::uninitialized()`](https://doc.rust-lang.org/std/mem/fn.uninitialized.html), which is now deprecated in favour of [`std::mem::MaybeUninit`](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html) instead. The short of it is that it was never entirely clear that `mem::uninitialized()` could be used without UB, even for 'all bit-patterns are valid' types like `u8`. See [Gankro's post](https://gankro.github.io/blah/initialize-me-maybe/) and [Ralf J's post](https://www.ralfj.de/blog/2019/07/14/uninit.html) on uninitialised[^1] memory for more details.
+There's a couple of reasons that code like this worries me, and probably should worry you too. First is the use of [`std::mem::uninitialized()`](https://doc.rust-lang.org/std/mem/fn.uninitialized.html), which is now deprecated in favour of [`std::mem::MaybeUninit`](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html) instead. The short of it is that it was never entirely clear that `mem::uninitialized()` could be used without UB, even for 'all bit-patterns are valid' types like `u8`. See [Gankro's post](https://gankra.github.io/blah/initialize-me-maybe/) and [Ralf J's post](https://www.ralfj.de/blog/2019/07/14/uninit.html) on uninitialised[^1] memory for more details.
 
 Secondly (and probably the main reason for disliking this code) is that there's absolutely *no justification given* for why this is done. Why is `Display` not simply being used? Is this function even performance-critical? Is there any real benefit to using `ptr::copy_nonoverlapping` for **2 bytes** instead of just (safely) assigning the bytes like `buf[curr] = lut[d1]`? With `ptr::copy_nonoverlapping` there's a number of variants you need to uphold, including making sure that the arguments don't alias (i.e overlap), and making sure the buffers are large enough for the read/write - but neither of these are mentioned.
 
@@ -97,7 +97,7 @@ Another example of (in my opinion) poor attitude was the release of `actix-web 1
 
 ## Blazingly fast... or not?
 
-Actix is doing very well in the latest round of the [TechEmpower Web Framework Benchmarks](https://www.techempower.com/benchmarks/#section=data-r18). It's leading in four of the six benchmarks, and among the top 5 in the remaining two benchmarks. While clearly an excellent result, there's some questionable behaviour going on behind the scenes in a couple of them.
+Actix is doing very well in the latest round (18) of the [TechEmpower Web Framework Benchmarks](https://www.techempower.com/benchmarks/). It's leading in four of the six benchmarks, and among the top 5 in the remaining two benchmarks. While clearly an excellent result, there's some questionable behaviour going on behind the scenes in a couple of them.
 
 Specifically, in the 'plaintext' and 'JSON' benchmarks we can see that actix is doing some manual HTTP parsing, hardcoding header values (while ignoring the HTTP method). It doesn't look even *close* to the kind of code you'd write in real life ([see for yourselves](https://github.com/TechEmpower/FrameworkBenchmarks/blob/3129ff5f0cd36794a5bf0cca6e8d4b01eeb841f4/frameworks/Rust/actix/src/main_raw.rs#L26)):
 
