@@ -19,7 +19,7 @@ C_{\mathrm{out}} = \mathrm{TMO}(C_{\mathrm{in}})
 
 At this point you might be a little confused as to why you've never had to think about tone mapping inside your program. If you're using an API like OpenGL, your radiance values are probably just being clamped by the implementation to {{ katex(body="[0.0, 1.0]") }} in the final framebuffer. This is essentially a trivial tone mapping operator:
 
-{% katex(block=true)%} \mathrm{TMO_{clamp}}(C) = \mathrm{clamp}(C, 0.0, 1.0) {% end %}
+{% katex(block=true) %} \mathrm{TMO_{clamp}}(C) = \mathrm{clamp}(C, 0.0, 1.0) {% end %}
 
 This TMO, as you might guess, is quite flawed. Here's what it looks like when we apply this TMO to the memorial scene (the HDR scene file can be downloaded [here](https://www.cs.huji.ac.il/~danix/hdr/hdrs/memorial.hdr)):
 

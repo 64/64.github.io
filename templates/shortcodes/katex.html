@@ -1,1 +1,5 @@
-<script type="math/tex{% if block %};mode=display{% endif %}">{{ body | safe }}</script>
+{% if block %}
+{{ body | katex(block=true) | safe }}
+{% else %}
+{{ body | katex(block=false) | safe }}
+{% endif %}
