@@ -6,8 +6,6 @@ date = 2019-07-16
 categories = ["Rust"]
 +++
 
-*Warning: unapologetic rant ahead.*
-
 Don't get me wrong - I actually really like [`actix-web`](https://github.com/actix/actix-web). It's got a simple and innovative API, a reasonably sized ecosystem of [crates](https://crates.io/search?q=actix) and [examples](https://github.com/actix/examples) (at least compared to other Rust web frameworks), [real world usage](https://www.reddit.com/r/rust/comments/cdg5b4/rust_in_the_on_of_the_biggest_music_festival/) - and notably - it's fast. [Very fast](https://www.techempower.com/benchmarks/#section=data-r18&hw=ph&test=fortune). Despite these things, I'm going to try and spell out why I don't think it can be *the* framework of choice for the Rust community moving forward.
 <!-- more -->
 

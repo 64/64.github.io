@@ -11,7 +11,7 @@ before_script:
   # Download and unzip the zola executable
   #- curl -s -L https://github.com/64/zola/releases/latest/download/zola.tar.gz | sudo tar xvzf - -C /usr/local/bin
   - git clone https://github.com/64/zola
-  - cd zola && cargo build && sudo cp target/debug/zola /usr/local/bin
+  - cd zola && cargo build && sudo cp target/debug/zola /usr/local/bin && cd ..
 
 script:
   - zola check

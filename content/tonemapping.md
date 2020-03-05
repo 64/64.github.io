@@ -25,7 +25,7 @@ This TMO, as you might guess, is quite flawed. Here's what it looks like when we
 
 {{ figure(src="https://i.ibb.co/TcZcBYD/out.png", caption="Tone mapping with clamp") }}
 
-High radiance values are be completely lost beyond a certain point. This results in the white areas (like the middle stained glass window) looking completely 'blown out'. For this particular scene it's not too bad because most of the radiance values are in {{ katex(body="[0.0, 1.0]") }} already, but for a brighter outdoors scene it would look a lot worse. You could alleviate the issue somewhat by dividing the input color by some value before clamping: 
+High radiance values are being completely lost beyond a certain point. This results in the white areas (like the middle stained glass window) looking completely 'blown out'. For this particular scene it's not too bad because most of the radiance values are in {{ katex(body="[0.0, 1.0]") }} already, but for a brighter outdoors scene it would look a lot worse. You could alleviate the issue somewhat by dividing the input color by some value before clamping: 
 
 {% katex(block=true) %} \mathrm{TMO_{clamp2}}(C) = \mathrm{clamp}\left(\frac{C}{k}, 0.0, 1.0\right) {% end %}
 
