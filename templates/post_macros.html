@@ -9,8 +9,8 @@
                 &bull; {{ page.reading_time }} minute read
             </span>
             {% if page.taxonomies.categories %}
-                &bull;
                 {% for category in page.taxonomies.categories %}
+                    &bull;
                     <span class="post__category">
                             <a href="{{ get_taxonomy_url(kind="categories", name=category) }}">{{ category }}</a>
                     </span>

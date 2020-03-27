@@ -6,8 +6,6 @@ date = 2019-05-10
 categories = ["Graphics"]
 +++
 
-## What is tone mapping?
-
 Most monitors are capable of displaying RGB values in the range of {{ katex(body="[0, 255]") }}. However, in real life, there is no limit on the amount of light 'energy' incident on a point. Most renderers output linear radiance values in {{ katex(body="[0, \infty)") }}, which needs to be mapped into a viewable range. Those radiance values are described as High Dynamic Range (HDR), because they are unlimited, and the viewable target range is described as Low Dynamic Range (LDR), because there is a fixed limit of 255. Put simply, tone mapping is the process of mapping HDR values in {{ katex(body="[0, \infty)") }} into LDR values (e.g values in {{ katex(body="[0, 255]") }} or {{ katex(body="[0.0, 1.0]") }}).
 <!-- more -->
 
