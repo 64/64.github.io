@@ -99,7 +99,7 @@ hence
 \end{aligned}
 {% end %}
 
-This is excellent, as we can now set {% katex() %} \hat{I}_N(X_1, X_2, \ldots, X_N) {% end %} (which I will just write {% katex() %} \hat{I}_N {% end %} from now) equal to this left hand side quantity. This gives
+This is excellent, as we can now set {% katex() %} \hat{I}_N(X_1, X_2, \ldots, X_N) {% end %} (which I will just write as {% katex() %} \hat{I}_N {% end %} from now on) equal to this left hand side quantity. This gives
 
 {% katex(block=true) %}
 \begin{aligned}
@@ -161,7 +161,7 @@ The Monte Carlo estimator extends easily to multiple dimensions. For example, in
 \hat{I}_N = \frac{1}{N}\sum_{i=1}^{N}\frac{f(X_i)}{p_X(X_i)}\mathrm{.}
 {% end %}
 
-Keep in mind that the Monte Carlo estimator is a function of {% katex() %} N {% end %} - for low values of {% katex() %} N {% end %}, the estimate will be quite inaccurate, but the law of large numbers tells us that as {% katex() %} N {% end %} increases, the estimate gets better and better. It is possible to show analytically that the error of the Monte Carlo estimator (defined by {% katex() %} \hat{I}_N - \mathbb{E}[\hat{I}_N] {% end %}) is {% katex() %} O(N^{-1/2}) {% end %} in any number of dimensions, whereas no quadrature rule has an error better than {% katex() %} O(N^{-1/s}) {% end %} in {% katex() %} s {% end %} dimensions. Again, see [Veach's thesis](http://graphics.stanford.edu/papers/veach_thesis/thesis.pdf) for a more rigorous exploration of these results.
+Keep in mind that the Monte Carlo estimator is a function of {% katex() %} N {% end %} - for low values of {% katex() %} N {% end %}, the estimate will be quite inaccurate, but the law of large numbers tells us that as {% katex() %} N {% end %} increases, the estimate gets better and better. It is possible to show analytically that the *error* of the Monte Carlo estimator (defined by {% katex() %} \hat{I}_N - \mathbb{E}[\hat{I}_N] {% end %}) is {% katex() %} O(N^{-1/2}) {% end %} in any number of dimensions, whereas no quadrature rule has an error better than {% katex() %} O(N^{-1/s}) {% end %} in {% katex() %} s {% end %} dimensions. Again, see [Veach's thesis](http://graphics.stanford.edu/papers/veach_thesis/thesis.pdf) for a more rigorous exploration of these results.
 
 ## Variance Reduction Techniques
 
@@ -169,7 +169,7 @@ Ideally we want our estimator {% katex() %} \hat{I}_N {% end %} to give us an ac
 
 ### Importance Sampling
 
-One extremely clever way of reducing the variance of a Monte Carlo estimator is to strategically sample the {% katex() %} X_i {% end %} according to some probability distribution {% katex() %} p_X(x) {% end %} that closely approximates the integrand {% katex() %} f {% end %}. To see why this works, consider picking {% katex() %} p_X(x) = cf(x){% end %}<sup id="footnote-ref-1">[1](#footnote-1)</sup> (where {% katex() %} c {% end %} ensures that {% katex() %} p_X {% end %} integrates to 1). Then
+One extremely clever way of reducing the variance of a Monte Carlo estimator is to strategically sample the {% katex() %} X_i {% end %} according to some probability density {% katex() %} p_X(x) {% end %} that closely approximates the integrand {% katex() %} f {% end %}. To see why this works, consider picking {% katex() %} p_X(x) = cf(x){% end %}<sup id="footnote-ref-1">[1](#footnote-1)</sup> (where {% katex() %} c {% end %} is some constant which ensures that {% katex() %} p_X {% end %} integrates to 1). Then
 
 {% katex(block=true) %}
 \begin{aligned}
@@ -227,12 +227,12 @@ where {% katex() %}d_k(n){% end %} is the {% katex() %} k {% end %}th digit of t
 
 Monte Carlo integration is a powerful tool for evaluating high-dimensional integrals. We have seen how its variance can be reduced significantly through importance sampling and through choosing a low discrepancy sequence, both of which result in lowering the amount of computational work we need to do to obtain a reasonable result.
 
-In another article, I will talk about a technique called *[Multiple Importance Sampling](https://en.wikipedia.org/wiki/Importance_sampling#Multiple_and_adaptive_importance_sampling)* which allows us to combine several different guesses of the shape of our integrand into one single probability density function usable for importance sampling as above.
+In [the next article](@/multiple-importance-sampling.md), I will talk about a technique called [Multiple Importance Sampling](https://en.wikipedia.org/wiki/Importance_sampling#Multiple_and_adaptive_importance_sampling) which allows us to combine samples from multiple different probability density functions that we think match the shape of the integrand, reducing variance without introducing bias.
 
 ### Footnotes
 <a id="footnote-1" href="#footnote-ref-1">1</a>: For the rest of this post we assume that {% katex() %} f(x) {% end %} is non-negative, otherwise such a choice of PDF would not be possible. We also assume that the PDF is non-zero wherever {% katex() %} f {% end %} is non-zero, to avoid division by zero.
 
-### Further Reading
+### References
 
 * [Eric Veach's thesis](http://graphics.stanford.edu/papers/veach_thesis/thesis.pdf) is a truly excellent resource and covers everything here and more in greater detail (mainly section 2).
 * [Physically Based Rendering: From Theory to Implementation](http://www.pbr-book.org/3ed-2018/Monte_Carlo_Integration.html) chapter 10 covers Monte Carlo Integration. [Chapter 7](http://www.pbr-book.org/3ed-2018/Sampling_and_Reconstruction.html) describes the theory and implementation behind a number of low discrepancy sequences.

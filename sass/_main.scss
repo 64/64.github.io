@@ -34,6 +34,11 @@ main {
       background: $secondary-colour;
     }
 
+    .katex {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
     a > code {
         color: $main-colour;
     }
