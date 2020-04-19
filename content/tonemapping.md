@@ -33,7 +33,7 @@ The rest of this guide will explore a few simple tone mapping operators, as well
 
 ## Reinhard
 
-This is one of the simplest and most common TMOs, described by Reinhard et al. in [this paper](https://www.cs.utah.edu/~reinhard/cdrom/tonemap.pdf). Simply put, it is:
+This is one of the simplest and most common TMOs, described by Reinhard et al. in [this paper](http://www.cmap.polytechnique.fr/~peyre/cours/x2005signal/hdr_photographic.pdf). Simply put, it is:
 
 {% katex(block=true) %} \mathrm{TMO_{reinhard}}(C) = \frac{C}{1 + C} {% end %}
 
@@ -330,7 +330,7 @@ This method is available as an option in [Indigo Renderer](https://www.indigoren
 
 So far, all the TMOs I've discussed have been *global tone mapping operators*. This means that the computation they do is only based on the input radiance value and global image parameters like the average luminance. Tone mapping operators which are a function of position are known as *local tone mapping operators*. These are generally far more expensive and hence unsuitable for real time graphics - yet widely used in digital photography. Local TMOs can also give strange results when applied to video.
 
-One local tone mapping operator is described in the [same paper by Reinhard et al.](https://www.cs.utah.edu/~reinhard/cdrom/tonemap.pdf) - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different exposure to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.
+One local tone mapping operator is described in the [same paper by Reinhard et al.](http://www.cmap.polytechnique.fr/~peyre/cours/x2005signal/hdr_photographic.pdf) - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different exposure to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.
 
 # Conclusion
 
