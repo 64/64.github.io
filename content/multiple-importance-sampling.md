@@ -89,7 +89,7 @@ Currently we've been sampling from 2 PDFs (let's call each of these a 'sampling 
 
 {% katex(block=true) %}
 \begin{aligned}
-\tag{5} \hat{I}_N = \sum_{j=1}^{K}\frac{1}{N}\sum_{i=1}^{N}w_j(X_{j,i})\frac{g(X_{j,i})h(X_{j,i})}{p_i(X_{j,i})} 
+\tag{5} \hat{I}_N = \sum_{j=1}^{K}\frac{1}{N}\sum_{i=1}^{N}w_j(X_{j,i})\frac{g(X_{j,i})h(X_{j,i})}{p_j(X_{j,i})} 
 \end{aligned}
 {% end %}
 
@@ -103,7 +103,7 @@ Let {% katex() %} n_j {% end %} the number of samples taken for sampling techniq
 
 {% katex(block=true) %}
 \begin{aligned}
-\tag{6} \hat{I}_N = \sum_{j=1}^{K}\frac{1}{n_j}\sum_{i=1}^{n_j}w_j(X_{j,i})\frac{g(X_{j,i})h(X_{j,i})}{p_i(X_{j,i})} 
+\tag{6} \hat{I}_N = \sum_{j=1}^{K}\frac{1}{n_j}\sum_{i=1}^{n_j}w_j(X_{j,i})\frac{g(X_{j,i})h(X_{j,i})}{p_j(X_{j,i})} 
 \end{aligned}
 {% end %}
 
@@ -127,7 +127,7 @@ When inserted into the MIS definition {% katex() %} (6) {% end %}, this gives:
 
 {% katex(block=true) %}
 \begin{aligned}
-\hat{I}_N &= \sum_{j=1}^{K}\frac{1}{n_j}\sum_{i=1}^{n_j}\left(\frac{n_jp_j(X_{j,i})}{\sum_{k=1}^{K} n_kp_k(X_{j,i})}\frac{g(X_{j,i})h(X_{j,i})}{p_i(X_{j,i})}\right) \\
+\hat{I}_N &= \sum_{j=1}^{K}\frac{1}{n_j}\sum_{i=1}^{n_j}\left(\frac{n_jp_j(X_{j,i})}{\sum_{k=1}^{K} n_kp_k(X_{j,i})}\frac{g(X_{j,i})h(X_{j,i})}{p_j(X_{j,i})}\right) \\
 \tag{7} &= \sum_{j=1}^{K}\sum_{i=1}^{n_j}\frac{g(X_{j,i})h(X_{j,i})}{\sum_{k=1}^{K} n_kp_k(X_{j,i})}
 \end{aligned}
 {% end %}
