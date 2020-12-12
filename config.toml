@@ -12,6 +12,15 @@ taxonomies = [
     {name = "tags", rss = true},
 ]
 
+# Configuration of the link checker.
+[link_checker]
+# Skip link checking for external URLs that start with these prefixes
+skip_prefixes = [
+    "https://doi.org",
+]
+
+
+
 [extra]
 katex_enable = true
 even_title = "Delta - Blog by 64"

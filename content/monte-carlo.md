@@ -227,7 +227,7 @@ where {% katex() %}d_k(n){% end %} is the {% katex() %} k {% end %}th digit of t
 
 Monte Carlo integration is a powerful tool for evaluating high-dimensional integrals. We have seen how its variance can be reduced significantly through importance sampling and through choosing a low discrepancy sequence, both of which result in lowering the amount of computational work we need to do to obtain a reasonable result.
 
-In [the next article](@/multiple-importance-sampling.md), I will talk about a technique called [Multiple Importance Sampling](https://en.wikipedia.org/wiki/Importance_sampling#Multiple_and_adaptive_importance_sampling) which allows us to combine samples from multiple different probability density functions that we think match the shape of the integrand, reducing variance without introducing bias.
+In [the next article](@/multiple-importance-sampling.md), I will talk about a technique called [Multiple Importance Sampling](https://64.github.io/multiple-importance-sampling/) which allows us to combine samples from multiple different probability density functions that we think match the shape of the integrand, reducing variance without introducing bias.
 
 ### Footnotes
 <a id="footnote-1" href="#footnote-ref-1">1</a>: For the rest of this post we assume that {% katex() %} f(x) {% end %} is non-negative, otherwise such a choice of PDF would not be possible. We also assume that the PDF is non-zero wherever {% katex() %} f {% end %} is non-zero, to avoid division by zero.
