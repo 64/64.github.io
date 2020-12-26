@@ -1,4 +1,4 @@
 <figure>
     <img src="{{ src }}" />
-    {% if caption %}<figcaption><i>{{ caption }}</i></figcaption>{% endif %}
+    {% if caption %}<figcaption><i>{{ caption }}</i> {% if credit %} Credit: <a href="{{ creditsrc }}">{{ credit }}</a>{% endif %}</figcaption>{% endif %}
 </figure>

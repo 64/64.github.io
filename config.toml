@@ -15,8 +15,10 @@ taxonomies = [
 # Configuration of the link checker.
 [link_checker]
 # Skip link checking for external URLs that start with these prefixes
+# TODO: I think these can be made to work, if we tweak the user-agent
 skip_prefixes = [
     "https://doi.org",
+    "https://twitter.com",
 ]
 
 
