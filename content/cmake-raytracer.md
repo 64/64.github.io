@@ -1,6 +1,6 @@
 +++
 title = "Ray Tracing in pure CMake"
-date = 2020-10-07
+date = 2020-12-27
 
 [taxonomies]
 categories = ["Graphics"]
@@ -10,7 +10,7 @@ Without further ado, I present: a basic whitted ray tracer, complete with multic
 
 <!-- more -->
 
-{{ figure(src="https://github.com/64/cmake-raytracer/raw/master/render.png", caption="512x512, rendered on a **insert CPU details** in **insert time details** using **insert number procs** cores") }}
+{{ figure(src="https://github.com/64/cmake-raytracer/raw/master/render.png") }}
 
 At this point, those familiar with CMake may have some questions, so keep reading to find out how it all works.
 
