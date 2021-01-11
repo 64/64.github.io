@@ -10,7 +10,7 @@ Without further ado, I present: a basic whitted ray tracer, complete with multic
 
 <!-- more -->
 
-{{ figure(src="https://github.com/64/cmake-raytracer/raw/master/render.png") }}
+{{ figure(src="https://github.com/64/cmake-raytracer/raw/master/render.png", caption="Rendered in 7m23s on a i5-10210U, 8 processes") }}
 
 At this point, those familiar with CMake may have some questions, so keep reading to find out how it all works.
 
@@ -158,18 +158,18 @@ For {% katex() %} N {% end %} processes, the basic plan is to divide up the imag
 
 One subtlety is that as we need all the sub-processes to run in parallel, we can't simply call `execute_process` {% katex() %} N {% end %} times, as it would run them sequentially. Luckily, we can specify multiple processes to run simultaneously in one command (I think this is intended to be used for long chains where one program is piped into the next), but in order to avoid hardcoding {% katex() %} N {% end %} we have to programmatically construct the call to `execute_process` with CMake's [`EVAL CODE`](https://cmake.org/cmake/help/git-stage/command/cmake_language.html) feature (thanks to [martty](https://github.com/martty/vuk) for this idea):
 ```cmake
-    message(STATUS "Launching ray tracer with ${num_procs} processes, ${image_width}x${image_height} image...")
+message(STATUS "Launching ray tracer with ${num_procs} processes, ${image_width}x${image_height} image...")
 
-    set(exec_command "execute_process(\n")
-    foreach(worker_index RANGE 1 ${num_procs})
-        set(exec_command "${exec_command}COMMAND cmake . -Wno-dev -Dworker_index=${worker_index} -Dimage_width=${image_width} -Dimage_height=${image_height} -Dnum_procs=${num_procs}\n")
-    endforeach()
-    set(exec_command "${exec_command} )")
+set(exec_command "execute_process(\n")
+foreach(worker_index RANGE 1 ${num_procs})
+    set(exec_command "${exec_command}COMMAND cmake . -Wno-dev -Dworker_index=${worker_index} -Dimage_width=${image_width} -Dimage_height=${image_height} -Dnum_procs=${num_procs}\n")
+endforeach()
+set(exec_command "${exec_command} )")
 
-    # Begin the worker processes
-    cmake_language(EVAL CODE ${exec_command})
+# Begin the worker processes
+cmake_language(EVAL CODE ${exec_command})
 
-    message(STATUS "Finished ray tracing, gathering results...")
+message(STATUS "Finished ray tracing, gathering results...")
 ```
 
 # Outputting an Image
@@ -177,14 +177,14 @@ One subtlety is that as we need all the sub-processes to run in parallel, we can
 As per [Ray Tracing in One Weekend](https://raytracing.github.io/), I use the [PPM image format](https://en.wikipedia.org/wiki/Netpbm#PPM_example). This is a really simple text-based format which is perfect for my purposes as I don't have to bother with compression. Once we're done rendering we simply read all the data that the workers have spat out, write the PPM header, and print everything to `stderr`:
 
 ```cmake
-    set(image_contents "P3 ${image_width} ${image_height}\n255\n\n")
+set(image_contents "P3 ${image_width} ${image_height}\n255\n\n")
 
-    foreach(worker_index RANGE 1 ${num_procs})
-        file(READ "worker-${worker_index}.txt" file_contents)
-        set(image_contents "${image_contents}${file_contents}")
-    endforeach()
+foreach(worker_index RANGE 1 ${num_procs})
+    file(READ "worker-${worker_index}.txt" file_contents)
+    set(image_contents "${image_contents}${file_contents}")
+endforeach()
 
-    message("${image_contents}")
+message("${image_contents}")
 ```
 
 The division of work among the worker processes is pretty sub-optimal as the rows towards the top of the image are mostly empty whereas the rows at the bottom are entirely full, which means that some processes finish very fast while others take much longer. Fixing this problem is left as an exercise to the reader.
