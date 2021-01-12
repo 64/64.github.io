@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140396812-1"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-140396812-1');
+	</script>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="/favicon-64x64.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#7908cf">
+	<meta name="msapplication-TileColor" content="#7908cf">
+	<meta name="theme-color" content="#7908cf">
+
+    
+        <!-- meta properties: https://ogp.me/ -->
+        <meta property="og:title" content="Tone Mapping">
+        <meta property="og:type" content="article">
+        <meta property="og:description" content="">
+        <meta property="og:image" content="/favicon-64x64.png">
+        <meta property="og:url" content="https://64.github.io/tonemapping">
+        <meta name="twitter:image" content="/favicon-64x64.png">
+    
+
+	<!-- Enable responsiveness on mobile devices-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+	<title>Tone Mapping | Delta</title>
+
+	
+
+	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+        
+	
+
+	
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;64.github.io&#x2F;site.css">
+		
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+		
+	
+
+	
+	
+	</head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="/" class="logo">Delta - Blog by 64</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;64.github.io">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories">
+                            Categories
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;github.com&#x2F;64">
+                            GitHub
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo"><a href="https:&#x2F;&#x2F;64.github.io">Delta - Blog by 64</a></div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                <a href="https:&#x2F;&#x2F;64.github.io">
+                                    Home
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories">
+                                    Categories
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="https:&#x2F;&#x2F;github.com&#x2F;64">
+                                    GitHub
+                                </a>
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#reinhard" class="toc-link">Reinhard</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#extended-reinhard" class="toc-link">Extended Reinhard</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#luminance-and-color-theory" class="toc-link">Luminance and Color Theory</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://64.github.io/tonemapping/#extended-reinhard-luminance-tone-map" class="toc-link">Extended Reinhard (Luminance Tone Map)</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://64.github.io/tonemapping/#reinhard-jodie" class="toc-link">Reinhard-Jodie</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#filmic-tone-mapping-operators" class="toc-link">Filmic Tone Mapping Operators</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://64.github.io/tonemapping/#uncharted-2" class="toc-link">Uncharted 2</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://64.github.io/tonemapping/#aces" class="toc-link">ACES</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#real-camera-response-functions" class="toc-link">Real Camera Response Functions</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#local-tone-mapping-operators" class="toc-link">Local Tone Mapping Operators</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/tonemapping/#conclusion" class="toc-link">Conclusion</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://64.github.io/tonemapping/#further-reading" class="toc-link">Further Reading</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://64.github.io/tonemapping/#appendix" class="toc-link">Appendix</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;64.github.io&#x2F;tonemapping&#x2F;">Tone Mapping</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">May 10, 2019</span>
+            <span class="post__readtime">
+                &bull; 17 minute read
+            </span>
+            
+                
+                    &bull;
+                    <span class="post__category">
+                            <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories&#x2F;graphics&#x2F;">Graphics</a>
+                    </span>
+                
+            
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+      <p>Most monitors are capable of displaying RGB values in the range of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>255</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0, 255]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">5</span><span class="mclose">]</span></span></span></span>. However, in real life, there is no limit on the amount of light 'energy' incident on a point. Most renderers output linear radiance values in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mi mathvariant="normal">∞</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[0, \infty)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∞</span><span class="mclose">)</span></span></span></span>, which needs to be mapped into a viewable range. Those radiance values are described as High Dynamic Range (HDR), because they are unlimited, and the viewable target range is described as Low Dynamic Range (LDR), because there is a fixed limit of 255. Put simply, tone mapping is the process of mapping HDR values in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mi mathvariant="normal">∞</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[0, \infty)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∞</span><span class="mclose">)</span></span></span></span> into LDR values (e.g values in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>255</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0, 255]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">5</span><span class="mclose">]</span></span></span></span> or <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.0, 1.0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">]</span></span></span></span>).</p>
+<span id="continue-reading"></span>
+<p>A <em>tone mapping operator</em> (TMO) is essentially just a function which maps an input color (e.g an RGB triple) to an output color:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub><mo>=</mo><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">M</mi><mi mathvariant="normal">O</mi></mrow><mo stretchy="false">(</mo><msub><mi>C</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">C_{\mathrm{out}} = \mathrm{TMO}(C_{\mathrm{in}})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">M</span><span class="mord mathrm">O</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>At this point you might be a little confused as to why you've never had to think about tone mapping inside your program. If you're using an API like OpenGL, your radiance values are probably just being clamped by the implementation to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.0, 1.0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">]</span></span></span></span> in the final framebuffer. This is essentially a trivial tone mapping operator:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">M</mi><msub><mi mathvariant="normal">O</mi><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi></mrow></msub></mrow><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi></mrow><mo stretchy="false">(</mo><mi>C</mi><mo separator="true">,</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathrm{TMO_{clamp}}(C) = \mathrm{clamp}(C, 0.0, 1.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">M</span><span class="mord"><span class="mord mathrm">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">c</span><span class="mord mathrm mtight">l</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">m</span><span class="mord mathrm mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">c</span><span class="mord mathrm">l</span><span class="mord mathrm">a</span><span class="mord mathrm">m</span><span class="mord mathrm">p</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span></span></p>
+<p>This TMO, as you might guess, is quite flawed. Here's what it looks like when we apply this TMO to the memorial scene (the HDR scene file can be downloaded <a href="https://www.cs.huji.ac.il/%7Edanix/hdr/hdrs/memorial.hdr">here</a>):</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;TcZcBYD&#x2F;out.png" />
+    <figcaption><i>Tone mapping with clamp</i> </figcaption>
+</figure>
+<p>High radiance values are being completely lost beyond a certain point. This results in the white areas (like the middle stained glass window) looking completely 'blown out'. For this particular scene it's not too bad because most of the radiance values are in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.0, 1.0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">]</span></span></span></span> already, but for a brighter outdoors scene it would look a lot worse. You could alleviate the issue somewhat by dividing the input color by some value before clamping: </p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">M</mi><msub><mi mathvariant="normal">O</mi><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi><mn>2</mn></mrow></msub></mrow><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi></mrow><mrow><mo fence="true">(</mo><mfrac><mi>C</mi><mi>k</mi></mfrac><mo separator="true">,</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathrm{TMO_{clamp2}}(C) = \mathrm{clamp}\left(\frac{C}{k}, 0.0, 1.0\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">M</span><span class="mord"><span class="mord mathrm">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">c</span><span class="mord mathrm mtight">l</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">m</span><span class="mord mathrm mtight">p</span><span class="mord mathrm mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="mord"><span class="mord mathrm">c</span><span class="mord mathrm">l</span><span class="mord mathrm">a</span><span class="mord mathrm">m</span><span class="mord mathrm">p</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span></span></span></p>
+<p>However, as it turns out, we don't really want a linear relationship between input and output color. Human color perception is very non-linear - the difference between 1 light source and 2 light sources illuminating a point appears much greater than the difference between 100 light sources and 101 light sources. Non-linear TMOs are potentially able to reproduce images which can convey more detail to our eyes. Floats actually work great for storing HDR values for this exact reason - they have higher precision nearer zero, and lower precision as their value increases towards infinity.</p>
+<p>The rest of this guide will explore a few simple tone mapping operators, as well as some underlying theory which should help you research the topic further.</p>
+<h2 id="reinhard">Reinhard<a class="zola-anchor" href="#reinhard" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>This is one of the simplest and most common TMOs, described by Reinhard et al. in <a href="http://www.cmap.polytechnique.fr/%7Epeyre/cours/x2005signal/hdr_photographic.pdf">this paper</a>. Simply put, it is:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">M</mi><msub><mi mathvariant="normal">O</mi><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">d</mi></mrow></msub></mrow><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mi>C</mi><mrow><mn>1</mn><mo>+</mo><mi>C</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathrm{TMO_{reinhard}}(C) = \frac{C}{1 + C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">M</span><span class="mord"><span class="mord mathrm">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">r</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span><span class="mord mathrm mtight">h</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">r</span><span class="mord mathrm mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.1296600000000003em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>(Note that this isn't exactly what Reinhard is proposing in his paper, but more on that further down.)</p>
+<p>This is mathematically guaranteed to produce a value in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.0, 1.0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">]</span></span></span></span>. By differentiating, you can see that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{\mathrm{out}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> has an inverse-square falloff (e.g a radiance value of 4 results in something which is only 1.2 times as bright as a radiance value of 2).</p>
+<p>In C++:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#dcdcdc;">vec3 reinhard(vec3 v)
+{
+    </span><span style="color:#569cd6;">return</span><span style="color:#dcdcdc;"> v / (</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ v);
+}
+</span></pre>
+<p>Compare this image to the previous 'clamp' TMO. Reinhard looks much more grey-ish, and the whites are less blown out (more detail is noticeable in the middle stained glass window).</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;S6JdvQz&#x2F;out.png" />
+    <figcaption><i>Reinhard tone mapping</i> </figcaption>
+</figure>
+<h2 id="extended-reinhard">Extended Reinhard<a class="zola-anchor" href="#extended-reinhard" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>The problem with the 'simple' Reinhard TMO is that it doesn't necessarily make good use of the full Low Dynamic Range. If our max scene radiance happened to be <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1.0, 1.0, 1.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span> then the resulting maximum brightness would only be <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0.5</mn><mo separator="true">,</mo><mn>0.5</mn><mo separator="true">,</mo><mn>0.5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0.5, 0.5, 0.5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mclose">)</span></span></span></span> - only half of the available range. Fortunately, the paper by Reinhard presents a way to scale and make use of the full range:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">M</mi><msub><mi mathvariant="normal">O</mi><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">x</mi><mi mathvariant="normal">t</mi></mrow></msub></mrow><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>C</mi><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><mfrac><mi>C</mi><msubsup><mi>C</mi><mrow><mi mathvariant="normal">w</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi></mrow><mn>2</mn></msubsup></mfrac><mo fence="true">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><mi>C</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathrm{TMO_{reinhardext}}(C) = \frac{C\left(1 + \frac{C}{C_{\mathrm{white}}^2}\right)}{1 + C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">M</span><span class="mord"><span class="mord mathrm">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">r</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span><span class="mord mathrm mtight">h</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">r</span><span class="mord mathrm mtight">d</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">x</span><span class="mord mathrm mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.95935em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.19002em;"><span style="top:-2.464em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span><span style="top:-3.38em;"><span class="pstrut" style="height:3.15em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-4.1900200000000005em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.62642em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8051142857142858em;"><span style="top:-2.1527714285714286em;margin-left:-0.07153em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.01389em;">w</span><span class="mord mathrm mtight">h</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">e</span></span></span></span></span><span style="top:-2.8448em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3472285714285714em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.6166399999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi mathvariant="normal">w</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{\mathrm{white}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.01389em;">w</span><span class="mord mathrm mtight">h</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">e</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the biggest radiance value in the scene. Now, our biggest radiance value will get mapped to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1.0, 1.0, 1.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span>, using the full LDR.</p>
+<p>(Note that you can also just set <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi mathvariant="normal">w</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_\mathrm{white}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.01389em;">w</span><span class="mord mathrm mtight">h</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> to a value lower than the maximum radiance, which will ensure that anything higher gets mapped to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1.0, 1.0, 1.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span> - for this reason it is sometimes referred to as the 'white point'.)</p>
+<p>In C++:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#dcdcdc;">vec3 reinhard_extended(vec3 v, </span><span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">max_white)
+{
+    vec3 numerator = v </span><span style="color:#569cd6;">* </span><span style="color:#dcdcdc;">(</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ (v / vec3(max_white </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> max_white)));
+    </span><span style="color:#569cd6;">return</span><span style="color:#dcdcdc;"> numerator / (</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ v);
+}
+</span></pre>
+<p>If we just set our max scene radiance as the white point, this TMO appears almost exactly the same as the simple reinhard operator. That's because the max radiance for this scene is 622, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>622</mn><mrow><mn>1</mn><mo>+</mo><mn>622</mn></mrow></mfrac><mo>≈</mo><mn>0.998</mn></mrow><annotation encoding="application/x-tex">\frac{622}{1+622} \approx 0.998</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2484389999999999em;vertical-align:-0.403331em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight">6</span><span class="mord mtight">2</span><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">2</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">9</span><span class="mord">9</span><span class="mord">8</span></span></span></span>, so the difference between the extended and the simple variants in this case is imperceptible - simple reinhard was already making full use of the low dynamic range. If we used a different white point, the TMO would look noticeably different.</p>
+<h1 id="luminance-and-color-theory">Luminance and Color Theory<a class="zola-anchor" href="#luminance-and-color-theory" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
+<p>Okay, so I must admit that I've lied to you slightly. Reinhard's formulas actually operate on a thing called <em>luminance</em> rather than operating on RGB-triples as I implied. Luminance is a single scalar value which measures how bright we view something. It may not be obvious, but for example we perceive green as much brighter than blue. In other words, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0.0</mn><mo separator="true">,</mo><mn>0.7</mn><mo separator="true">,</mo><mn>0.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0.0, 0.7, 0.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span> appears much brighter than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0.0</mn><mo separator="true">,</mo><mn>0.0</mn><mo separator="true">,</mo><mn>0.7</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0.0, 0.0, 0.7)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mclose">)</span></span></span></span>.</p>
+<p>Converting a linear RGB triple to a luminance value is easy:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mn>0.2126</mn><mi>R</mi><mo>+</mo><mn>0.7152</mn><mi>G</mi><mo>+</mo><mn>0.0722</mn><mi>B</mi></mrow><annotation encoding="application/x-tex">L = 0.2126R + 0.7152G + 0.0722B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span class="mord">1</span><span class="mord">2</span><span class="mord">6</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord">1</span><span class="mord">5</span><span class="mord">2</span><span class="mord mathdefault">G</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">7</span><span class="mord">2</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span></span></p>
+<p>So far we've effectively been applying our TMOs to each RGB channel individually. However this can cause a 'shift' in hue or saturation which can significantly change the color appearance.</p>
+<p>Instead, what Reinhard's formula entails is to convert our linear RGB radiance to luminance, apply tone mapping the luminance, then somehow scale our RGB value by the new luminance. The simplest way of doing that final scaling is:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub><mo>=</mo><msub><mi>C</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub><mfrac><msub><mi>L</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub></mfrac></mrow><annotation encoding="application/x-tex">C_{\mathrm{out}} =  C_{\mathrm{in}} \frac{L_{\mathrm{out}}}{L_{\mathrm{in}}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.19633em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>In C++:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">luminance(vec3 v)
+{
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">dot(v, vec3(</span><span style="color:#b5cea8;">0.2126f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.7152f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.0722f</span><span style="color:#dcdcdc;">));
+}
+
+vec3 change_luminance(vec3 c_in, </span><span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">l_out)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> l_in = luminance(c_in);
+    </span><span style="color:#569cd6;">return</span><span style="color:#dcdcdc;"> c_in </span><span style="color:#569cd6;">* </span><span style="color:#dcdcdc;">(l_out / l_in);
+}
+</span></pre>
+<p>Two other more complex luminance-adjusting methods are discussed in <a href="https://www.cl.cam.ac.uk/%7Erkm38/pdfs/mantiuk09cctm.pdf">a paper</a> by Mantiuk et al., but the simple method is perfectly acceptable.</p>
+<p>Don't confuse <em>luminance</em> with <em>luma</em> - luma is the equivalent of the luminance computed from an sRGB pixel (i.e gamma-corrected). The coefficients used to convert to luma are the same as luminance, they just operate on sRGB components instead. See <a href="https://en.wikipedia.org/wiki/Luma_(video)">Wikipedia</a> for more details.</p>
+<p>Note that the hue / saturation preservation which results from this method isn't always desirable. Reinhard tone mapping in particular was created with the intention of being applied to luminance only, so it looks much better when this is done (see the following section for details on that). Other tone mapping curves look better when applied to RGB components separately.</p>
+<blockquote>
+<p>Reinhard was on the wrong track in applying his tone mapping curve to luminance; his curve was inspired by film, but film curves are applied to each color channel separately. And that is a good thing - [...] the &quot;hue and saturation shifts&quot; (really mostly saturation shifts) resulting from applying nonlinear curves per channel are an important feature, not a bug.</p>
+<p>-- <a href="https://imdoingitwrong.wordpress.com/2010/08/19/why-reinhard-desaturates-my-blacks-3/#comment-3">Naty Hoffman, co-author of Real Time Rendering</a></p>
+</blockquote>
+<h2 id="extended-reinhard-luminance-tone-map">Extended Reinhard (Luminance Tone Map)<a class="zola-anchor" href="#extended-reinhard-luminance-tone-map" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>Let's apply the extended Reinhard TMO to luminance only:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#dcdcdc;">vec3 reinhard_extended_luminance(vec3 v, </span><span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">max_white_l)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> l_old = luminance(v);
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> numerator = l_old </span><span style="color:#569cd6;">* </span><span style="color:#dcdcdc;">(</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ (l_old / (max_white_l </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> max_white_l)));
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> l_new = numerator / (</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ l_old);
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">change_luminance(v, l_new);
+}
+</span></pre>
+<p>Here's the difference it makes - the stained glass windows and the column on the left are noticeably more orange and less 'washed out' in the luminance mapped version:</p>
+<!-- ![Reinhard applied to RGB channels](https://i.ibb.co/S6JdvQz/out.png) ![Reinhard applied to luminance](https://i.ibb.co/vmbB9QV/out.png) -->
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;S6JdvQz&#x2F;out.png" />
+    <figcaption><i>Reinhard applied to RGB channels</i> </figcaption>
+</figure>
+    </div>
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;vmbB9QV&#x2F;out.png" />
+    <figcaption><i>Reinhard applied to luminance</i> </figcaption>
+</figure>
+    </div>
+</div>
+<p>Note that in fact with Reinhard, the luminance calculation can be simplified somewhat:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.24999999999999992em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mi>L</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub><mrow><mn>1.0</mn><mo>+</mo><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub></mrow></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mfrac><msub><mi>L</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub></mfrac></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><mn>1.0</mn><mrow><mn>1.0</mn><mo>+</mo><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub></mrow></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+L_\mathrm{out} &amp;= \frac{L_\mathrm{in}}{1.0 + L_\mathrm{in}} \
+\implies \frac{L_\mathrm{out}}{L_\mathrm{in}} &amp;= \frac{1.0}{1.0 + L_\mathrm{in}}
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.992660000000001em;vertical-align:-2.2463300000000004em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7463300000000004em;"><span style="top:-4.74633em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.2463300000000004em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7463300000000004em;"><span style="top:-4.74633em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.2463300000000004em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>Hence</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.24999999999999992em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">M</mi><msub><mi mathvariant="normal">O</mi><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">x</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi></mrow></msub></mrow><mo stretchy="false">(</mo><msub><mi>C</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><msub><mi>C</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub><mfrac><msub><mi>L</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">t</mi></mrow></msub><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><msub><mi>C</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub><mrow><mn>1.0</mn><mo>+</mo><msub><mi>L</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi></mrow></msub></mrow></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\mathrm{TMO_{reinhardextlum}}(C_\mathrm{in}) &amp;= C_\mathrm{in} \frac{L_\mathrm{out}}{L_\mathrm{in}} \
+&amp;= \frac{C_\mathrm{in}}{1.0 + L_\mathrm{in}}
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.992660000000001em;vertical-align:-2.2463300000000004em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7463300000000004em;"><span style="top:-4.74633em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">M</span><span class="mord"><span class="mord mathrm">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">r</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span><span class="mord mathrm mtight">h</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">r</span><span class="mord mathrm mtight">d</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">x</span><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">l</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.2463300000000004em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7463300000000004em;"><span style="top:-4.74633em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">o</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.3603300000000003em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.2463300000000004em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<h2 id="reinhard-jodie">Reinhard-Jodie<a class="zola-anchor" href="#reinhard-jodie" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>You aren't necessarily forced to choose between tone mapping RGB individually and tone mapping luminance. Here's one such Reinhard variant by shadertoy user <a href="https://www.shadertoy.com/user/Jodie">Jodie</a> which does that:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#dcdcdc;">vec3 reinhard_jodie(vec3 v)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> l = luminance(v);
+    vec3 tv = v / (</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ v);
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">lerp(v / (</span><span style="color:#b5cea8;">1.0f </span><span style="color:#dcdcdc;">+ l), tv, tv);
+}
+</span></pre>
+<p>The difference between this and the luminance-only tone map is barely noticeable in this scene (you can see that the stain glass windows are slightly less orange), but in other scenes (especially those with colored lights) the difference is more obvious. Note that there's also no way to set the white point with this TMO, but you could add a way yourself.</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;ofIO1KR.png" />
+    <figcaption><i>Reinhard-Jodie tone mapping</i> </figcaption>
+</figure>
+<h1 id="filmic-tone-mapping-operators">Filmic Tone Mapping Operators<a class="zola-anchor" href="#filmic-tone-mapping-operators" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
+<p>So-called 'filmic' TMOs are designed to emulate real film. Other than that, their defining feature is the distinctive 'toe' at the bottom end of the curve (radiance is on the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>-axis, final pixel brightness is on the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>-axis):</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;apsY7L0.png" />
+</figure>
+<p>Note that the other end of the tone mapping curve is usually described as the 'shoulder'.</p>
+<h2 id="uncharted-2">Uncharted 2<a class="zola-anchor" href="#uncharted-2" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>A popular TMO for real-time graphics is the Uncharted 2 TMO devised by John Hable (sometimes known as 'Hable Tone Mapping' or 'Hable Filmic' etc). It has some parameters which can be tweaked, but the basic operator is given by the following code:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#dcdcdc;">vec3 uncharted2_tonemap_partial(vec3 x)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> A = </span><span style="color:#b5cea8;">0.15f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> B = </span><span style="color:#b5cea8;">0.50f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> C = </span><span style="color:#b5cea8;">0.10f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> D = </span><span style="color:#b5cea8;">0.20f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> E = </span><span style="color:#b5cea8;">0.02f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> F = </span><span style="color:#b5cea8;">0.30f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">((x</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">(A</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">x+C</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">B)+D</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">E)/(x</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">(A</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">x+B)+D</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">F))-E/F;
+}
+
+vec3 uncharted2_filmic(vec3 v)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> exposure_bias = </span><span style="color:#b5cea8;">2.0f</span><span style="color:#dcdcdc;">;
+    vec3 curr = uncharted2_tonemap_partial(v </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> exposure_bias);
+
+    vec3 W = vec3(</span><span style="color:#b5cea8;">11.2f</span><span style="color:#dcdcdc;">);
+    vec3 white_scale = vec3(</span><span style="color:#b5cea8;">1.0f</span><span style="color:#dcdcdc;">) / uncharted2_tonemap_partial(W);
+    </span><span style="color:#569cd6;">return</span><span style="color:#dcdcdc;"> curr </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> white_scale;
+}
+</span></pre><figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;MnFDk8n&#x2F;out.png" />
+    <figcaption><i>Uncharted 2 tone mapping</i> </figcaption>
+</figure>
+<p>For some further reading, see <a href="http://filmicworlds.com/blog/filmic-tonemapping-with-piecewise-power-curves/">John Hable's blog post</a> about creating an improved curve which offers more intuitive controls.</p>
+<h2 id="aces">ACES<a class="zola-anchor" href="#aces" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>Another popular filmic tone mapping curve is ACES (Academy Color Encoding System). This is the default TMO used by Unreal Engine 4 so would be a perfectly good choice to use in your own real-time engine. The TMO curve is calculated through a couple of matrix transformations and formulae adapted from <a href="https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl">Stephen Hill's</a> fit, shown below:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#569cd6;">static const</span><span style="color:#dcdcdc;"> std::array&lt;vec3, </span><span style="color:#b5cea8;">3</span><span style="color:#dcdcdc;">&gt; aces_input_matrix =
+{
+    vec3(</span><span style="color:#b5cea8;">0.59719f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.35458f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.04823f</span><span style="color:#dcdcdc;">),
+    vec3(</span><span style="color:#b5cea8;">0.07600f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.90834f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.01566f</span><span style="color:#dcdcdc;">),
+    vec3(</span><span style="color:#b5cea8;">0.02840f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.13383f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">0.83777f</span><span style="color:#dcdcdc;">)
+};
+
+</span><span style="color:#569cd6;">static const</span><span style="color:#dcdcdc;"> std::array&lt;vec3, </span><span style="color:#b5cea8;">3</span><span style="color:#dcdcdc;">&gt; aces_output_matrix =
+{
+    vec3( </span><span style="color:#b5cea8;">1.60475f</span><span style="color:#dcdcdc;">, -</span><span style="color:#b5cea8;">0.53108f</span><span style="color:#dcdcdc;">, -</span><span style="color:#b5cea8;">0.07367f</span><span style="color:#dcdcdc;">),
+    vec3(-</span><span style="color:#b5cea8;">0.10208f</span><span style="color:#dcdcdc;">,  </span><span style="color:#b5cea8;">1.10813f</span><span style="color:#dcdcdc;">, -</span><span style="color:#b5cea8;">0.00605f</span><span style="color:#dcdcdc;">),
+    vec3(-</span><span style="color:#b5cea8;">0.00327f</span><span style="color:#dcdcdc;">, -</span><span style="color:#b5cea8;">0.07276f</span><span style="color:#dcdcdc;">,  </span><span style="color:#b5cea8;">1.07602f</span><span style="color:#dcdcdc;">)
+};
+
+vec3 mul(</span><span style="color:#569cd6;">const</span><span style="color:#dcdcdc;"> std::array&lt;vec3, </span><span style="color:#b5cea8;">3</span><span style="color:#dcdcdc;">&gt;</span><span style="color:#569cd6;">&amp; </span><span style="color:#dcdcdc;">m, </span><span style="color:#569cd6;">const</span><span style="color:#dcdcdc;"> vec3</span><span style="color:#569cd6;">&amp; </span><span style="color:#dcdcdc;">v)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> x = m[</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">] + m[</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] + m[</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">];
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> y = m[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] + m[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] + m[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">];
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> z = m[</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] + m[</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">] + m[</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">][</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v[</span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">];
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">vec3(x, y, z);
+}
+
+vec3 rtt_and_odt_fit(vec3 v)
+{
+    vec3 a = v </span><span style="color:#569cd6;">* </span><span style="color:#dcdcdc;">(v + </span><span style="color:#b5cea8;">0.0245786f</span><span style="color:#dcdcdc;">) - </span><span style="color:#b5cea8;">0.000090537f</span><span style="color:#dcdcdc;">;
+    vec3 b = v </span><span style="color:#569cd6;">* </span><span style="color:#dcdcdc;">(</span><span style="color:#b5cea8;">0.983729f </span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;"> v + </span><span style="color:#b5cea8;">0.4329510f</span><span style="color:#dcdcdc;">) + </span><span style="color:#b5cea8;">0.238081f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">return</span><span style="color:#dcdcdc;"> a / b;
+}
+
+vec3 aces_fitted(vec3 v)
+{
+    v = mul(aces_input_matrix, v);
+    v = rtt_and_odt_fit(v);
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">mul(aces_output_matrix, v);
+}
+</span></pre><figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;YZ0eNGw.png" />
+    <figcaption><i>ACES tone mapping</i> </figcaption>
+</figure>
+<p>You can also use this approximated ACES fit by <a href="https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/">Krzysztof Narkowicz</a> for something a bit more performant. Note that this approximation oversaturates bright colors slightly compared to the better fit (you can see that in the middle stained glass window).</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#dcdcdc;">vec3 aces_approx(vec3 v)
+{
+    v *= </span><span style="color:#b5cea8;">0.6f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> a = </span><span style="color:#b5cea8;">2.51f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> b = </span><span style="color:#b5cea8;">0.03f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> c = </span><span style="color:#b5cea8;">2.43f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> d = </span><span style="color:#b5cea8;">0.59f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> e = </span><span style="color:#b5cea8;">0.14f</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">clamp((v</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">(a</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">v+b))/(v</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">(c</span><span style="color:#569cd6;">*</span><span style="color:#dcdcdc;">v+d)+e), </span><span style="color:#b5cea8;">0.0f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">1.0f</span><span style="color:#dcdcdc;">);
+}
+</span></pre><figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;Ck14lqL.png" />
+    <figcaption><i>ACES tone mapping (worse fit)</i> </figcaption>
+</figure>
+<h1 id="real-camera-response-functions">Real Camera Response Functions<a class="zola-anchor" href="#real-camera-response-functions" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
+<p>Sometimes it might be desireable to exactly reproduce the 'tone mapping' response of a real camera. Fortunately, the University of Columbia has released a <a href="http://web.archive.org/web/20191226154550/http://cs.columbia.edu/CAVE/software/softlib/dorf.php">database of camera response functions</a> which we can use for this purpose. Each camera response curve has two axes: irradiance (essentially the energy coming into the camera) and intensity (essentially the value of color component at that point on the film).</p>
+<p>Since irradiance is the input and intensity is the output, you can visualise irradiance and intensity on the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> axes respectively. The data given to us has the points on both axes normalized into the range <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.0, 1.0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">]</span></span></span></span>. For intensity, this is exactly what we want, as we can just scale the output by 256 to get the corresponding 8-bit color component. For irradiance, we will need to decide the 'width' of the curve. Since the point with the largest <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> value is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1.0, 1.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span>, if we stretch this curve horizontally by a factor of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> then the new furthest point will be <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a, 1.0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">)</span></span></span></span>. We can map any irradiance value greater than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.0</mn></mrow><annotation encoding="application/x-tex">1.0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span></span></span></span> and hence we can effectively control the white point by stretching or squashing the irradiance axis. Instead of 'white point', we'll call this parameter 'ISO' which mimics the function of the ISO setting on a real-world camera.</p>
+<p>The data is given as two associative arrays. Given a irradiance value in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.0</mn><mo separator="true">,</mo><mn>1.0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.0, 1.0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">0</span><span class="mclose">]</span></span></span></span> we need to find the index into the irradiance array (ideally using a binary search). Then, we can compute the output value by using the index we got from that binary search to look up the intensity value from the intensity array. We'll repeat this procedure for each RGB channel individually to compute the final color.</p>
+<p>For real-time graphics you might want to find a way to bake a LUT instead of doing a relatively expensive binary search.</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">camera_get_intensity(</span><span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">f, </span><span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">iso)
+{
+    f = clamp(f, </span><span style="color:#b5cea8;">0.0f</span><span style="color:#dcdcdc;">, iso); </span><span style="color:#608b4e;">// Clamp to [0.0, iso]
+</span><span style="color:#dcdcdc;">    f /= iso; </span><span style="color:#608b4e;">// Convert to [0.0, 1.0]
+
+    // Returns 1.0 if the index is out-of-bounds
+    </span><span style="color:#569cd6;">auto</span><span style="color:#dcdcdc;"> get_or_one = [](</span><span style="color:#569cd6;">const auto&amp;</span><span style="color:#dcdcdc;"> arr, size_t index)
+    {
+        </span><span style="color:#569cd6;">return</span><span style="color:#dcdcdc;"> index &lt; arr.size() </span><span style="color:#569cd6;">?</span><span style="color:#dcdcdc;"> arr[index] </span><span style="color:#569cd6;">: </span><span style="color:#b5cea8;">1.0</span><span style="color:#dcdcdc;">;
+    };
+
+    </span><span style="color:#608b4e;">// std::upper_bound uses a binary search to find the position of f in camera_irradiance
+    </span><span style="color:#569cd6;">auto</span><span style="color:#dcdcdc;"> upper = std::upper_bound(camera_irradiance.begin(), camera_irradiance.end(), f);
+    size_t idx = std::distance(camera_irradiance.begin(), upper);
+
+    </span><span style="color:#569cd6;">double</span><span style="color:#dcdcdc;"> low_irradiance = camera_irradiance[idx];
+    </span><span style="color:#569cd6;">double</span><span style="color:#dcdcdc;"> high_irradiance = get_or_one(camera_irradiance, idx + </span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">);
+    </span><span style="color:#569cd6;">double</span><span style="color:#dcdcdc;"> lerp_param = (f - low_irradiance) / (high_irradiance - low_irradiance);
+
+    </span><span style="color:#569cd6;">double</span><span style="color:#dcdcdc;"> low_val = camera_intensity[idx];
+    </span><span style="color:#569cd6;">double</span><span style="color:#dcdcdc;"> high_val = get_or_one(camera_intensity, idx + </span><span style="color:#b5cea8;">1</span><span style="color:#dcdcdc;">);
+
+    </span><span style="color:#608b4e;">// Lerping isn&#39;t really necessary for RGB8 (as the curve is sampled with 1024 points)
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">clamp(lerp((</span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;">)low_val, (</span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;">)high_val, (</span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;">)lerp_param), </span><span style="color:#b5cea8;">0.0f</span><span style="color:#dcdcdc;">, </span><span style="color:#b5cea8;">1.0f</span><span style="color:#dcdcdc;">);
+}
+
+vec3 camera_tonemap(vec3 v, </span><span style="color:#569cd6;">float </span><span style="color:#dcdcdc;">iso)
+{
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> r = camera_get_intensity(v.r(), iso);
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> g = camera_get_intensity(v.g(), iso);
+    </span><span style="color:#569cd6;">float</span><span style="color:#dcdcdc;"> b = camera_get_intensity(v.b(), iso);
+    </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">vec3(r, g, b);
+}
+</span></pre><figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;K78Xff4&#x2F;out.png" />
+    <figcaption><i>DSCS315-R1 response curve, ISO = 6.0</i> </figcaption>
+</figure>
+<p>This method is available as an option in <a href="https://www.indigorenderer.com/documentation/manual/rendering-with-indigo/camera/tone-mapping">Indigo Renderer</a>, for the curious.</p>
+<h1 id="local-tone-mapping-operators">Local Tone Mapping Operators<a class="zola-anchor" href="#local-tone-mapping-operators" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
+<p>So far, all the TMOs I've discussed have been <em>global tone mapping operators</em>. This means that the computation they do is only based on the input radiance value and global image parameters like the average luminance. Tone mapping operators which are a function of position are known as <em>local tone mapping operators</em>. These are generally far more expensive and hence unsuitable for real time graphics - yet widely used in digital photography. Local TMOs can also give strange results when applied to video.</p>
+<p>One local tone mapping operator is described in the <a href="http://www.cmap.polytechnique.fr/%7Epeyre/cours/x2005signal/hdr_photographic.pdf">same paper by Reinhard et al.</a> - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different exposure to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.</p>
+<h1 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
+<p>Hopefully this guide was instructive. I've placed a grid of all TMOs used here for comparison, <strong>but keep in mind that these can be adjusted in certain ways through exposure or other parameters, so this isn't entirely a fair comparison</strong>. </p>
+<!-- ![Reinhard extended (white point set to max radiance component)](https://i.ibb.co/rQy8dq9/out.png) -->
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;TcZcBYD&#x2F;out.png" />
+    <figcaption><i>Clamp</i> </figcaption>
+</figure>
+    </div>
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;S6JdvQz&#x2F;out.png" />
+    <figcaption><i>Reinhard simple</i> </figcaption>
+</figure>
+    </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;vmbB9QV&#x2F;out.png" />
+    <figcaption><i>Reinhard luminance (white point = max luminance)</i> </figcaption>
+</figure>
+    </div>
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;ofIO1KR.png" />
+    <figcaption><i>Reinhard-Jodie</i> </figcaption>
+</figure>
+    </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;MnFDk8n&#x2F;out.png" />
+    <figcaption><i>Uncharted 2</i> </figcaption>
+</figure>
+    </div>
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;YZ0eNGw.png" />
+    <figcaption><i>ACES</i> </figcaption>
+</figure>
+    </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.imgur.com&#x2F;Ck14lqL.png" />
+    <figcaption><i>ACES (worse fit)</i> </figcaption>
+</figure>
+    </div>
+    <div class="image-grid-col">
+        <figure>
+    <img src="https:&#x2F;&#x2F;i.ibb.co&#x2F;K78Xff4&#x2F;out.png" />
+    <figcaption><i>DSCS315-R1 (ISO = 6.0)</i> </figcaption>
+</figure>
+    </div>
+</div>
+<h2 id="further-reading">Further Reading<a class="zola-anchor" href="#further-reading" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<ul>
+<li><a href="https://www.cl.cam.ac.uk/%7Erkm38/pdfs/mantiuk15hdri.pdf"><em>High Dynamic Range Imaging Book</em></a>, R. Mantiuk et al.</li>
+<li><a href="http://filmicworlds.com/blog/"><em>Filmic Worlds Blog</em></a> - John Hable</li>
+<li><a href="https://www.cl.cam.ac.uk/%7Erkm38/pdfs/tone_mapping.pdf"><em>Tone Mapping (slides)</em></a> - R. Mantiuk</li>
+<li><a href="http://seenaburns.com/dynamic-range/"><em>Dynamic Range, Exposure and Tone Mapping</em></a> - Seena Burns</li>
+</ul>
+<h2 id="appendix">Appendix<a class="zola-anchor" href="#appendix" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>The full source code for this post can be found <a href="https://github.com/64/64.github.io/blob/src/code/tonemapping">on my GitHub</a>. For the <code>vec3</code> class, I'm using a <a href="https://github.com/64/64.github.io/blob/src/code/tonemapping/vec3.h">slightly modified version</a> of the one found in Shirley's '<a href="http://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf">Ray Tracing in One Weekend</a>' book.</p>
+<p><em>This guide was initially created by me for the <a href="https://graphicsprogramming.github.io/resources/">Graphics Programming Discord Resources</a></em>.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            
+            
+                <div class="post-nav">
+                    
+                    
+                        <a class="next" href="https:&#x2F;&#x2F;64.github.io&#x2F;actix&#x2F;">Why we need alternatives to Actix ›</a>
+                    
+                    
+                    
+                </div>
+            
+
+        
+
+    </div>
+
+    
+        
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://64.github.io/tonemapping/";
+                    this.page.identifier = "tonemapping";
+                };
+            </script>
+            <div id="disqus_thread"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();</script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          
+          <script type="text/javascript" src="https:&#x2F;&#x2F;64.github.io&#x2F;even.js" ></script>
+      
+    </body>
+
+</html>

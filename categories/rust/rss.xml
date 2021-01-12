@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Delta</title>
+        <link>https://64.github.io</link>
+        <description></description>
+        <generator>Zola</generator>
+        <language>en</language>
+        <atom:link href="https://64.github.io/categories/rust/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Tue, 16 Jul 2019 00:00:00 +0000</lastBuildDate>
+        
+            <item>
+                <title>Why we need alternatives to Actix</title>
+                <pubDate>Tue, 16 Jul 2019 00:00:00 +0000</pubDate>
+                <link>https://64.github.io/actix/</link>
+                <guid>https://64.github.io/actix/</guid>
+                <description>&lt;p&gt;Don&#x27;t get me wrong - I actually really like &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;actix&#x2F;actix-web&quot;&gt;&lt;code&gt;actix-web&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;. It&#x27;s got a simple and innovative API, a reasonably sized ecosystem of crates and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;actix&#x2F;examples&quot;&gt;examples&lt;&#x2F;a&gt; (at least compared to other Rust web frameworks), &lt;a href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;rust&#x2F;comments&#x2F;cdg5b4&#x2F;rust_in_the_on_of_the_biggest_music_festival&#x2F;&quot;&gt;real world usage&lt;&#x2F;a&gt; - and notably - it&#x27;s fast. &lt;a href=&quot;https:&#x2F;&#x2F;www.techempower.com&#x2F;benchmarks&#x2F;&quot;&gt;Very fast&lt;&#x2F;a&gt;. Despite these things, I&#x27;m going to try and spell out why I don&#x27;t think it can be &lt;em&gt;the&lt;&#x2F;em&gt; framework of choice for the Rust community moving forward.&lt;&#x2F;p&gt;
+</description>
+            </item>
+        
+    </channel>
+</rss>

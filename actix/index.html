@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140396812-1"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-140396812-1');
+	</script>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="/favicon-64x64.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#7908cf">
+	<meta name="msapplication-TileColor" content="#7908cf">
+	<meta name="theme-color" content="#7908cf">
+
+    
+        <!-- meta properties: https://ogp.me/ -->
+        <meta property="og:title" content="Why we need alternatives to Actix">
+        <meta property="og:type" content="article">
+        <meta property="og:description" content="">
+        <meta property="og:image" content="/favicon-64x64.png">
+        <meta property="og:url" content="https://64.github.io/actix">
+        <meta name="twitter:image" content="/favicon-64x64.png">
+    
+
+	<!-- Enable responsiveness on mobile devices-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+	<title>Why we need alternatives to Actix | Delta</title>
+
+	
+
+	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+        
+	
+
+	
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;64.github.io&#x2F;site.css">
+		
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+		
+	
+
+	
+	
+	</head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="/" class="logo">Delta - Blog by 64</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;64.github.io">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories">
+                            Categories
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;github.com&#x2F;64">
+                            GitHub
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo"><a href="https:&#x2F;&#x2F;64.github.io">Delta - Blog by 64</a></div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                <a href="https:&#x2F;&#x2F;64.github.io">
+                                    Home
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories">
+                                    Categories
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="https:&#x2F;&#x2F;github.com&#x2F;64">
+                                    GitHub
+                                </a>
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://64.github.io/actix/#belly-of-the-beast" class="toc-link">Belly of the Beast</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/actix/#flying-solo" class="toc-link">Flying Solo</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/actix/#blazingly-fast-or-not" class="toc-link">Blazingly fast... or not?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/actix/#anything-else-while-we-re-at-it" class="toc-link">Anything else, while we&#x27;re at it?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/actix/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://64.github.io/actix/#what-are-the-alternatives" class="toc-link">What are the alternatives?</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;64.github.io&#x2F;actix&#x2F;">Why we need alternatives to Actix</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">Jul 16, 2019</span>
+            <span class="post__readtime">
+                &bull; 13 minute read
+            </span>
+            
+                
+                    &bull;
+                    <span class="post__category">
+                            <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories&#x2F;rust&#x2F;">Rust</a>
+                    </span>
+                
+            
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+      <p>Don't get me wrong - I actually really like <a href="https://github.com/actix/actix-web"><code>actix-web</code></a>. It's got a simple and innovative API, a reasonably sized ecosystem of crates and <a href="https://github.com/actix/examples">examples</a> (at least compared to other Rust web frameworks), <a href="https://www.reddit.com/r/rust/comments/cdg5b4/rust_in_the_on_of_the_biggest_music_festival/">real world usage</a> - and notably - it's fast. <a href="https://www.techempower.com/benchmarks/">Very fast</a>. Despite these things, I'm going to try and spell out why I don't think it can be <em>the</em> framework of choice for the Rust community moving forward.</p>
+<span id="continue-reading"></span>
+<hr />
+<p>UPDATE 1: Replaced some bits from the benchmarks section.</p>
+<p>UPDATE 2 [2019-08-01]: Wow, this <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/">blew up</a> a lot more than I expected. A lot of things have been said (mostly <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/">on reddit</a>), so I'm going to take a moment to respond and clarify, in a sort of Q&amp;A format:</p>
+<p><strong>Q:</strong> There is no need to be a dick. Why the mocking tone?<sup><a href="https://twitter.com/mgattozzi/status/1151982658173513728">1</a>, <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlwtr/">2</a>, <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/eu13bog/">3</a></sup><br />
+<strong>A:</strong> This is certainly my biggest regret of the whole situation. It was absolutely not my intention to be mocking or insulting, but on the other hand I can totally see how this post may come across as such. In particular, the <a href="https://64.github.io/actix/#Flying_Solo">Flying Solo</a> section had a poor tone, and hence I have removed it. For what it's worth, the point of this section was <strong>not</strong> to randomly mock the framework or maintainer, but was to demonstrate the barriers that new contributors face, which is a bad thing for the longevity of any software project.</p>
+<p><strong>Q:</strong> Criticising code is one thing, but why the personal angle? That clearly crosses a line.<sup><a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/eu3bkgq/">1</a>, <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxqj6n/">2</a></sup><br />
+<strong>A:</strong> I think <a href="https://github.com/BurntSushi">BurntSushi</a> answered this in a much better way than I could:</p>
+<blockquote>
+<p>Yes, I agree the situation is unfortunate. It's no fun being at the bad end of a mob. I think most people are being pretty polite relative to how the rest of the Internet behaves, but this is a thorny issue. I've said in the past (outside the context of actix) that the people behind a project are fair game for evaluating whether to bring in a dependency or not. There's trust, reputation and good judgment that are hard to quantify, but are nevertheless important qualitative metrics. You hear the positive side of this a lot, e.g., &quot;burntsushi's crates are always good.&quot; But the negative side is... ugly, because it's really hard to straddle that line between being rude/unfair and lodging legitimate concerns with one's qualitative confidence in a maintainer. And then when you throw in the fact that this is a volunteer effort... It's tough. And unfortunately, that's exactly what's happening here.
+-- <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/ety4hkz/">/u/BurntSushi on reddit</a></p>
+</blockquote>
+<p>(Please do not misconstrue this as BurntSushi endorsing everything I or anyone else has said on the issue.)</p>
+<p><strong>Q:</strong> None of the code shown actually contains any UB so what is the fuss about? <sup><a href="https://twitter.com/withoutboats/status/1151539484414136321">1</a>, <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etz92ze/">2</a></sup><br />
+<strong>A:</strong> <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlqot/">Instances</a> of UB which can be triggered through the public API have since been pointed out elsewhere. But my main problem is with the somewhat careless nature towards <code>unsafe</code> code. In the standard library, and many others, you are always encouraged to add a comment documenting which invariants the <code>unsafe</code> block requires, and how exactly they are upheld. Even the extra effort required for this should be enough to discourage you from using <code>unsafe</code> unnecessarily. Personally I find it quite worrying that this sort of attitude is prominent in such a popular and security-critical crate.</p>
+<p><strong>Q:</strong> Do you believe that nobody should ever use <code>unsafe</code>? <sup><a href="https://twitter.com/withoutboats/status/1151537402265198605">1</a>, <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxkx4q/">2</a></sup><br />
+<strong>A:</strong> No, of course not. <code>unsafe</code> serves a purpose and is often needed for performance reasons or just to shorten the amount of code required. Both of these use cases are totally valid. However, many of the uses I am seeing in actix are entirely unnecessary, such as the first block I showed which appears to be able to be rewritten using the normal <code>Display</code> implementation while <em>gaining speed</em>. Further, the security critical nature of this crate is another reason why it's bad to have unnecessary unsafe lying about. For things such as CLI tools or games, there is less of a need to be so acutely aware of unsafety.</p>
+<p><strong>Q:</strong> If you dislike actix so much, why not just use something else instead of bashing it? <sup>1 dead, <a href="https://www.reddit.com/r/rust/comments/ce09id/why_we_need_alternatives_to_actix/etxlwtr/">2</a></sup><br />
+<strong>A:</strong> That is pretty much what I am recommending to people. I think it is totally fair to notify people of these concerns and let them decide if they want to keep using the framework. I know a lot of people have read this post and decided to keep using actix anyway, which I have no problem with.</p>
+<p>Anyway, onwards with the rest.</p>
+<hr />
+<h2 id="belly-of-the-beast">Belly of the Beast<a class="zola-anchor" href="#belly-of-the-beast" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>Does anyone remember when actix used to have <a href="https://github.com/actix/actix-web/issues/289">over 100 instances of unsafe</a>, largely used willy-nilly? Most of the egregious usages have been fixed a while ago, but there's still about 25 instances of it. Looking through the code now, there's still some worrying bits. Here's <a href="https://github.com/actix/actix-web/blob/d286ccb4f5a86eca12c65b1632506a8bd8b37d19/actix-http/src/helpers.rs#L116">one example</a>:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#569cd6;">pub</span><span style="color:#dcdcdc;">(</span><span style="color:#569cd6;">crate</span><span style="color:#dcdcdc;">) </span><span style="color:#569cd6;">fn </span><span style="color:#dcdcdc;">convert_usize(</span><span style="color:#569cd6;">mut </span><span style="color:#dcdcdc;">n: </span><span style="color:#569cd6;">usize</span><span style="color:#dcdcdc;">, bytes: </span><span style="color:#569cd6;">&amp;mut</span><span style="color:#dcdcdc;"> BytesMut) {
+    </span><span style="color:#569cd6;">let mut</span><span style="color:#dcdcdc;"> curr: </span><span style="color:#569cd6;">isize = </span><span style="color:#b5cea8;">39</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">let mut</span><span style="color:#dcdcdc;"> buf: [</span><span style="color:#569cd6;">u8</span><span style="color:#dcdcdc;">; </span><span style="color:#b5cea8;">41</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">= unsafe </span><span style="color:#dcdcdc;">{ mem::uninitialized() };
+    buf[</span><span style="color:#b5cea8;">39</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">= b</span><span style="color:#d69d85;">&#39;</span><span style="color:#e3bbab;">\r</span><span style="color:#d69d85;">&#39;</span><span style="color:#dcdcdc;">;
+    buf[</span><span style="color:#b5cea8;">40</span><span style="color:#dcdcdc;">] </span><span style="color:#569cd6;">= b</span><span style="color:#d69d85;">&#39;</span><span style="color:#e3bbab;">\n</span><span style="color:#d69d85;">&#39;</span><span style="color:#dcdcdc;">;
+    </span><span style="color:#569cd6;">let</span><span style="color:#dcdcdc;"> buf_ptr </span><span style="color:#569cd6;">=</span><span style="color:#dcdcdc;"> buf.as_mut_ptr();
+    </span><span style="color:#569cd6;">let</span><span style="color:#dcdcdc;"> lut_ptr </span><span style="color:#569cd6;">= </span><span style="color:#b4cea8;">DEC_DIGITS_LUT</span><span style="color:#dcdcdc;">.as_ptr();
+
+    </span><span style="color:#608b4e;">// eagerly decode 4 characters at a time
+    </span><span style="color:#569cd6;">while</span><span style="color:#dcdcdc;"> n </span><span style="color:#569cd6;">&gt;= </span><span style="color:#b5cea8;">10_000 </span><span style="color:#dcdcdc;">{
+        </span><span style="color:#569cd6;">let</span><span style="color:#dcdcdc;"> rem </span><span style="color:#569cd6;">= </span><span style="color:#dcdcdc;">(n </span><span style="color:#569cd6;">% </span><span style="color:#b5cea8;">10_000</span><span style="color:#dcdcdc;">) </span><span style="color:#569cd6;">as isize</span><span style="color:#dcdcdc;">;
+
+	</span><span style="color:#608b4e;">// ...snip
+
+        </span><span style="color:#569cd6;">unsafe </span><span style="color:#dcdcdc;">{
+            ptr::copy_nonoverlapping(lut_ptr.offset(d1), buf_ptr.offset(curr), </span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">);
+            ptr::copy_nonoverlapping(lut_ptr.offset(d2), buf_ptr.offset(curr </span><span style="color:#569cd6;">+ </span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">), </span><span style="color:#b5cea8;">2</span><span style="color:#dcdcdc;">);
+        }
+    }
+
+    </span><span style="color:#608b4e;">// another 5 similar uses of unsafe below...
+</span><span style="color:#dcdcdc;">}
+</span></pre>
+<p>There's a couple of reasons that code like this worries me, and probably should worry you too. First is the use of <a href="https://doc.rust-lang.org/std/mem/fn.uninitialized.html"><code>std::mem::uninitialized()</code></a>, which is now deprecated in favour of <a href="https://doc.rust-lang.org/std/mem/union.MaybeUninit.html"><code>std::mem::MaybeUninit</code></a> instead. The short of it is that it was never entirely clear that <code>mem::uninitialized()</code> could be used without UB, even for 'all bit-patterns are valid' types like <code>u8</code>. See <a href="https://gankra.github.io/blah/initialize-me-maybe/">Gankro's post</a> and <a href="https://www.ralfj.de/blog/2019/07/14/uninit.html">Ralf J's post</a> on uninitialised<sup class="footnote-reference"><a href="#1">1</a></sup> memory for more details.</p>
+<p>Secondly (and probably the main reason for disliking this code) is that there's absolutely <em>no justification given</em> for why this is done. Why is <code>Display</code> not simply being used? Is this function even performance-critical? Is there any real benefit to using <code>ptr::copy_nonoverlapping</code> for <strong>2 bytes</strong> instead of just (safely) assigning the bytes like <code>buf[curr] = lut[d1]</code>? With <code>ptr::copy_nonoverlapping</code> there's a number of variants you need to uphold, including making sure that the arguments don't alias (i.e overlap), and making sure the buffers are large enough for the read/write - but neither of these are mentioned.</p>
+<p>In <a href="https://github.com/actix/actix-web/blob/f27beab016de18577de0818a5802829b31da96b1/actix-http/src/h1/encoder.rs#L135">other places</a>, there's bits of code like this, which are probably enough to instill fear in people who don't know any Rust at all:</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#569cd6;">let mut</span><span style="color:#dcdcdc;"> buf </span><span style="color:#569cd6;">= unsafe </span><span style="color:#dcdcdc;">{ </span><span style="color:#569cd6;">&amp;mut *</span><span style="color:#dcdcdc;">(dst.bytes_mut() </span><span style="color:#569cd6;">as *mut </span><span style="color:#dcdcdc;">[</span><span style="color:#569cd6;">u8</span><span style="color:#dcdcdc;">]) };
+</span></pre>
+<p>You might be thinking 'somebody used unsafe a bit too much, what's the big deal here? Just fix it and move on.'. The problem I'm trying to highlight here is that there's a fundamental issue with the author's attitude which we don't seem to be able to change.</p>
+<p>For example, you'd think that after the previous <a href="https://github.com/actix/actix-web/issues/289">debacle</a>, Nikolay (the author) would have learnt his lesson about <code>unsafe</code>. But apparently this is not the case. Recently, GitHub user <a href="https://github.com/Aaron1011">Aaron1011</a> opened a PR on actix <a href="https://github.com/actix/actix-web/pull/968">removing several instances of <code>unsafe</code></a>. The changes basically boiled down to replacing a use of <code>UnsafeCell</code> with <code>Cell</code> / <code>RefCell</code> - changes which should have absolutely no observable impact on performance. Aaron101 explained that, as it currently stands, the current interface (though keep in mind this is <strong>not</strong> part of the public API) makes it possible to trigger UB in only a few lines of code. (<strong>UPDATE: This has since been re-opened and merged.</strong>)</p>
+<p>The reasonable and responsible thing to do here is to merge. But instead, Nikolay <a href="https://github.com/actix/actix-web/pull/968#issuecomment-509894555">responded with</a>:</p>
+<blockquote>
+<p>&quot;I guess everybody should switch to interpreted language otherwise we will die in ub&quot;</p>
+<p><em>PR closed by @fafhrd91</em></p>
+</blockquote>
+<p>Not exactly the kind of attitude you'd want from the maintainer of a top web framework with 425k downloads.</p>
+<p>Another example of (in my opinion) poor attitude was the release of <code>actix-web 1.0.2</code>, which was actually a breaking change (some code was refactored into a separate crate). At least one person has been caught off-guard by this, and <a href="https://github.com/actix/actix-web/issues/953">when asked to yank and add a re-export to maintain compatability</a>, Nikolay responded with simply &quot;i dont see reason&quot; and closed the issue. Again, it's not a huge problem in itself, but I'd consider it mildly irresponsible and a demonstration of poor attitude.</p>
+<h2 id="flying-solo">Flying Solo<a class="zola-anchor" href="#flying-solo" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>[deleted]</p>
+<h2 id="blazingly-fast-or-not">Blazingly fast... or not?<a class="zola-anchor" href="#blazingly-fast-or-not" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>Actix is doing very well in the latest round (18) of the <a href="https://www.techempower.com/benchmarks/">TechEmpower Web Framework Benchmarks</a>. It's leading in four of the six benchmarks, and among the top 5 in the remaining two benchmarks. While clearly an excellent result, there's some questionable behaviour going on behind the scenes in a couple of them.</p>
+<p>Specifically, in the 'plaintext' and 'JSON' benchmarks we can see that actix is doing some manual HTTP parsing, hardcoding header values (while ignoring the HTTP method). It doesn't look even <em>close</em> to the kind of code you'd write in real life (<a href="https://github.com/TechEmpower/FrameworkBenchmarks/blob/3129ff5f0cd36794a5bf0cca6e8d4b01eeb841f4/frameworks/Rust/actix/src/main_raw.rs#L26">see for yourselves</a>):</p>
+<pre style="background-color:#1e1e1e;">
+<span style="color:#569cd6;">impl</span><span style="color:#dcdcdc;">&lt;T: AsyncRead </span><span style="color:#569cd6;">+</span><span style="color:#dcdcdc;"> AsyncWrite&gt; Future </span><span style="color:#569cd6;">for </span><span style="color:#dcdcdc;">App&lt;T&gt; {
+    </span><span style="color:#569cd6;">type </span><span style="color:#4ec9b0;">Item </span><span style="color:#569cd6;">= </span><span style="color:#dcdcdc;">();
+    </span><span style="color:#569cd6;">type </span><span style="color:#4ec9b0;">Error </span><span style="color:#569cd6;">= </span><span style="color:#dcdcdc;">();
+
+    </span><span style="color:#569cd6;">fn </span><span style="color:#dcdcdc;">poll(</span><span style="color:#569cd6;">&amp;mut </span><span style="color:#dcdcdc;">self) -&gt; Poll&lt;</span><span style="color:#569cd6;">Self::</span><span style="color:#dcdcdc;">Item, </span><span style="color:#569cd6;">Self::</span><span style="color:#dcdcdc;">Error&gt; {
+        </span><span style="color:#569cd6;">loop </span><span style="color:#dcdcdc;">{
+            </span><span style="color:#569cd6;">if </span><span style="color:#dcdcdc;">self.read_buf.remaining_mut() </span><span style="color:#569cd6;">&lt; </span><span style="color:#b5cea8;">4096 </span><span style="color:#dcdcdc;">{
+                self.read_buf.reserve(</span><span style="color:#b5cea8;">32_768</span><span style="color:#dcdcdc;">);
+            }
+            </span><span style="color:#569cd6;">let</span><span style="color:#dcdcdc;"> read </span><span style="color:#569cd6;">= unsafe </span><span style="color:#dcdcdc;">{ self.io.read(self.read_buf.bytes_mut()) };
+            </span><span style="color:#569cd6;">match</span><span style="color:#dcdcdc;"> read {
+                Ok(</span><span style="color:#b5cea8;">0</span><span style="color:#dcdcdc;">) </span><span style="color:#569cd6;">=&gt; return </span><span style="color:#dcdcdc;">Ok(Async::Ready(())),
+                Ok(n) </span><span style="color:#569cd6;">=&gt; unsafe </span><span style="color:#dcdcdc;">{ self.read_buf.advance_mut(n) },
+                Err(e) </span><span style="color:#569cd6;">=&gt; </span><span style="color:#dcdcdc;">{
+                    </span><span style="color:#569cd6;">if</span><span style="color:#dcdcdc;"> e.kind() </span><span style="color:#569cd6;">== </span><span style="color:#dcdcdc;">io::ErrorKind::WouldBlock {
+                        </span><span style="color:#569cd6;">break</span><span style="color:#dcdcdc;">;
+                    } </span><span style="color:#569cd6;">else </span><span style="color:#dcdcdc;">{
+                        </span><span style="color:#569cd6;">return </span><span style="color:#dcdcdc;">Err(());
+                    }
+                }
+            }
+        }
+	</span><span style="color:#608b4e;">// ...snip
+    </span><span style="color:#dcdcdc;">}
+}
+</span></pre>
+<p>Another problem is that actix doesn't seem to check the HTTP method at all, it just looks at the path and assumes (based on the benchmark specification) what it needs to do.</p>
+<p>In fairness, it seems other benchmarks are doing these things (hyper even does this - though <a href="https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/Rust/hyper/src/main.rs#L28">Sean acknowledges</a> it's a bit of a scummy tactic). Gotham and Thruster <a href="https://www.reddit.com/r/rust/comments/cd9asm/announcing_gotham_v04/etteye7/">make a point</a> not to do this, for what it's worth. More commentary on the benchmarks from one of the Gotham maintainers can be found <a href="https://www.reddit.com/r/rust/comments/cd9asm/announcing_gotham_v04/ett80qm/">here</a>. I would strongly urge someone to take a proper look at these benchmarks and notify TechEmpower that they're being deceived - there's a special 'stripped' classification for framework applications which have been unrealistically crafted for maximum benchmark score - actix, hyper and many others probably deserve this. </p>
+<p>Please don't misconstrue this as me arguing that actix is slow - it's definitely not - I'm just trying to point out that the TechEmpower benchmarks don't tell the whole story!</p>
+<h2 id="anything-else-while-we-re-at-it">Anything else, while we're at it?<a class="zola-anchor" href="#anything-else-while-we-re-at-it" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>Actix has 221 dependencies in its tree at the time of writing. This leads to pretty horrible compile times, to be brutally honest. In one project which uses actix, my compile times are up to around 23 seconds for an incremental change in debug mode, which I find nearly unbearable. Thank God for <code>cargo check</code> (<code>rls</code> also seems to shit the bed a little bit in this project). I would really like to see more effort spent reducing compile times. (Side rant: I reckon if Rust used <code>lld</code> then I'd save around 5-7 seconds per compile on that project, but I haven't been able to get it working on my machine).</p>
+<p>Last minor gripe: documentation. The API documentation is actually reasonably good, although there's still some rough edges. For example, there's a trait called <a href="https://docs.rs/actix-web/1.0.3/actix_web/trait.ResponseError.html"><code>ResponseError</code></a> which allows you to convert from your custom error type into a <code>HttpResponse</code> that gets sent to the user (useful if you want to have your routes return something like <code>Result&lt;HttpResponse, MyError&gt;</code>). There's two functions on it: <code>response_error</code> and <code>error_response</code>. Feel free to figure out what the difference is between them, because the documentation and naming is entirely unhelpful! Turns out that if you use the <code>error_response</code> function then the body of whatever you return is totally ignored when sending to the user, and I have absolutely no idea why.</p>
+<p>Aside from the fact that the other parts of <code>actix-web</code>'s web of crates (like <code>actix-net</code>) are barely documented at all, the API documentation is fairly solid. There's a fair few examples, though most use outdated mechanisms and some don't even compile. A bigger issue is that it's taken over a month for the <a href="https://actix.rs/docs/getting-started/">actix user guide</a> to be updated to 1.0, and it's not even done yet! Why Nikolay would push a 1.0 release without updating the user guide I do not know. GitHub user <a href="https://github.com/cldershem">cldershem</a> has put in a <a href="https://github.com/actix/actix-website/pull/90">monumental effort</a> updating the documentation by themselves thus far.</p>
+<h2 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>TL;DR: actix isn't really a sustainable framework for the Rust community to rally around (as much as I'd like it to be). There's a number of red flags; mainly the author's mentality and internal code quality. As such, I won't be using actix in the future, and I think it's time we looked elsewhere.</p>
+<h2 id="what-are-the-alternatives">What are the alternatives?<a class="zola-anchor" href="#what-are-the-alternatives" aria-hidden="true"><img src="/images/link.svg"/></a></h2>
+<p>Sorry for the downbeat tone - don't despair! Here are some promising alternatives, all of which are currently being updated and maintained:</p>
+<ul>
+<li><a href="https://rocket.rs/">Rocket</a> - Probably the most mature Rust web framework of all. Dead simple API, but lacking in performance, which will hopefully improve when the framework moves over to Futures and async/await</li>
+<li><a href="https://gotham.rs/">Gotham</a> - Still fairly new, but rapidly improving! Good support for async, recently added TLS and diesel middleware support in 0.4.</li>
+<li><a href="https://github.com/trezm/Thruster">Thruster</a> - Fast middleware-based framework (think express, koa). Still very new but author is friendly and willing to help. Totally unsafe-free!</li>
+<li><a href="https://github.com/seanmonstar/warp">Warp</a> - Lightweight composable framework using middleware 'filters', built on top of hyper</li>
+<li><a href="https://github.com/rustasync/tide">Tide</a> - Modular framework built by the Rust Async Ecosystem working group, naturally quite focused on <code>async</code>/<code>await</code> support but still a work in progress</li>
+<li>Please leave a comment (here or on reddit) if you feel I've left something off this list</li>
+</ul>
+<hr>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Yes, I'm a Brit, and I'm bloody-well going to switch to spelling uninitialised with an 's' when you're not looking.</p>
+</div>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            
+            
+                <div class="post-nav">
+                    
+                        <a class="previous" href="https:&#x2F;&#x2F;64.github.io&#x2F;tonemapping&#x2F;">‹ Tone Mapping</a>
+                    
+                    
+                        <a class="next" href="https:&#x2F;&#x2F;64.github.io&#x2F;monte-carlo&#x2F;">Monte Carlo Integration ›</a>
+                    
+                    
+                    
+                </div>
+            
+
+        
+
+    </div>
+
+    
+        
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://64.github.io/actix/";
+                    this.page.identifier = "actix";
+                };
+            </script>
+            <div id="disqus_thread"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();</script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          
+          <script type="text/javascript" src="https:&#x2F;&#x2F;64.github.io&#x2F;even.js" ></script>
+      
+    </body>
+
+</html>
