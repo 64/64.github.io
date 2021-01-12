@@ -23,6 +23,16 @@
 	<meta name="msapplication-TileColor" content="#7908cf">
 	<meta name="theme-color" content="#7908cf">
 
+    {% if page %}
+        <!-- meta properties: https://ogp.me/ -->
+        <meta property="og:title" content="{{ page.title }}">
+        <meta property="og:type" content="article">
+        <meta property="og:description" content="{% if page.extra.carddesc %}{{ page.extra.carddesc }}{% endif %}">
+        <meta property="og:image" content="{% if page.extra.cardimage %}{{ page.extra.cardimage | safe }}{% else %}/favicon-64x64.png{% endif %}">
+        <meta property="og:url" content="{{ get_url(path=page.path) | safe }}">
+        <meta name="twitter:image" content="{% if page.extra.cardimage %}{{ page.extra.cardimage | safe }}{% else %}/favicon-64x64.png{% endif %}">
+    {% endif %}
+
 	<!-- Enable responsiveness on mobile devices-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 

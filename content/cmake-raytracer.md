@@ -4,6 +4,10 @@ date = 2020-12-27
 
 [taxonomies]
 categories = ["Graphics"]
+
+[extra]
+cardimage = "https://github.com/64/cmake-raytracer/raw/master/render.png"
+carddesc = "A simple ray tracer written in pure CMake"
 +++
 
 Without further ado, I present: a basic whitted ray tracer, complete with multicore rendering, written in 100% pure CMake. If you don't care about the details, and just want to see the code, you can [find it here](https://github.com/64/cmake-raytracer).
