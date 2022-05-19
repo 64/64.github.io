@@ -1,408 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140396812-1"></script>
-	<script>
-	window.dataLayer = window.dataLayer || [];
+<!doctype html><html lang=en><head><script src="https://www.googletagmanager.com/gtag/js?id=UA-140396812-1" async></script><script>window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 
-	gtag('config', 'UA-140396812-1');
-	</script>
-
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="/favicon-64x64.png">
-	<link rel="manifest" href="/site.webmanifest">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#7908cf">
-	<meta name="msapplication-TileColor" content="#7908cf">
-	<meta name="theme-color" content="#7908cf">
-
-    
-        <!-- meta properties: https://ogp.me/ -->
-        <meta property="og:title" content="Ray Tracing in pure CMake">
-        <meta property="og:type" content="article">
-        <meta property="og:description" content="A simple ray tracer written in pure CMake">
-        <meta property="og:image" content="https://github.com/64/cmake-raytracer/raw/master/render.png">
-        <meta property="og:url" content="https://64.github.io/cmake-raytracer">
-        <meta name="twitter:image" content="https://github.com/64/cmake-raytracer/raw/master/render.png">
-    
-
-	<!-- Enable responsiveness on mobile devices-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-
-	<title>Ray Tracing in pure CMake | Delta</title>
-
-	
-
-	
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
-        
-	
-
-	
-		<link rel="stylesheet" href="https:&#x2F;&#x2F;64.github.io&#x2F;site.css">
-		
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
-		
-	
-
-	
-	
-	</head>
-
-    <body>
-        <div class="container">
-
-            <div id="mobile-navbar" class="mobile-navbar">
-              <div class="mobile-header-logo">
-                <a href="/" class="logo">Delta - Blog by 64</a>
-              </div>
-              <div class="mobile-navbar-icon icon-out">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-
-            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
-              <ul class="mobile-menu-list">
-                
-                    <li class="mobile-menu-item">
-                        <a href="https:&#x2F;&#x2F;64.github.io">
-                            Home
-                        </a>
-                    </li>
-                
-                    <li class="mobile-menu-item">
-                        <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories">
-                            Categories
-                        </a>
-                    </li>
-                
-                    <li class="mobile-menu-item">
-                        <a href="https:&#x2F;&#x2F;github.com&#x2F;64">
-                            GitHub
-                        </a>
-                    </li>
-                
-              </ul>
-            </nav>
-
-            <header id="header">
-                <div class="logo"><a href="https:&#x2F;&#x2F;64.github.io">Delta - Blog by 64</a></div>
-                <nav class="menu">
-                    <ul>
-                        
-                            <li>
-                                <a href="https:&#x2F;&#x2F;64.github.io">
-                                    Home
-                                </a>
-                            </li>
-                        
-                            <li>
-                                <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories">
-                                    Categories
-                                </a>
-                            </li>
-                        
-                            <li>
-                                <a href="https:&#x2F;&#x2F;github.com&#x2F;64">
-                                    GitHub
-                                </a>
-                            </li>
-                        
-                    </ul>
-                </nav>
-            </header>
-
-            <main>
-                <div class="content" id="mobile-panel">
-                    
-
-
-<div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">Contents</h2>
-    <div class="post-toc-content always-active">
-        <nav id="TableOfContents">
-            <ul>
-                
-                <li>
-                    <a href="https://64.github.io/cmake-raytracer/#fixed-point-arithmetic" class="toc-link">Fixed-Point Arithmetic</a>
-                    
-                </li>
-                
-                <li>
-                    <a href="https://64.github.io/cmake-raytracer/#rendering" class="toc-link">Rendering</a>
-                    
-                </li>
-                
-                <li>
-                    <a href="https://64.github.io/cmake-raytracer/#multicore-rendering-a-k-a-making-cmake-go-brrrrrrrrrrrr" class="toc-link">Multicore Rendering (a.k.a making CMake go brrrrrrrrrrrr...)</a>
-                    
-                </li>
-                
-                <li>
-                    <a href="https://64.github.io/cmake-raytracer/#outputting-an-image" class="toc-link">Outputting an Image</a>
-                    
-                </li>
-                
-                <li>
-                    <a href="https://64.github.io/cmake-raytracer/#conclusion" class="toc-link">Conclusion</a>
-                    
-                </li>
-                
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-<article class="post">
-    
-    <header class="post__header">
-        <h1 class="post__title">
-            <a href="https:&#x2F;&#x2F;64.github.io&#x2F;cmake-raytracer&#x2F;">Ray Tracing in pure CMake</a>
-        </h1>
-        <div class="post__meta">
-            <span class="post__time">Dec 27, 2020</span>
-            <span class="post__readtime">
-                &bull; 9 minute read
-            </span>
-            
-                
-                    &bull;
-                    <span class="post__category">
-                            <a href="https:&#x2F;&#x2F;64.github.io&#x2F;categories&#x2F;graphics&#x2F;">Graphics</a>
-                    </span>
-                
-            
-            
-        </div>
-    </header>
-
-    <div class="post-content">
-      <p>Without further ado, I present: a basic whitted ray tracer, complete with multicore rendering, written in 100% pure CMake. If you don't care about the details, and just want to see the code, you can <a href="https://github.com/64/cmake-raytracer">find it here</a>.</p>
-<span id="continue-reading"></span><figure>
-    <img src="https:&#x2F;&#x2F;github.com&#x2F;64&#x2F;cmake-raytracer&#x2F;raw&#x2F;master&#x2F;render.png" />
-    <figcaption><i>Rendered in 7m23s on a i5-10210U, 8 processes</i> </figcaption>
-</figure>
-<p>At this point, those familiar with CMake may have some questions, so keep reading to find out how it all works.</p>
-<h1 id="fixed-point-arithmetic">Fixed-Point Arithmetic<a class="zola-anchor" href="#fixed-point-arithmetic" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
-<p><strong>Good news:</strong> CMake has a <a href="https://cmake.org/cmake/help/latest/command/math.html?highlight=math"><code>math</code></a> command. <strong>Bad news:</strong> it only supports integers. If you've written a ray tracer before, you probably did it with floating point numbers. So how do you go from representing signed integers to representing something-resembling-floating-point numbers? One answer is to use <a href="https://en.wikipedia.org/wiki/Fixed-point_arithmetic"><strong>fixed-point arithmetic</strong></a>.</p>
-<p>The basic idea with fixed point is simple. We define some large integer to represent the number 1.0; let's choose <strong>1000</strong>. Then we can represent 2.0 as 2000, 0.5 as 500, -3.0 as -3000 etc. When we want to add two numbers, we simply add their fixed-point representations. Here's how that looks in CMake:</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#dcdcdc;">function(add a b res)
-    math(EXPR tmp </span><span style="color:#d69d85;">&quot;(${</span><span style="color:#dcdcdc;">a</span><span style="color:#d69d85;">}) + (${</span><span style="color:#dcdcdc;">b</span><span style="color:#d69d85;">})&quot;</span><span style="color:#dcdcdc;">)
-    set(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">res</span><span style="color:#d69d85;">}&quot; &quot;${</span><span style="color:#dcdcdc;">tmp</span><span style="color:#d69d85;">}&quot; </span><span style="color:#dcdcdc;">PARENT_SCOPE)
-endfunction()
-</span></pre>
-<p>This takes two values <code>a</code> and <code>b</code> to be added and stored in the variable <code>res</code>. I use <code>PARENT_SCOPE</code> so that the variable we create is actually visible from the calling function, otherwise CMake will destroy it when the function ends.</p>
-<p>To multiply two numbers, we simply multiply their fixed-point representations, and then divide by the thing we chose to represent 1.0:
-<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.5</mn><mo>×</mo><mn>4.0</mn><mo>↦</mo><mfrac><mrow><mn>1500</mn><mo>×</mo><mn>4000</mn></mrow><mn>1000</mn></mfrac><mo>=</mo><mn>6000</mn><mo>↦</mo><mn>6.0</mn></mrow><annotation encoding="application/x-tex">1.5 \times 4.0 \mapsto \frac{1500 \times 4000}{1000} = 6000 \mapsto 6.0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.65544em;vertical-align:-0.011em;"></span><span class="mord">4</span><span class="mord">.</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">5</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">4</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.65544em;vertical-align:-0.011em;"></span><span class="mord">6</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">.</span><span class="mord">0</span></span></span></span></span></p>
-<p>Division is similar:
-<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.5</mn><mo>÷</mo><mn>4.0</mn><mo>↦</mo><mfrac><mrow><mn>1500</mn><mo>×</mo><mn>1000</mn></mrow><mn>4000</mn></mfrac><mo>=</mo><mn>375</mn><mo>↦</mo><mn>0.375</mn></mrow><annotation encoding="application/x-tex">1.5 \div 4.0 \mapsto \frac{1500 \times 1000}{4000} = 375 \mapsto 0.375</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.65544em;vertical-align:-0.011em;"></span><span class="mord">4</span><span class="mord">.</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">5</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.65544em;vertical-align:-0.011em;"></span><span class="mord">3</span><span class="mord">7</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">3</span><span class="mord">7</span><span class="mord">5</span></span></span></span></span>
-We could have multiplied by 1000 after doing the division, but as integer division rounds towards zero this would wipe out all our precision (as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1500</mn><mn>4000</mn></mfrac><mo>×</mo><mn>1000</mn><mo>=</mo><mn>0</mn><mo>×</mo><mn>1000</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{1500}{4000}\times 1000 = 0 \times 1000 = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mord mtight">0</span><span class="mord mtight">0</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">5</span><span class="mord mtight">0</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>). Multiplying first gives us better results, as long as the dividend isn't too huge (which would cause overflow).</p>
-<p>CMake's <code>math</code> command only supports basic integer arithmetic. For more complicated operations, like square root, we use <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton-Raphson iteration</a>. You can read more about this <a href="https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method">here</a>, but the basic idea is to make a 'guess' as to what the output should be then iteratively refine the guess towards the answer. This gives a surprisingly accurate result within only three or four iterations, subject to the quality of the initial guess:</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#dcdcdc;">function(sqrt x res)
-    div_by_2(${x} guess)
-
-    </span><span style="color:#569cd6;">foreach</span><span style="color:#dcdcdc;">(counter RANGE 4)
-        </span><span style="color:#569cd6;">if</span><span style="color:#dcdcdc;">(${guess} EQUAL 0)
-            set(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">res</span><span style="color:#d69d85;">}&quot; </span><span style="color:#dcdcdc;">0 PARENT_SCOPE)
-            return()
-        </span><span style="color:#569cd6;">endif</span><span style="color:#dcdcdc;">()
-
-        div(${x} ${guess} tmp)
-        add(${tmp} ${guess} tmp)
-        div_by_2(${tmp} guess)
-    </span><span style="color:#569cd6;">endforeach</span><span style="color:#dcdcdc;">()
-
-    set(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">res</span><span style="color:#d69d85;">}&quot; &quot;${</span><span style="color:#dcdcdc;">guess</span><span style="color:#d69d85;">}&quot; </span><span style="color:#dcdcdc;">PARENT_SCOPE)
-endfunction()
-
-</span><span style="color:#608b4e;"># sqrt(123) = 11.09072626, actual answer is 11.0905365064
-</span></pre>
-<p>I also implemented a similar function for computing <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><msqrt><mi>x</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{\sqrt{x}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.383108em;vertical-align:-0.538em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6258665em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8059050000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mathdefault mtight">x</span></span></span><span style="top:-2.765905em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
-c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
-c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
-c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
-s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
-c69,-144,104.5,-217.7,106.5,-221
-l0 -0
-c5.3,-9.3,12,-14,20,-14
-H400000v40H845.2724
-s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
-c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
-M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.234095em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.538em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> separately as I found that it lead to better numerical stability, as opposed to computing the square root as above and then doing the reciprocal. This comes in handy when we need to normalize vectors.</p>
-<p>Almost everything in computer graphics is done with vectors, so I started implementing vector operations: <code>vec3_add</code>, <code>vec3_mul</code>, <code>vec3_div</code>, <code>vec3_dot</code> etc. These make use of CMake built-in lists, which are pretty horrible, but save me from having to use three separate variables to keep track of the individual components of each vector. For example, here's what the dot product looks like:</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#dcdcdc;">function(vec3_dot x y res)
-    list(GET ${x} 0 x_0)
-    list(GET ${x} 1 x_1)
-    list(GET ${x} 2 x_2)
-    list(GET ${y} 0 y_0)
-    list(GET ${y} 1 y_1)
-    list(GET ${y} 2 y_2)
-    mul(${x_0} ${y_0} z_0)
-    mul(${x_1} ${y_1} z_1)
-    mul(${x_2} ${y_2} z_2)
-    add(${z_0} ${z_1} tmp)
-    add(${tmp} ${z_2} tmp)
-    set(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">res</span><span style="color:#d69d85;">}&quot; </span><span style="color:#dcdcdc;">${tmp} PARENT_SCOPE)
-endfunction()
-</span></pre>
-<p>And here's how we'd use it to normalize a vector:</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#dcdcdc;">function(vec3_normalize x res)
-    vec3_dot(${x} ${x} x_2)
-    rsqrt(${x_2} one_over_length)
-    vec3_mulf(${x} ${one_over_length} tmp)
-    set(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">res</span><span style="color:#d69d85;">}&quot; </span><span style="color:#dcdcdc;">${tmp} PARENT_SCOPE)
-endfunction()
-</span></pre>
-<p>As well a few other bits and bobs, like <code>clamp</code> and <code>truncate</code>, that's all the arithmetic that's needed.</p>
-<h1 id="rendering">Rendering<a class="zola-anchor" href="#rendering" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
-<p>If you're new to ray tracing, I'd refer you to <a href="https://twitter.com/peter_shirley">Peter Shirley's</a> wonderful book series '<a href="https://raytracing.github.io/">Ray Tracing in One Weekend</a>', which my code is loosely based on. The general intuition is to trace rays out from the camera into the scene and see what they intersect. Since we represent all our scene geometry and rays as mathematical objects, computing intersections between rays and geometry is just a case of solving equations. Once we have found an intersection, we compute the color of the point we intersected with, which may itself be computed by tracing rays towards light sources or towards other scene geometry.</p>
-<figure>
-    <img src="https:&#x2F;&#x2F;developer.nvidia.com&#x2F;sites&#x2F;default&#x2F;files&#x2F;pictures&#x2F;2018&#x2F;RayTracing&#x2F;ray-tracing-image-1.jpg" />
-    <figcaption><i>The ray tracing algorithm.</i>  Credit: <a href="https:&#x2F;&#x2F;developer.nvidia.com&#x2F;discover&#x2F;ray-tracing">https:&#x2F;&#x2F;developer.nvidia.com</a></figcaption>
-</figure> 
-<p>To keep it simply I went with a simple scene consisting of a sphere sitting atop an infinite plane in a checkerboard color. I also ended up faking the shadow underneath the sphere, simply drawing a black circle (well done if you spotted it from the image). I had implemented whitted ray tracing and even path tracing at one point, but they were much more complicated and performed a lot worse for the same result. In theory, though, there's no reason why I couldn't do it properly, it would just require some additional effort and patience.</p>
-<p>Here's what the main 'trace' function looks like, with some of the unnecessary bits stripped out for clarity:</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#608b4e;"># Traces a ray into the scene, computes the color returned along the ray
-</span><span style="color:#dcdcdc;">function(trace ray_origin ray_dir depth color)
-    </span><span style="color:#608b4e;"># Base case for recursion
-    </span><span style="color:#569cd6;">if</span><span style="color:#dcdcdc;">(${depth} GREATER_EQUAL 3)
-        return()
-    </span><span style="color:#569cd6;">else</span><span style="color:#dcdcdc;">()
-        math(EXPR depth </span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">depth</span><span style="color:#d69d85;">} + 1&quot;</span><span style="color:#dcdcdc;">)
-    </span><span style="color:#569cd6;">endif</span><span style="color:#dcdcdc;">()
-
-    </span><span style="color:#608b4e;"># Calculate intersection points with the sphere and plane
-    </span><span style="color:#dcdcdc;">sphere_intersect(${ray_origin} ${ray_dir} hit_t_1 hit_point_1 hit_normal_1)
-    plane_intersect(${ray_origin} ${ray_dir} hit_t_2 hit_point_2 hit_normal_2)
-
-    </span><span style="color:#608b4e;"># Did we hit the sphere?
-    </span><span style="color:#569cd6;">if</span><span style="color:#dcdcdc;">(${hit_t_1} GREATER ${ray_epsilon})
-        </span><span style="color:#608b4e;"># Calculate reflected ray direction
-        </span><span style="color:#dcdcdc;">offset_origin(hit_point_1 hit_normal_1 new_origin)
-        vec3_dot(hit_normal_1 ${ray_dir} scalar)
-        mul_by_2(${scalar} scalar)
-        vec3_mulf(hit_normal_1 ${scalar} refl_a)
-        vec3_sub(${ray_dir} refl_a new_dir)
-
-        </span><span style="color:#608b4e;"># Recursively trace the new ray into the scene
-        </span><span style="color:#dcdcdc;">trace(new_origin new_dir ${depth} traced_col)
-
-        </span><span style="color:#608b4e;"># Calculate contribution from lights
-        </span><span style="color:#dcdcdc;">set(col 0 0 0)
-        light_contrib(hit_point_1 hit_normal_1 light1_pos light1_col out_col1)
-        light_contrib(hit_point_1 hit_normal_1 light2_pos light2_col out_col2)
-        vec3_add(col out_col1 col)
-        vec3_add(col out_col2 col)
-        vec3_add(col traced_col col)
-
-        set(base_col ${sphere_color})
-        vec3_mul(base_col col col)
-
-    </span><span style="color:#608b4e;"># Did we hit the plane?
-    </span><span style="color:#569cd6;">elseif</span><span style="color:#dcdcdc;">(${hit_t_2} GREATER ${ray_epsilon})
-        </span><span style="color:#608b4e;"># ...snip: Use equation of a circle to fake shadow, if we&#39;re within range
-        # ...snip: Calculate checkerboard pattern
-    </span><span style="color:#569cd6;">else</span><span style="color:#dcdcdc;">()
-        </span><span style="color:#608b4e;"># We hit nothing, return black
-        </span><span style="color:#dcdcdc;">set(col 0 0 0)
-    </span><span style="color:#569cd6;">endif</span><span style="color:#dcdcdc;">()
-
-    set(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">color</span><span style="color:#d69d85;">}&quot; </span><span style="color:#dcdcdc;">${col} PARENT_SCOPE)
-endfunction()
-</span></pre><h1 id="multicore-rendering-a-k-a-making-cmake-go-brrrrrrrrrrrr">Multicore Rendering (a.k.a making CMake go <em>brrrrrrrrrrrr...</em>)<a class="zola-anchor" href="#multicore-rendering-a-k-a-making-cmake-go-brrrrrrrrrrrr" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
-<p>When I started, I wouldn't sure if it would be possible to do in pure CMake, but with a little trickery we can manage it.</p>
-<p>For <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span> processes, the basic plan is to divide up the image vertically and let each sub-process render a few rows. We can invoke sub-processes with the <a href="https://cmake.org/cmake/help/v3.0/command/execute_process.html"><code>execute_process</code></a> command, passing arguments (such as the worker index) via <code>-D</code>. Each process then spits their row data into a text file, which gets merged together by the master process once they've all finished.</p>
-<p>One subtlety is that as we need all the sub-processes to run in parallel, we can't simply call <code>execute_process</code> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span> times, as it would run them sequentially. Luckily, we can specify multiple processes to run simultaneously in one command (I think this is intended to be used for long chains where one program is piped into the next), but in order to avoid hardcoding <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span> we have to programmatically construct the call to <code>execute_process</code> with CMake's <a href="https://cmake.org/cmake/help/git-stage/command/cmake_language.html"><code>EVAL CODE</code></a> feature (thanks to <a href="https://github.com/martty/vuk">martty</a> for this idea):</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#dcdcdc;">message(STATUS </span><span style="color:#d69d85;">&quot;Launching ray tracer with ${</span><span style="color:#dcdcdc;">num_procs</span><span style="color:#d69d85;">} processes, ${</span><span style="color:#dcdcdc;">image_width</span><span style="color:#d69d85;">}x${</span><span style="color:#dcdcdc;">image_height</span><span style="color:#d69d85;">} image...&quot;</span><span style="color:#dcdcdc;">)
-
-set(exec_command </span><span style="color:#d69d85;">&quot;execute_process(</span><span style="color:#e3bbab;">\n</span><span style="color:#d69d85;">&quot;</span><span style="color:#dcdcdc;">)
-</span><span style="color:#569cd6;">foreach</span><span style="color:#dcdcdc;">(worker_index RANGE 1 ${num_procs})
-    set(exec_command </span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">exec_command</span><span style="color:#d69d85;">}COMMAND cmake . -Wno-dev -Dworker_index=${</span><span style="color:#dcdcdc;">worker_index</span><span style="color:#d69d85;">} -Dimage_width=${</span><span style="color:#dcdcdc;">image_width</span><span style="color:#d69d85;">} -Dimage_height=${</span><span style="color:#dcdcdc;">image_height</span><span style="color:#d69d85;">} -Dnum_procs=${</span><span style="color:#dcdcdc;">num_procs</span><span style="color:#d69d85;">}</span><span style="color:#e3bbab;">\n</span><span style="color:#d69d85;">&quot;</span><span style="color:#dcdcdc;">)
-</span><span style="color:#569cd6;">endforeach</span><span style="color:#dcdcdc;">()
-set(exec_command </span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">exec_command</span><span style="color:#d69d85;">} )&quot;</span><span style="color:#dcdcdc;">)
-
-</span><span style="color:#608b4e;"># Begin the worker processes
-</span><span style="color:#dcdcdc;">cmake_language(EVAL CODE ${exec_command})
-
-message(STATUS </span><span style="color:#d69d85;">&quot;Finished ray tracing, gathering results...&quot;</span><span style="color:#dcdcdc;">)
-</span></pre><h1 id="outputting-an-image">Outputting an Image<a class="zola-anchor" href="#outputting-an-image" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
-<p>As per <a href="https://raytracing.github.io/">Ray Tracing in One Weekend</a>, I use the <a href="https://en.wikipedia.org/wiki/Netpbm#PPM_example">PPM image format</a>. This is a really simple text-based format which is perfect for my purposes as I don't have to bother with compression. Once we're done rendering we simply read all the data that the workers have spat out, write the PPM header, and print everything to <code>stderr</code>:</p>
-<pre style="background-color:#1e1e1e;">
-<span style="color:#dcdcdc;">set(image_contents </span><span style="color:#d69d85;">&quot;P3 ${</span><span style="color:#dcdcdc;">image_width</span><span style="color:#d69d85;">} ${</span><span style="color:#dcdcdc;">image_height</span><span style="color:#d69d85;">}</span><span style="color:#e3bbab;">\n</span><span style="color:#d69d85;">255</span><span style="color:#e3bbab;">\n\n</span><span style="color:#d69d85;">&quot;</span><span style="color:#dcdcdc;">)
-
-</span><span style="color:#569cd6;">foreach</span><span style="color:#dcdcdc;">(worker_index RANGE 1 ${num_procs})
-    file(READ </span><span style="color:#d69d85;">&quot;worker-${</span><span style="color:#dcdcdc;">worker_index</span><span style="color:#d69d85;">}.txt&quot; </span><span style="color:#dcdcdc;">file_contents)
-    set(image_contents </span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">image_contents</span><span style="color:#d69d85;">}${</span><span style="color:#dcdcdc;">file_contents</span><span style="color:#d69d85;">}&quot;</span><span style="color:#dcdcdc;">)
-</span><span style="color:#569cd6;">endforeach</span><span style="color:#dcdcdc;">()
-
-message(</span><span style="color:#d69d85;">&quot;${</span><span style="color:#dcdcdc;">image_contents</span><span style="color:#d69d85;">}&quot;</span><span style="color:#dcdcdc;">)
-</span></pre>
-<p>The division of work among the worker processes is pretty sub-optimal as the rows towards the top of the image are mostly empty whereas the rows at the bottom are entirely full, which means that some processes finish very fast while others take much longer. Fixing this problem is left as an exercise to the reader.</p>
-<h1 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-hidden="true"><img src="/images/link.svg"/></a></h1>
-<p>If you made it this far, thanks for reading! Feel free to create issues, send pull requests or star <a href="https://github.com/64/cmake-raytracer">the code on GitHub</a>.</p>
-
-    </div>
-
-    
-    
-
-    <div class="post-footer">
-        
-            
-            
-                <div class="post-nav">
-                    
-                        <a class="previous" href="https:&#x2F;&#x2F;64.github.io&#x2F;multiple-importance-sampling&#x2F;">‹ Multiple Importance Sampling</a>
-                    
-                    
-                    
-                    
-                </div>
-            
-
-        
-
-    </div>
-
-    
-        
-            <script>
-                var disqus_config = function () {
+	gtag('config', 'UA-140396812-1');</script><meta content="IE=edge" http-equiv=X-UA-Compatible><meta content="text/html; charset=utf-8" http-equiv=content-type><link href=/apple-touch-icon.png rel=apple-touch-icon sizes=180x180><link href=/favicon-64x64.png rel=icon type=image/png><link href=/site.webmanifest rel=manifest><link color=#7908cf href=/safari-pinned-tab.svg rel=mask-icon><meta content=#7908cf name=msapplication-TileColor><meta content=#7908cf name=theme-color><meta content="Ray Tracing in pure CMake" property=og:title><meta content=article property=og:type><meta content="A simple ray tracer written in pure CMake" property=og:description><meta content=https://github.com/64/cmake-raytracer/raw/master/render.png property=og:image><meta content=https://64.github.io/cmake-raytracer property=og:url><meta content=https://github.com/64/cmake-raytracer/raw/master/render.png name=twitter:image><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><title>Ray Tracing in pure CMake | δelta</title><script src=https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js></script><meta content="dark light" name=color-scheme><link href=https://64.github.io/site-dark.css id=theme-link rel=stylesheet><link crossorigin=anonymous href=https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css integrity=sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y rel=stylesheet><body><div class=container><div class=mobile-navbar id=mobile-navbar><div class=mobile-header-logo><a class=logo href=/>δ<span class=logo-text-alt>elta</span></a>: <span class=logo-subtitle> Blog by <a href=https://github.com/64>@64</a> </span></div><div class="mobile-navbar-icon icon-out"><span></span><span></span><span></span></div></div><nav class="mobile-menu slideout-menu slideout-menu-left" id=mobile-menu><ul class=mobile-menu-list><li class=mobile-menu-item><a href=https://64.github.io> Home </a><li class=mobile-menu-item><a href=https://64.github.io/categories> Categories </a><li class=mobile-menu-item><a class=nav-link href=https://github.com/64> GitHub <svg viewbox="0 0 24 24" class=mobile-menu-icon fill=none height=20 stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 width=20 xmlns=http://www.w3.org/2000/svg><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><li class=mobile-menu-item><a class=theme-toggle> Theme <span class=toggle-dark hidden><svg viewbox="0 0 24 24" class=mobile-menu-icon fill=none height=20 stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 width=20 xmlns=http://www.w3.org/2000/svg><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span> <span class=toggle-light><svg viewbox="0 0 24 24" class=mobile-menu-icon fill=none height=20 stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 width=20 xmlns=http://www.w3.org/2000/svg><circle cx=12 cy=12 r=5></circle><line x1=12 x2=12 y1=1 y2=3></line><line x1=12 x2=12 y1=21 y2=23></line><line x1=4.22 x2=5.64 y1=4.22 y2=5.64></line><line x1=18.36 x2=19.78 y1=18.36 y2=19.78></line><line x1=1 x2=3 y1=12 y2=12></line><line x1=21 x2=23 y1=12 y2=12></line><line x1=4.22 x2=5.64 y1=19.78 y2=18.36></line><line x1=18.36 x2=19.78 y1=5.64 y2=4.22></line></svg></span> </a></ul></nav><header id=header><div><div class=logo><a class=logo href=/>δ<span class=logo-text-alt>elta</span></a></div><div class=logo-subtitle>Blog by <a href=https://github.com/64>@64</a></div></div><nav class=menu><ul><li><a href=https://64.github.io> Home </a><li><a href=https://64.github.io/categories> Categories </a><li class=menu-separator><li class=menu-icon><a class=nav-link href=https://github.com/64><svg viewbox="0 0 24 24" fill=none height=20 stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 width=20 xmlns=http://www.w3.org/2000/svg><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><li class=menu-icon><a class=theme-toggle> <span class=toggle-dark hidden><svg viewbox="0 0 24 24" fill=none height=20 stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 width=20 xmlns=http://www.w3.org/2000/svg><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span> <span class=toggle-light><svg viewbox="0 0 24 24" fill=none height=20 stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 width=20 xmlns=http://www.w3.org/2000/svg><circle cx=12 cy=12 r=5></circle><line x1=12 x2=12 y1=1 y2=3></line><line x1=12 x2=12 y1=21 y2=23></line><line x1=4.22 x2=5.64 y1=4.22 y2=5.64></line><line x1=18.36 x2=19.78 y1=18.36 y2=19.78></line><line x1=1 x2=3 y1=12 y2=12></line><line x1=21 x2=23 y1=12 y2=12></line><line x1=4.22 x2=5.64 y1=19.78 y2=18.36></line><line x1=18.36 x2=19.78 y1=5.64 y2=4.22></line></svg></span> </a></ul></nav></header><main><div class=content id=mobile-panel><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a class=toc-link href=https://64.github.io/cmake-raytracer/#fixed-point-arithmetic>Fixed-Point Arithmetic</a><li><a class=toc-link href=https://64.github.io/cmake-raytracer/#rendering>Rendering</a><li><a class=toc-link href=https://64.github.io/cmake-raytracer/#multicore-rendering-a-k-a-making-cmake-go-brrrrrrrrrrrr>Multicore Rendering (a.k.a making CMake go brrrrrrrrrrrr...)</a><li><a class=toc-link href=https://64.github.io/cmake-raytracer/#outputting-an-image>Outputting an Image</a><li><a class=toc-link href=https://64.github.io/cmake-raytracer/#conclusion>Conclusion</a></ul></nav></div></div><article class=post><header class=post__header><h1 class=post__title><a href=https://64.github.io/cmake-raytracer/>Ray Tracing in pure CMake</a></h1><div class=post__meta><span class=post__time>Dec 27, 2020</span><span class=post__readtime> • 9 minute read </span> • <span class=post__category> <a href=https://64.github.io/categories/graphics/>Graphics</a> </span></div></header><div class=post-content><p>Without further ado, I present: a basic whitted ray tracer, complete with multicore rendering, written in 100% pure CMake. If you don't care about the details, and just want to see the code, you can <a href=https://github.com/64/cmake-raytracer>find it here</a>.</p><span id=continue-reading></span><figure><img src=https://github.com/64/cmake-raytracer/raw/master/render.png><figcaption><i>Rendered in 7m23s on a i5-10210U, 8 processes</i></figcaption></figure><p>At this point, those familiar with CMake may have some questions, so keep reading to find out how it all works.<h1 id=fixed-point-arithmetic>Fixed-Point Arithmetic<a aria-hidden=true class=zola-anchor href=#fixed-point-arithmetic><img src=/images/link.svg></a></h1><p><strong>Good news:</strong> CMake has a <a href="https://cmake.org/cmake/help/latest/command/math.html?highlight=math"><code>math</code></a> command. <strong>Bad news:</strong> it only supports integers. If you've written a ray tracer before, you probably did it with floating point numbers. So how do you go from representing signed integers to representing something-resembling-floating-point numbers? One answer is to use <a href=https://en.wikipedia.org/wiki/Fixed-point_arithmetic><strong>fixed-point arithmetic</strong></a>.<p>The basic idea with fixed point is simple. We define some large integer to represent the number 1.0; let's choose <strong>1000</strong>. Then we can represent 2.0 as 2000, 0.5 as 500, -3.0 as -3000 etc. When we want to add two numbers, we simply add their fixed-point representations. Here's how that looks in CMake:<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span>function(add a b res)
+</span><span>    math(EXPR tmp </span><span style=color:#d69d85;>"(${</span><span>a</span><span style=color:#d69d85;>}) + (${</span><span>b</span><span style=color:#d69d85;>})"</span><span>)
+</span><span>    set(</span><span style=color:#d69d85;>"${</span><span>res</span><span style=color:#d69d85;>}" "${</span><span>tmp</span><span style=color:#d69d85;>}" </span><span>PARENT_SCOPE)
+</span><span>endfunction()
+</span></code></pre><p>This takes two values <code>a</code> and <code>b</code> to be added and stored in the variable <code>res</code>. I use <code>PARENT_SCOPE</code> so that the variable we create is actually visible from the calling function, otherwise CMake will destroy it when the function ends.<p>To multiply two numbers, we simply multiply their fixed-point representations, and then divide by the thing we chose to represent 1.0: <span class=katex-display><span class=katex><span class=katex-mathml><math display=block xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mn>1.5</mn><mo>×</mo><mn>4.0</mn><mo>↦</mo><mfrac><mrow><mn>1500</mn><mo>×</mo><mn>4000</mn></mrow><mn>1000</mn></mfrac><mo>=</mo><mn>6000</mn><mo>↦</mo><mn>6.0</mn></mrow><annotation encoding=application/x-tex>1.5 \times 4.0 \mapsto \frac{1500 \times 4000}{1000} = 6000 \mapsto 6.0</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:0.7278em;vertical-align:-0.0833em;></span><span class=mord>1.5</span><span class=mspace style=margin-right:0.2222em;></span><span class=mbin>×</span><span class=mspace style=margin-right:0.2222em;></span></span><span class=base><span class=strut style=height:0.6554em;vertical-align:-0.011em;></span><span class=mord>4.0</span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>↦</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:2.0074em;vertical-align:-0.686em;></span><span class=mord><span class="mopen nulldelimiter"></span><span class=mfrac><span class="vlist-t vlist-t2"><span class=vlist-r><span class=vlist style=height:1.3214em;><span style=top:-2.314em;><span class=pstrut style=height:3em;></span><span class=mord><span class=mord>1000</span></span></span><span style=top:-3.23em;><span class=pstrut style=height:3em;></span><span class=frac-line style=border-bottom-width:0.04em;></span></span><span style=top:-3.677em;><span class=pstrut style=height:3em;></span><span class=mord><span class=mord>1500</span><span class=mspace style=margin-right:0.2222em;></span><span class=mbin>×</span><span class=mspace style=margin-right:0.2222em;></span><span class=mord>4000</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:0.686em;><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>=</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:0.6554em;vertical-align:-0.011em;></span><span class=mord>6000</span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>↦</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:0.6444em;></span><span class=mord>6.0</span></span></span></span></span><p>Division is similar: <span class=katex-display><span class=katex><span class=katex-mathml><math display=block xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mn>1.5</mn><mo>÷</mo><mn>4.0</mn><mo>↦</mo><mfrac><mrow><mn>1500</mn><mo>×</mo><mn>1000</mn></mrow><mn>4000</mn></mfrac><mo>=</mo><mn>375</mn><mo>↦</mo><mn>0.375</mn></mrow><annotation encoding=application/x-tex>1.5 \div 4.0 \mapsto \frac{1500 \times 1000}{4000} = 375 \mapsto 0.375</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:0.7278em;vertical-align:-0.0833em;></span><span class=mord>1.5</span><span class=mspace style=margin-right:0.2222em;></span><span class=mbin>÷</span><span class=mspace style=margin-right:0.2222em;></span></span><span class=base><span class=strut style=height:0.6554em;vertical-align:-0.011em;></span><span class=mord>4.0</span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>↦</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:2.0074em;vertical-align:-0.686em;></span><span class=mord><span class="mopen nulldelimiter"></span><span class=mfrac><span class="vlist-t vlist-t2"><span class=vlist-r><span class=vlist style=height:1.3214em;><span style=top:-2.314em;><span class=pstrut style=height:3em;></span><span class=mord><span class=mord>4000</span></span></span><span style=top:-3.23em;><span class=pstrut style=height:3em;></span><span class=frac-line style=border-bottom-width:0.04em;></span></span><span style=top:-3.677em;><span class=pstrut style=height:3em;></span><span class=mord><span class=mord>1500</span><span class=mspace style=margin-right:0.2222em;></span><span class=mbin>×</span><span class=mspace style=margin-right:0.2222em;></span><span class=mord>1000</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:0.686em;><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>=</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:0.6554em;vertical-align:-0.011em;></span><span class=mord>375</span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>↦</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:0.6444em;></span><span class=mord>0.375</span></span></span></span></span> We could have multiplied by 1000 after doing the division, but as integer division rounds towards zero this would wipe out all our precision (as <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mfrac><mn>1500</mn><mn>4000</mn></mfrac><mo>×</mo><mn>1000</mn><mo>=</mo><mn>0</mn><mo>×</mo><mn>1000</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding=application/x-tex>\frac{1500}{4000}\times 1000 = 0 \times 1000 = 0</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:1.1901em;vertical-align:-0.345em;></span><span class=mord><span class="mopen nulldelimiter"></span><span class=mfrac><span class="vlist-t vlist-t2"><span class=vlist-r><span class=vlist style=height:0.8451em;><span style=top:-2.655em;><span class=pstrut style=height:3em;></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4000</span></span></span></span><span style=top:-3.23em;><span class=pstrut style=height:3em;></span><span class=frac-line style=border-bottom-width:0.04em;></span></span><span style=top:-3.394em;><span class=pstrut style=height:3em;></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1500</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:0.345em;><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace style=margin-right:0.2222em;></span><span class=mbin>×</span><span class=mspace style=margin-right:0.2222em;></span></span><span class=base><span class=strut style=height:0.6444em;></span><span class=mord>1000</span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>=</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:0.7278em;vertical-align:-0.0833em;></span><span class=mord>0</span><span class=mspace style=margin-right:0.2222em;></span><span class=mbin>×</span><span class=mspace style=margin-right:0.2222em;></span></span><span class=base><span class=strut style=height:0.6444em;></span><span class=mord>1000</span><span class=mspace style=margin-right:0.2778em;></span><span class=mrel>=</span><span class=mspace style=margin-right:0.2778em;></span></span><span class=base><span class=strut style=height:0.6444em;></span><span class=mord>0</span></span></span></span> ). Multiplying first gives us better results, as long as the dividend isn't too huge (which would cause overflow).<p>CMake's <code>math</code> command only supports basic integer arithmetic. For more complicated operations, like square root, we use <a href=https://en.wikipedia.org/wiki/Newton%27s_method>Newton-Raphson iteration</a>. You can read more about this <a href=https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method>here</a>, but the basic idea is to make a 'guess' as to what the output should be then iteratively refine the guess towards the answer. This gives a surprisingly accurate result within only three or four iterations, subject to the quality of the initial guess:<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span>function(sqrt x res)
+</span><span>    div_by_2(${x} guess)
+</span><span>
+</span><span>    </span><span style=color:#569cd6;>foreach</span><span>(counter RANGE 4)
+</span><span>        </span><span style=color:#569cd6;>if</span><span>(${guess} EQUAL 0)
+</span><span>            set(</span><span style=color:#d69d85;>"${</span><span>res</span><span style=color:#d69d85;>}" </span><span>0 PARENT_SCOPE)
+</span><span>            return()
+</span><span>        </span><span style=color:#569cd6;>endif</span><span>()
+</span><span>
+</span><span>        div(${x} ${guess} tmp)
+</span><span>        add(${tmp} ${guess} tmp)
+</span><span>        div_by_2(${tmp} guess)
+</span><span>    </span><span style=color:#569cd6;>endforeach</span><span>()
+</span><span>
+</span><span>    set(</span><span style=color:#d69d85;>"${</span><span>res</span><span style=color:#d69d85;>}" "${</span><span>guess</span><span style=color:#d69d85;>}" </span><span>PARENT_SCOPE)
+</span><span>endfunction()
+</span><span>
+</span><span style=color:#608b4e;># sqrt(123) = 11.09072626, actual answer is 11.0905365064
+</span></code></pre><p>I also implemented a similar function for computing <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mfrac><mn>1</mn><msqrt><mi>x</mi></msqrt></mfrac></mrow><annotation encoding=application/x-tex>\frac{1}{\sqrt{x}}</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:1.3831em;vertical-align:-0.538em;></span><span class=mord><span class="mopen nulldelimiter"></span><span class=mfrac><span class="vlist-t vlist-t2"><span class=vlist-r><span class=vlist style=height:0.8451em;><span style=top:-2.6259em;><span class=pstrut style=height:3em;></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class=vlist-r><span class=vlist style=height:0.8059em;><span class=svg-align style=top:-3em;><span class=pstrut style=height:3em;></span><span class="mord mtight" style=padding-left:0.833em;><span class="mord mathnormal mtight">x</span></span></span><span style=top:-2.7659em;><span class=pstrut style=height:3em;></span><span class="hide-tail mtight" style=min-width:0.853em;height:1.08em;><svg preserveaspectratio="xMinYMin slice" viewbox="0 0 400000 1080" height=1.08em width=400em xmlns=http://www.w3.org/2000/svg><path d="M95,702 c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14 c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54 c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10 s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429 c69,-144,104.5,-217.7,106.5,-221 l0 -0 c5.3,-9.3,12,-14,20,-14 H400000v40H845.2724 s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7 c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z M834 80h400000v40h-400000z"/></svg></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:0.2341em;><span></span></span></span></span></span></span></span></span><span style=top:-3.23em;><span class=pstrut style=height:3em;></span><span class=frac-line style=border-bottom-width:0.04em;></span></span><span style=top:-3.394em;><span class=pstrut style=height:3em;></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:0.538em;><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> separately as I found that it lead to better numerical stability, as opposed to computing the square root as above and then doing the reciprocal. This comes in handy when we need to normalize vectors.<p>Almost everything in computer graphics is done with vectors, so I started implementing vector operations: <code>vec3_add</code>, <code>vec3_mul</code>, <code>vec3_div</code>, <code>vec3_dot</code> etc. These make use of CMake built-in lists, which are pretty horrible, but save me from having to use three separate variables to keep track of the individual components of each vector. For example, here's what the dot product looks like:<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span>function(vec3_dot x y res)
+</span><span>    list(GET ${x} 0 x_0)
+</span><span>    list(GET ${x} 1 x_1)
+</span><span>    list(GET ${x} 2 x_2)
+</span><span>    list(GET ${y} 0 y_0)
+</span><span>    list(GET ${y} 1 y_1)
+</span><span>    list(GET ${y} 2 y_2)
+</span><span>    mul(${x_0} ${y_0} z_0)
+</span><span>    mul(${x_1} ${y_1} z_1)
+</span><span>    mul(${x_2} ${y_2} z_2)
+</span><span>    add(${z_0} ${z_1} tmp)
+</span><span>    add(${tmp} ${z_2} tmp)
+</span><span>    set(</span><span style=color:#d69d85;>"${</span><span>res</span><span style=color:#d69d85;>}" </span><span>${tmp} PARENT_SCOPE)
+</span><span>endfunction()
+</span></code></pre><p>And here's how we'd use it to normalize a vector:<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span>function(vec3_normalize x res)
+</span><span>    vec3_dot(${x} ${x} x_2)
+</span><span>    rsqrt(${x_2} one_over_length)
+</span><span>    vec3_mulf(${x} ${one_over_length} tmp)
+</span><span>    set(</span><span style=color:#d69d85;>"${</span><span>res</span><span style=color:#d69d85;>}" </span><span>${tmp} PARENT_SCOPE)
+</span><span>endfunction()
+</span></code></pre><p>As well a few other bits and bobs, like <code>clamp</code> and <code>truncate</code>, that's all the arithmetic that's needed.<h1 id=rendering>Rendering<a aria-hidden=true class=zola-anchor href=#rendering><img src=/images/link.svg></a></h1><p>If you're new to ray tracing, I'd refer you to <a href=https://twitter.com/peter_shirley>Peter Shirley's</a> wonderful book series '<a href=https://raytracing.github.io/>Ray Tracing in One Weekend</a>', which my code is loosely based on. The general intuition is to trace rays out from the camera into the scene and see what they intersect. Since we represent all our scene geometry and rays as mathematical objects, computing intersections between rays and geometry is just a case of solving equations. Once we have found an intersection, we compute the color of the point we intersected with, which may itself be computed by tracing rays towards light sources or towards other scene geometry.<figure><img src=https://developer.nvidia.com/sites/default/files/pictures/2018/RayTracing/ray-tracing-image-1.jpg><figcaption><i>The ray tracing algorithm.</i> Credit: <a href=https://developer.nvidia.com/discover/ray-tracing>https://developer.nvidia.com</a></figcaption></figure><p>To keep it simply I went with a simple scene consisting of a sphere sitting atop an infinite plane in a checkerboard color. I also ended up faking the shadow underneath the sphere, simply drawing a black circle (well done if you spotted it from the image). I had implemented whitted ray tracing and even path tracing at one point, but they were much more complicated and performed a lot worse for the same result. In theory, though, there's no reason why I couldn't do it properly, it would just require some additional effort and patience.<p>Here's what the main 'trace' function looks like, with some of the unnecessary bits stripped out for clarity:<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span style=color:#608b4e;># Traces a ray into the scene, computes the color returned along the ray
+</span><span>function(trace ray_origin ray_dir depth color)
+</span><span>    </span><span style=color:#608b4e;># Base case for recursion
+</span><span>    </span><span style=color:#569cd6;>if</span><span>(${depth} GREATER_EQUAL 3)
+</span><span>        return()
+</span><span>    </span><span style=color:#569cd6;>else</span><span>()
+</span><span>        math(EXPR depth </span><span style=color:#d69d85;>"${</span><span>depth</span><span style=color:#d69d85;>} + 1"</span><span>)
+</span><span>    </span><span style=color:#569cd6;>endif</span><span>()
+</span><span>
+</span><span>    </span><span style=color:#608b4e;># Calculate intersection points with the sphere and plane
+</span><span>    sphere_intersect(${ray_origin} ${ray_dir} hit_t_1 hit_point_1 hit_normal_1)
+</span><span>    plane_intersect(${ray_origin} ${ray_dir} hit_t_2 hit_point_2 hit_normal_2)
+</span><span>
+</span><span>    </span><span style=color:#608b4e;># Did we hit the sphere?
+</span><span>    </span><span style=color:#569cd6;>if</span><span>(${hit_t_1} GREATER ${ray_epsilon})
+</span><span>        </span><span style=color:#608b4e;># Calculate reflected ray direction
+</span><span>        offset_origin(hit_point_1 hit_normal_1 new_origin)
+</span><span>        vec3_dot(hit_normal_1 ${ray_dir} scalar)
+</span><span>        mul_by_2(${scalar} scalar)
+</span><span>        vec3_mulf(hit_normal_1 ${scalar} refl_a)
+</span><span>        vec3_sub(${ray_dir} refl_a new_dir)
+</span><span>
+</span><span>        </span><span style=color:#608b4e;># Recursively trace the new ray into the scene
+</span><span>        trace(new_origin new_dir ${depth} traced_col)
+</span><span>
+</span><span>        </span><span style=color:#608b4e;># Calculate contribution from lights
+</span><span>        set(col 0 0 0)
+</span><span>        light_contrib(hit_point_1 hit_normal_1 light1_pos light1_col out_col1)
+</span><span>        light_contrib(hit_point_1 hit_normal_1 light2_pos light2_col out_col2)
+</span><span>        vec3_add(col out_col1 col)
+</span><span>        vec3_add(col out_col2 col)
+</span><span>        vec3_add(col traced_col col)
+</span><span>
+</span><span>        set(base_col ${sphere_color})
+</span><span>        vec3_mul(base_col col col)
+</span><span>
+</span><span>    </span><span style=color:#608b4e;># Did we hit the plane?
+</span><span>    </span><span style=color:#569cd6;>elseif</span><span>(${hit_t_2} GREATER ${ray_epsilon})
+</span><span>        </span><span style=color:#608b4e;># ...snip: Use equation of a circle to fake shadow, if we're within range
+</span><span>        </span><span style=color:#608b4e;># ...snip: Calculate checkerboard pattern
+</span><span>    </span><span style=color:#569cd6;>else</span><span>()
+</span><span>        </span><span style=color:#608b4e;># We hit nothing, return black
+</span><span>        set(col 0 0 0)
+</span><span>    </span><span style=color:#569cd6;>endif</span><span>()
+</span><span>
+</span><span>    set(</span><span style=color:#d69d85;>"${</span><span>color</span><span style=color:#d69d85;>}" </span><span>${col} PARENT_SCOPE)
+</span><span>endfunction()
+</span></code></pre><h1 id=multicore-rendering-a-k-a-making-cmake-go-brrrrrrrrrrrr>Multicore Rendering (a.k.a making CMake go <em>brrrrrrrrrrrr...</em>)<a aria-hidden=true class=zola-anchor href=#multicore-rendering-a-k-a-making-cmake-go-brrrrrrrrrrrr><img src=/images/link.svg></a></h1><p>When I started, I wouldn't sure if it would be possible to do in pure CMake, but with a little trickery we can manage it.<p>For <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mi>N</mi></mrow><annotation encoding=application/x-tex>N</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:0.6833em;></span><span class="mord mathnormal" style=margin-right:0.10903em;>N</span></span></span></span> processes, the basic plan is to divide up the image vertically and let each sub-process render a few rows. We can invoke sub-processes with the <a href=https://cmake.org/cmake/help/v3.0/command/execute_process.html><code>execute_process</code></a> command, passing arguments (such as the worker index) via <code>-D</code>. Each process then spits their row data into a text file, which gets merged together by the master process once they've all finished.<p>One subtlety is that as we need all the sub-processes to run in parallel, we can't simply call <code>execute_process</code> <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mi>N</mi></mrow><annotation encoding=application/x-tex>N</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:0.6833em;></span><span class="mord mathnormal" style=margin-right:0.10903em;>N</span></span></span></span> times, as it would run them sequentially. Luckily, we can specify multiple processes to run simultaneously in one command (I think this is intended to be used for long chains where one program is piped into the next), but in order to avoid hardcoding <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mi>N</mi></mrow><annotation encoding=application/x-tex>N</annotation></semantics></math></span><span aria-hidden=true class=katex-html><span class=base><span class=strut style=height:0.6833em;></span><span class="mord mathnormal" style=margin-right:0.10903em;>N</span></span></span></span> we have to programmatically construct the call to <code>execute_process</code> with CMake's <a href=https://cmake.org/cmake/help/git-stage/command/cmake_language.html><code>EVAL CODE</code></a> feature (thanks to <a href=https://github.com/martty/vuk>martty</a> for this idea):<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span>message(STATUS </span><span style=color:#d69d85;>"Launching ray tracer with ${</span><span>num_procs</span><span style=color:#d69d85;>} processes, ${</span><span>image_width</span><span style=color:#d69d85;>}x${</span><span>image_height</span><span style=color:#d69d85;>} image..."</span><span>)
+</span><span>
+</span><span>set(exec_command </span><span style=color:#d69d85;>"execute_process(</span><span style=color:#e3bbab;>\n</span><span style=color:#d69d85;>"</span><span>)
+</span><span style=color:#569cd6;>foreach</span><span>(worker_index RANGE 1 ${num_procs})
+</span><span>    set(exec_command </span><span style=color:#d69d85;>"${</span><span>exec_command</span><span style=color:#d69d85;>}COMMAND cmake . -Wno-dev -Dworker_index=${</span><span>worker_index</span><span style=color:#d69d85;>} -Dimage_width=${</span><span>image_width</span><span style=color:#d69d85;>} -Dimage_height=${</span><span>image_height</span><span style=color:#d69d85;>} -Dnum_procs=${</span><span>num_procs</span><span style=color:#d69d85;>}</span><span style=color:#e3bbab;>\n</span><span style=color:#d69d85;>"</span><span>)
+</span><span style=color:#569cd6;>endforeach</span><span>()
+</span><span>set(exec_command </span><span style=color:#d69d85;>"${</span><span>exec_command</span><span style=color:#d69d85;>} )"</span><span>)
+</span><span>
+</span><span style=color:#608b4e;># Begin the worker processes
+</span><span>cmake_language(EVAL CODE ${exec_command})
+</span><span>
+</span><span>message(STATUS </span><span style=color:#d69d85;>"Finished ray tracing, gathering results..."</span><span>)
+</span></code></pre><h1 id=outputting-an-image>Outputting an Image<a aria-hidden=true class=zola-anchor href=#outputting-an-image><img src=/images/link.svg></a></h1><p>As per <a href=https://raytracing.github.io/>Ray Tracing in One Weekend</a>, I use the <a href=https://en.wikipedia.org/wiki/Netpbm#PPM_example>PPM image format</a>. This is a really simple text-based format which is perfect for my purposes as I don't have to bother with compression. Once we're done rendering we simply read all the data that the workers have spat out, write the PPM header, and print everything to <code>stderr</code>:<pre class=language-cmake data-lang=cmake style=background-color:#1e1e1e;color:#dcdcdc;><code class=language-cmake data-lang=cmake><span>set(image_contents </span><span style=color:#d69d85;>"P3 ${</span><span>image_width</span><span style=color:#d69d85;>} ${</span><span>image_height</span><span style=color:#d69d85;>}</span><span style=color:#e3bbab;>\n</span><span style=color:#d69d85;>255</span><span style=color:#e3bbab;>\n\n</span><span style=color:#d69d85;>"</span><span>)
+</span><span>
+</span><span style=color:#569cd6;>foreach</span><span>(worker_index RANGE 1 ${num_procs})
+</span><span>    file(READ </span><span style=color:#d69d85;>"worker-${</span><span>worker_index</span><span style=color:#d69d85;>}.txt" </span><span>file_contents)
+</span><span>    set(image_contents </span><span style=color:#d69d85;>"${</span><span>image_contents</span><span style=color:#d69d85;>}${</span><span>file_contents</span><span style=color:#d69d85;>}"</span><span>)
+</span><span style=color:#569cd6;>endforeach</span><span>()
+</span><span>
+</span><span>message(</span><span style=color:#d69d85;>"${</span><span>image_contents</span><span style=color:#d69d85;>}"</span><span>)
+</span></code></pre><p>The division of work among the worker processes is pretty sub-optimal as the rows towards the top of the image are mostly empty whereas the rows at the bottom are entirely full, which means that some processes finish very fast while others take much longer. Fixing this problem is left as an exercise to the reader.<h1 id=conclusion>Conclusion<a aria-hidden=true class=zola-anchor href=#conclusion><img src=/images/link.svg></a></h1><p>If you made it this far, thanks for reading! Feel free to create issues, send pull requests or star <a href=https://github.com/64/cmake-raytracer>the code on GitHub</a>.</div><div class=post-footer><div class=post-nav><a class=previous href=https://64.github.io/multiple-importance-sampling/>‹ Multiple Importance Sampling</a></div></div><script>var disqus_config = function () {
                     this.page.url = "https://64.github.io/cmake-raytracer/";
                     this.page.identifier = "cmake-raytracer";
-                };
-            </script>
-            <div id="disqus_thread"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();</script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        
-    
-</article>
-
-
-                </div>
-            </main>
-
-            
-            
-        </div>
-
-      
-          
-          <script type="text/javascript" src="https:&#x2F;&#x2F;64.github.io&#x2F;even.js" ></script>
-      
-    </body>
-
-</html>
+                };</script><div id=disqus_thread></div><script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); document.addEventListener('colorSchemeChanged', function (e) { if (document.readyState == 'complete') { DISQUS.reset({ reload: true }); } });</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></article></div></main></div><script defer src=https://64.github.io/theme.js></script><script src=https://64.github.io/even.js></script>

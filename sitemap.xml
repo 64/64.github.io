@@ -1,69 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    
-        <url>
-            <loc>https://64.github.io/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/actix/</loc>
-            
-                <lastmod>2019-07-16</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/categories/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/categories/graphics/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/categories/maths/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/categories/rust/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/cmake-raytracer/</loc>
-            
-                <lastmod>2020-12-27</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/monte-carlo/</loc>
-            
-                <lastmod>2020-03-27</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/multiple-importance-sampling/</loc>
-            
-                <lastmod>2020-04-19</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/page/1/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://64.github.io/tonemapping/</loc>
-            
-                <lastmod>2019-05-10</lastmod>
-            
-        </url>
-    
+    <url>
+        <loc>https://64.github.io/</loc>
+    </url>
+    <url>
+        <loc>https://64.github.io/actix/</loc>
+        <lastmod>2019-07-16</lastmod>
+    </url>
+    <url>
+        <loc>https://64.github.io/categories/</loc>
+    </url>
+    <url>
+        <loc>https://64.github.io/categories/graphics/</loc>
+    </url>
+    <url>
+        <loc>https://64.github.io/categories/maths/</loc>
+    </url>
+    <url>
+        <loc>https://64.github.io/categories/rust/</loc>
+    </url>
+    <url>
+        <loc>https://64.github.io/cmake-raytracer/</loc>
+        <lastmod>2020-12-27</lastmod>
+    </url>
+    <url>
+        <loc>https://64.github.io/monte-carlo/</loc>
+        <lastmod>2020-03-27</lastmod>
+    </url>
+    <url>
+        <loc>https://64.github.io/multiple-importance-sampling/</loc>
+        <lastmod>2020-04-19</lastmod>
+    </url>
+    <url>
+        <loc>https://64.github.io/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://64.github.io/tonemapping/</loc>
+        <lastmod>2019-05-10</lastmod>
+    </url>
 </urlset>
