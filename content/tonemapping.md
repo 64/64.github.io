@@ -21,7 +21,7 @@ At this point you might be a little confused as to why you've never had to think
 
 This TMO, as you might guess, is quite flawed. Here's what it looks like when we apply this TMO to the memorial scene (the HDR scene file can be downloaded [here](https://www.cs.huji.ac.il/~danix/hdr/hdrs/memorial.hdr)):
 
-{{ figure(src="https://i.ibb.co/TcZcBYD/out.png", caption="Tone mapping with clamp") }}
+{{ figure(src="/images/tonemap/clamp.png", caption="Tone mapping with clamp") }}
 
 High radiance values are being completely lost beyond a certain point. This results in the white areas (like the middle stained glass window) looking completely 'blown out'. For this particular scene it's not too bad because most of the radiance values are in {{ katex(body="[0.0, 1.0]") }} already, but for a brighter outdoors scene it would look a lot worse. You could alleviate the issue somewhat by dividing the input color by some value before clamping: 
 
@@ -33,7 +33,7 @@ The rest of this guide will explore a few simple tone mapping operators, as well
 
 ## Reinhard
 
-This is one of the simplest and most common TMOs, described by Reinhard et al. in [this paper](http://www.cmap.polytechnique.fr/~peyre/cours/x2005signal/hdr_photographic.pdf). Simply put, it is:
+This is one of the simplest and most common TMOs, described by Reinhard et al. in [this paper](https://www.cs.utah.edu/docs/techreports/2002/pdf/UUCS-02-001.pdf). Simply put, it is:
 
 {% katex(block=true) %} \mathrm{TMO_{reinhard}}(C) = \frac{C}{1 + C} {% end %}
 
@@ -52,7 +52,7 @@ vec3 reinhard(vec3 v)
 
 Compare this image to the previous 'clamp' TMO. Reinhard looks much more grey-ish, and the whites are less blown out (more detail is noticeable in the middle stained glass window).
 
-{{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard tone mapping") }}
+{{ figure(src="/images/tonemap/reinhard.png", caption="Reinhard tone mapping") }}
 
 ## Extended Reinhard
 
@@ -134,10 +134,10 @@ Here's the difference it makes - the stained glass windows and the column on the
 <!-- ![Reinhard applied to RGB channels](https://i.ibb.co/S6JdvQz/out.png) ![Reinhard applied to luminance](https://i.ibb.co/vmbB9QV/out.png) -->
 <div class="image-grid-row">
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard applied to RGB channels") }}
+        {{ figure(src="/images/tonemap/reinhard-rgb.png", caption="Reinhard applied to RGB channels") }}
     </div>
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/vmbB9QV/out.png", caption="Reinhard applied to luminance") }}
+        {{ figure(src="/images/tonemap/reinhard-luminance.png", caption="Reinhard applied to luminance") }}
     </div>
 </div>
 
@@ -174,13 +174,13 @@ vec3 reinhard_jodie(vec3 v)
 
 The difference between this and the luminance-only tone map is barely noticeable in this scene (you can see that the stain glass windows are slightly less orange), but in other scenes (especially those with colored lights) the difference is more obvious. Note that there's also no way to set the white point with this TMO, but you could add a way yourself.
 
-{{ figure(src="https://i.imgur.com/ofIO1KR.png", caption="Reinhard-Jodie tone mapping") }}
+{{ figure(src="/images/tonemap/reinhard-jodie.png", caption="Reinhard-Jodie tone mapping") }}
 
 # Filmic Tone Mapping Operators
 
 So-called 'filmic' TMOs are designed to emulate real film. Other than that, their defining feature is the distinctive 'toe' at the bottom end of the curve (radiance is on the {{ katex(body="x") }}-axis, final pixel brightness is on the {{ katex(body="y") }}-axis):
 
-{{ figure(src="https://i.imgur.com/apsY7L0.png") }}
+{{ figure(src="/images/tonemap/filmic-curve.png") }}
 
 Note that the other end of the tone mapping curve is usually described as the 'shoulder'.
 
@@ -211,7 +211,7 @@ vec3 uncharted2_filmic(vec3 v)
 }
 ```
 
-{{ figure(src="https://i.ibb.co/MnFDk8n/out.png", caption="Uncharted 2 tone mapping") }}
+{{ figure(src="/images/tonemap/uncharted-2.png", caption="Uncharted 2 tone mapping") }}
 
 For some further reading, see [John Hable's blog post](http://filmicworlds.com/blog/filmic-tonemapping-with-piecewise-power-curves/) about creating an improved curve which offers more intuitive controls.
 
@@ -257,7 +257,7 @@ vec3 aces_fitted(vec3 v)
 }
 ```
 
-{{ figure(src="https://i.imgur.com/YZ0eNGw.png", caption="ACES tone mapping")}}
+{{ figure(src="/images/tonemap/aces.png", caption="ACES tone mapping")}}
 
 You can also use this approximated ACES fit by [Krzysztof Narkowicz](https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/) for something a bit more performant. Note that this approximation oversaturates bright colors slightly compared to the better fit (you can see that in the middle stained glass window).
 
@@ -274,7 +274,7 @@ vec3 aces_approx(vec3 v)
 }
 ```
 
-{{ figure(src="https://i.imgur.com/Ck14lqL.png", caption="ACES tone mapping (worse fit)") }}
+{{ figure(src="/images/tonemap/aces-worse.png", caption="ACES tone mapping (worse fit)") }}
 
 # Real Camera Response Functions
 
@@ -322,7 +322,7 @@ vec3 camera_tonemap(vec3 v, float iso)
 }
 ```
 
-{{ figure(src="https://i.ibb.co/K78Xff4/out.png", caption="DSCS315-R1 response curve, ISO = 6.0") }}
+{{ figure(src="/images/tonemap/camera-response.png", caption="DSCS315-R1 response curve, ISO = 6.0") }}
 
 This method is available as an option in [Indigo Renderer](https://www.indigorenderer.com/documentation/manual/rendering-with-indigo/camera/tone-mapping), for the curious.
 
@@ -330,7 +330,7 @@ This method is available as an option in [Indigo Renderer](https://www.indigoren
 
 So far, all the TMOs I've discussed have been *global tone mapping operators*. This means that the computation they do is only based on the input radiance value and global image parameters like the average luminance. Tone mapping operators which are a function of position are known as *local tone mapping operators*. These are generally far more expensive and hence unsuitable for real time graphics - yet widely used in digital photography. Local TMOs can also give strange results when applied to video.
 
-One local tone mapping operator is described in the [same paper by Reinhard et al.](http://www.cmap.polytechnique.fr/~peyre/cours/x2005signal/hdr_photographic.pdf) - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different exposure to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.
+One local tone mapping operator is described in the [same paper by Reinhard et al.](https://www.cs.utah.edu/docs/techreports/2002/pdf/UUCS-02-001.pdf) - it involves a digital simulation of a process known as 'dodging and burning' in real photography, which essentially applies different exposure to different regions of the image, often resulting in more detailed images than global tone mapping operators are able to produce.
 
 # Conclusion
 
@@ -339,34 +339,34 @@ Hopefully this guide was instructive. I've placed a grid of all TMOs used here f
 <!-- ![Reinhard extended (white point set to max radiance component)](https://i.ibb.co/rQy8dq9/out.png) -->
 <div class="image-grid-row">
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/TcZcBYD/out.png", caption="Clamp") }}
+        {{ figure(src="/images/tonemap/clamp.png", caption="Clamp") }}
     </div>
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/S6JdvQz/out.png", caption="Reinhard simple") }}
-    </div>
-</div>
-<div class="image-grid-row">
-    <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/vmbB9QV/out.png", caption="Reinhard luminance (white point = max luminance)") }}
-    </div>
-    <div class="image-grid-col">
-        {{ figure(src="https://i.imgur.com/ofIO1KR.png", caption="Reinhard-Jodie") }}
+        {{ figure(src="/images/tonemap/reinhard.png", caption="Reinhard simple") }}
     </div>
 </div>
 <div class="image-grid-row">
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/MnFDk8n/out.png", caption="Uncharted 2") }}
+        {{ figure(src="/images/tonemap/reinhard-luminance.png", caption="Reinhard luminance (white point = max luminance)") }}
     </div>
     <div class="image-grid-col">
-        {{ figure(src="https://i.imgur.com/YZ0eNGw.png", caption="ACES") }}
+        {{ figure(src="/images/tonemap/reinhard-jodie.png", caption="Reinhard-Jodie") }}
     </div>
 </div>
 <div class="image-grid-row">
     <div class="image-grid-col">
-        {{ figure(src="https://i.imgur.com/Ck14lqL.png", caption="ACES (worse fit)") }}
+        {{ figure(src="/images/tonemap/uncharted-2.png", caption="Uncharted 2") }}
     </div>
     <div class="image-grid-col">
-        {{ figure(src="https://i.ibb.co/K78Xff4/out.png", caption="DSCS315-R1 (ISO = 6.0)") }}
+        {{ figure(src="/images/tonemap/aces.png", caption="ACES") }}
+    </div>
+</div>
+<div class="image-grid-row">
+    <div class="image-grid-col">
+        {{ figure(src="/images/tonemap/aces-worse.png", caption="ACES (worse fit)") }}
+    </div>
+    <div class="image-grid-col">
+        {{ figure(src="/images/tonemap/camera-response.png", caption="DSCS315-R1 (ISO = 6.0)") }}
     </div>
 </div>
 

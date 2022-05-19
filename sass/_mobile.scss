@@ -9,8 +9,8 @@
   left: 0;
   width: 100%;
   height: $mobile-navbar-height;
-  background: white;
-  box-shadow: 0px 2px 2px #cacaca;
+  background: $background-colour;
+  box-shadow: 0px 2px 2px $mobile-navbar-shadow-colour;
   text-align: center;
   transition: transform 300ms ease;
   z-index: 99;
@@ -45,18 +45,22 @@
 }
 
 .mobile-menu {
-  background-color: rgba($secondary-colour, 0.5);
+  background-color: $mobile-menu-colour;
+
+  .mobile-menu-icon {
+    margin-bottom: -3px;  
+  }
 
   .mobile-menu-list {
     position: relative;
     list-style: none;
     margin-top: 50px;
     padding: 0;
-    border-top: 1px solid $secondary-colour;
+    border-top: 1px solid $mobile-menu-separator-colour;
 
     .mobile-menu-item {
       padding: 10px 30px;
-      border-bottom: 1px solid $secondary-colour;
+      border-bottom: 1px solid $mobile-menu-separator-colour;
     }
 
     a {

@@ -1,5 +1,5 @@
 #header {
-  padding: 20px;
+  padding: 15px 20px 0px 10px;
   display: flex;
   justify-content: space-between;
 
@@ -9,6 +9,10 @@
     }
   }
 
+  .logo-subtitle {
+    margin-top: -10px;
+	}
+
   .menu {
     align-self: flex-start;
 
@@ -16,21 +20,30 @@
       display: inline-block;
       padding-right: 25px;
 
-      li {
+      li:not(.menu-separator) {
         display: inline-block;
-        margin-right: 5px;
+        margin-right: 10px;
         @include underline-from-center;
 
         a {
           font-size: 18px;
         }
       }
+
+      li.menu-icon {
+        margin-bottom: -5px; 
+      }
+
+      li.menu-separator {
+        display: inline-block;
+        margin-right: 10px;
+      }
     }
   }
 }
 @include max-screen() {
   #header {
-    .logo, .menu {
+    .logo, .menu, .logo-subtitle {
       display: none;
     }
     padding: 50px 0 0;

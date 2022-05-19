@@ -5,8 +5,8 @@ html {
 
 body {
   line-height: 1.5;
-  color: #34495e;
-  background: #fefefe;
+  color: $text-colour;
+  background: $background-colour;
   border-top: 3px solid $main-colour;
 }
 
@@ -25,6 +25,14 @@ body {
     width: 100%;
     box-shadow: -1px -5px 5px #cacaca;
   }
+}
+
+.logo-text-alt {
+  color: $logo-text-alt;
+}
+
+.logo-subtitle {
+    color: $meta-colour;
 }
 
 a {

@@ -1,18 +1,16 @@
 base_url = "https://64.github.io"
+default_language = "en"
 compile_sass = true
-highlight_code = true
-highlight_theme = "visual-studio-dark"
 build_search_index = true
+minify_html = true
 theme = "even"
-title = "Delta"
-# check_external_links = true
+title = "δelta"
 
 taxonomies = [
     {name = "categories", rss = true},
     {name = "tags", rss = true},
 ]
 
-# Configuration of the link checker.
 [link_checker]
 # Skip link checking for external URLs that start with these prefixes
 # TODO: I think these can be made to work, if we tweak the user-agent
@@ -21,17 +19,18 @@ skip_prefixes = [
     "https://twitter.com",
 ]
 
-
+[markdown]
+highlight_code = true
+highlight_theme = "visual-studio-dark"
 
 [extra]
 katex_enable = true
 even_title = "Delta - Blog by 64"
 author = "64"
-disqus_comment_code = "<div id=\"disqus_thread\"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();</script> <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>"
+disqus_comment_code = "<div id=\"disqus_thread\"></div> <script>(function() { var d = document, s = d.createElement('script'); s.src = 'https://64-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); document.addEventListener('colorSchemeChanged', function (e) { if (document.readyState == 'complete') { DISQUS.reset({ reload: true }); } });</script> <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>"
 #disqus_comment_count = "<script id=\"dsq-count-scr\" src=\"//64-github-io.disqus.com/count.js\" async></script>"
 
 even_menu = [
     {url = "$BASE_URL", name = "Home"},
     {url = "$BASE_URL/categories", name = "Categories"},
-    {url = "https://github.com/64", name = "GitHub"},
 ]

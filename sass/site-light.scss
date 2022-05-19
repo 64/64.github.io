@@ -1,0 +1,17 @@
+$main-colour: #7908cf;
+$secondary-colour: #f3ecf8;
+$logo-text-alt: rgba(black, 0.7);
+$background-colour: #fefefe;
+$light-secondary-colour: rgba($secondary-colour, 0.4);
+$text-colour: #34495e;
+$code-background-colour: $secondary-colour;
+
+$blockquote-background-colour: $light-secondary-colour;
+$blockquote-left-colour: darken($secondary-colour, 15%);
+$blockquote-text-colour: rgba(#34495e, 0.8);
+
+$mobile-menu-colour: rgba($secondary-colour, 0.5);
+$mobile-menu-separator-colour: $secondary-colour;
+$mobile-navbar-shadow-colour: #cacaca;
+
+@import "site";

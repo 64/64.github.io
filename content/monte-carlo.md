@@ -77,8 +77,9 @@ Suppose we are given a set of {% katex() %} N {% end %} random variables {% kate
 Using the jargon, this means that {% katex() %} \hat{I}_N {% end %} is an 'estimator' of {% katex() %} f {% end %}. It should be intuitive that given a set of {% katex() %} N {% end %} random variables {% katex() %} X_i \sim \mathrm{Uniform}(a, b) {% end %} (typically called 'samples'), then
 
 {% katex(block=true) %}
-\mathbb{E}[f(X_k)] \approx \frac{1}{N}\sum_{i=1}^{N} f(X_i) \text{\hspace{1em}(for any } k \in { 1, 2, \ldots, N }\text{).}
+\mathbb{E}[f(X_k)] \approx \frac{1}{N}\sum_{i=1}^{N} f(X_i) \text{\medspace\medspace\medspace\medspace\medspace for any } k \in \{1, 2, \ldots, N\}.
 {% end %}
+
 
 That is to say, the mean of our computed samples {% katex() %} f(X_i) {% end %} approaches the *expectation* of {% katex() %} f {% end %} as {% katex() %} N {% end %} gets larger (according to the law of large numbers). Since the {% katex() %} X_i {% end %} are distributed uniformly, we know that {% katex() %} p_X(x) = 1/(b-a) {% end %}, so using the *law of the unconscious statistician* gives
 

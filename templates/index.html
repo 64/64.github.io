@@ -46,10 +46,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
         {#
 		{% if config.extra.katex_enable %}
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+			<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
 
-			<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
-			<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/mathtex-script-type.min.js" integrity="sha384-zWYbd0NBwgTsgIdFKVprSfTh1mbMPe5Hz1X3yY4Sd1h/K1cQoUe36OGwAGz/PcDy" crossorigin="anonymous"></script>
 			{% if config.extra.katex_auto_render %}
 				<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
 				onload="renderMathInElement(document.body);"></script>
@@ -59,7 +58,8 @@
 	{% endblock js %}
 
 	{% block css %}
-		<link rel="stylesheet" href="{{ get_url(path="site.css", trailing_slash=false) }}">
+		<meta name="color-scheme" content="dark light">
+		<link id="theme-link" rel="stylesheet" href="{{ get_url(path="site-dark.css", trailing_slash=false) }}">
 		{% if config.extra.katex_enable %}
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
 		{% endif %}
@@ -73,9 +73,12 @@
         <div class="container">
 
             <div id="mobile-navbar" class="mobile-navbar">
-              <div class="mobile-header-logo">
-                <a href="/" class="logo">{{ config.extra.even_title }}</a>
-              </div>
+				<div class="mobile-header-logo">
+					<a href="/" class="logo">δ<span class="logo-text-alt">elta</span></a>: 
+					<span class="logo-subtitle">
+						Blog by <a href="https://github.com/64">&commat;64</a>
+					</span>
+				</div>
               <div class="mobile-navbar-icon icon-out">
                 <span></span>
                 <span></span>
@@ -92,11 +95,30 @@
                         </a>
                     </li>
                 {% endfor %}
+
+					<!-- GitHub link -->
+					<li class="mobile-menu-item">
+						<a class="nav-link" href="https://github.com/64">
+							 GitHub&nbsp;<svg class="mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+					</li>
+
+					<!-- Theme toggle -->
+					<li class="mobile-menu-item"><a class="theme-toggle">
+						Theme&nbsp;<span class="toggle-dark" hidden><svg class="mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+						<span class="toggle-light"><svg class="mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+					</a></li>
               </ul>
             </nav>
 
             <header id="header">
-                <div class="logo"><a href="{{ config.base_url }}">{{ config.extra.even_title }}</a></div>
+				<div>
+					<div class="logo">
+						<a href="/" class="logo">δ<span class="logo-text-alt">elta</span></a>
+					</div>
+					<div class="logo-subtitle">
+						Blog by <a href="https://github.com/64">&commat;64</a>
+					</div>
+				</div>
                 <nav class="menu">
                     <ul>
                         {% for item in config.extra.even_menu %}
@@ -106,6 +128,19 @@
                                 </a>
                             </li>
                         {% endfor %}
+
+						<li class="menu-separator"></li>
+
+						<!-- GitHub link -->
+						<li class="menu-icon">
+							<a class="nav-link" href="https://github.com/64"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+						</li>
+
+						<!-- Theme toggle -->
+						<li class="menu-icon"><a class="theme-toggle">
+							<span class="toggle-dark" hidden><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+							<span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+						</a></li>
                     </ul>
                 </nav>
             </header>
@@ -146,6 +181,7 @@
           {% if config.extra.disqus_comment_count %}
               {{ config.extra.disqus_comment_count | safe }}
           {% endif %}
+          <script type="text/javascript" src="{{ get_url(path="theme.js", trailing_slash=false) }}" defer></script>
           <script type="text/javascript" src="{{ get_url(path="even.js", trailing_slash=false) }}" ></script>
       {% endblock js_body %}
     </body>
