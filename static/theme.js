@@ -33,6 +33,8 @@ function setDarkTheme(dark) {
 
 if (currentTheme === "light") {
   setDarkTheme(false);
+} else if (currentTheme === "dark") {
+  setDarkTheme(true);
 } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
   setDarkTheme(false);
 } else {
